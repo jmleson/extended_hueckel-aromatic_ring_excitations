@@ -1,1 +1,1 @@
-# extended_h-ckel-aromatic_ring_excitations
+# extended_hückel-aromatic_ring_excitations
