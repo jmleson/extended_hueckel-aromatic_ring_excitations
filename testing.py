@@ -7,6 +7,7 @@ from IrreducibleRepresentation import IrreducibleRepresentation
 from PointGroup import PointGroup
 from SALC import SALC
 from SymmetryOperation import SymmetryOperation
+from tst.solve_saekular_equation import calculate
 
 
 class PointGroupTest(unittest.TestCase):
@@ -16,6 +17,7 @@ class PointGroupTest(unittest.TestCase):
         self.p = PointGroup(n=6)
         # revert Point group to C2v for 1,3-Butadien:
         self.p.n = 4
+        self.p.circular = False
         # set_up_symmetry_operations:
         self.p.operations = []
         o = SymmetryOperation(n=self.p.n, name="E", transform_p=lambda i: i, amount=1)
@@ -41,6 +43,14 @@ class PointGroupTest(unittest.TestCase):
         B2_chars = [1, -1, -1, 1]
         i = IrreducibleRepresentation(dict(zip(symmetry_names, B2_chars)), name="B2")
         self.p.irreducible_representations.append(i)
+
+
+        #####################################
+        p1, p2, p3, p4, alpha, beta = sp.symbols(f"p1 p2 p3 p4 alpha beta")
+        self.phi_1 = SALC(n=4, irred="B2", p_orbital_prefactors={p1: 1 / sp.sqrt(2), p4: 1 / sp.sqrt(2)})
+        self.phi_2 = SALC(n=4, irred="B2", p_orbital_prefactors={p2: 1 / sp.sqrt(2), p3: 1 / sp.sqrt(2)})
+        self.phi_3 = SALC(n=4, irred="A2", p_orbital_prefactors={p1: 1 / sp.sqrt(2), p4: -1 / sp.sqrt(2)})
+        self.phi_4 = SALC(n=4, irred="A2", p_orbital_prefactors={p2: 1 / sp.sqrt(2), p3: -1 / sp.sqrt(2)})
 
 
     def test_reducible_representations(self):
@@ -109,6 +119,63 @@ class PointGroupTest(unittest.TestCase):
         expected_equation = (1/sp.sqrt(2)) * p1 -  (1/sp.sqrt(2)) * p4
         assert sp.simplify(s.equation - expected_equation) == 0
         assert s.prefactors_of_AOs == [1/sp.sqrt(2), 0, 0, -1/sp.sqrt(2)]
+
+
+
+    def test_h_eff_of_SALCs(self):
+        alpha, beta = sp.symbols(f"alpha beta")
+
+        h = self.p.h_eff(salc_1=self.phi_1, salc_2=self.phi_1)
+        assert h == alpha
+
+        h = self.p.h_eff(salc_1=self.phi_2, salc_2=self.phi_2)
+        assert h == alpha + beta
+
+        h = self.p.h_eff(salc_1=self.phi_1, salc_2=self.phi_2)
+        assert h == beta
+
+        h = self.p.h_eff(salc_1=self.phi_3, salc_2=self.phi_3)
+        assert h == alpha
+
+        h = self.p.h_eff(salc_1=self.phi_4, salc_2=self.phi_4)
+        assert h == alpha - beta
+
+        h = self.p.h_eff(salc_1=self.phi_3, salc_2=self.phi_4)
+        assert h == beta
+
+
+    def test_get_effective_hamilton_matrix(self):
+        alpha, beta = sp.symbols(f"alpha beta")
+        # B2:
+        h_matrix = self.p.get_effective_hamilton_matrix(SALCs = [self.phi_1, self.phi_2])
+        expected = sp.Matrix([
+            [ alpha,  beta         ],
+            [ beta,   alpha + beta ]
+        ])
+        assert h_matrix.shape == expected.shape
+        assert h_matrix.equals(expected)
+        molecule_orbitals = calculate(h_matrix, info="tst", sorting_dict_values={alpha: 0, beta: -1})
+        e_1 = alpha + beta * ((1+sp.sqrt(5))/2)
+        e_2 = alpha + beta * ((1-sp.sqrt(5))/2)
+        assert sp.simplify(e_1 - molecule_orbitals[0].eigenvalue) == 0
+        assert sp.simplify(e_2 - molecule_orbitals[1].eigenvalue) == 0
+
+        # A2:
+        h_matrix = self.p.get_effective_hamilton_matrix(SALCs=[self.phi_3, self.phi_4])
+        expected = sp.Matrix([
+            [alpha, beta],
+            [beta, alpha - beta]
+        ])
+        assert h_matrix.shape == expected.shape
+        assert h_matrix.equals(expected)
+        molecule_orbitals = calculate(h_matrix, info="tst", sorting_dict_values={alpha: 0, beta: -1})
+        e_1 = alpha - beta * ((1 + sp.sqrt(5)) / 2)
+        e_2 = alpha - beta * ((1 - sp.sqrt(5)) / 2)
+        assert sp.simplify(e_2 - molecule_orbitals[0].eigenvalue) == 0
+        assert sp.simplify(e_1 - molecule_orbitals[1].eigenvalue) == 0
+
+
+
 
 
 

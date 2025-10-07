@@ -1,11 +1,16 @@
+import itertools
+import sympy as sp
+
 from IrreducibleRepresentation import IrreducibleRepresentation
 from PointGroup import PointGroup
 from SymmetryOperation import SymmetryOperation
+from tst.solve_saekular_equation import calculate
 
 ###### SET UP TESTING CASE ###############
 p = PointGroup(n=6)
 # revert Point group to C2v for 1,3-Butadien:
 p.n = 4
+p.circular = False
 # set_up_symmetry_operations:
 p.operations = []
 o = SymmetryOperation(n=p.n, name="E", transform_p=lambda i: i, amount=1)
@@ -41,6 +46,14 @@ p.irreducible_representations.append(i)
 # print(irreducible_representation)
 
 SALCs = p.get_all_SALCs()
+[i.norm() for i in SALCs]
+
+H = p.get_effective_hamilton_matrix(SALCs)
+alpha, beta = sp.symbols(f"alpha beta")
+calculate(H, info="tst", sorting_dict_values = {alpha: 0, beta: -1})
+
+
+
 
 
 

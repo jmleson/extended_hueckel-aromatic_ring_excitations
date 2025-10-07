@@ -4,7 +4,7 @@ import sympy as sp
 
 import sympy as sp
 
-from hueckel.molecule_orbital import molecule_orbital
+from tst.molecule_orbital import molecule_orbital
 
 
 def calculate(H, info: str, sorting_dict_values: dict):

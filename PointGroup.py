@@ -1,5 +1,7 @@
+import itertools
 from fractions import Fraction
 import sympy as sp
+
 
 from IrreducibleRepresentation import IrreducibleRepresentation
 from SALC import SALC
@@ -13,6 +15,8 @@ class PointGroup():
         self.set_up_symmetry_operations()
         self.irreducible_representations = []
         self.set_up_irreducible_representations()
+
+        self.circular = True
 
     def set_up_symmetry_operations(self):
         o = SymmetryOperation(n=self.n, name="E", transform_p=lambda i: i, amount = 1)
@@ -158,6 +162,62 @@ class PointGroup():
         # print(all_SALCs, len(all_SALCs), irreducible_representation, sum(irreducible_representation.values()))
         assert len(all_SALCs) == sum(irreducible_representation.values())
         return all_SALCs
+
+
+    def orbitals_adjoint(self, p1, p2):
+        alpha, beta = sp.symbols("alpha beta")
+        if p1 == p2:
+            return alpha
+        if p1 + 1 == p2 or p1 -1 == p2 :
+            return beta
+        if self.circular and p1 -1 == 0 and p2 == self.n:
+            return beta
+        return 0
+
+    def h_eff(self, salc_1: SALC, salc_2: SALC):
+        h_eff_integral = 0
+        for p_orbital in range(1, len(salc_1.prefactors_of_AOs) + 1):
+            if salc_1.prefactors_of_AOs[p_orbital - 1] != 0:
+                part = 0
+                for combi in range(1, len(salc_2.prefactors_of_AOs) + 1):
+                    if salc_2.prefactors_of_AOs[combi - 1] != 0:
+                        factor = salc_1.prefactors_of_AOs[p_orbital - 1] * salc_2.prefactors_of_AOs[combi - 1]
+                        part += factor * self.orbitals_adjoint(p_orbital, combi)
+                        # print("p", p_orbital, "|", "p", combi, "=")
+                        # print("+", p.orbitals_adjoint(p_orbital, combi) ,"*", factor)
+                h_eff_integral += part
+        return h_eff_integral
+
+    def get_effective_hamilton_matrix(self, SALCs: list[SALC]):
+        SALCs_by_irred = {}
+        for s in SALCs:
+            SALCs_by_irred.setdefault(s.irred, []).append(s)
+
+        for irred, salcs in SALCs_by_irred.items():
+            print(f"\n=== {irred} ===")
+
+            if len(salcs) == 1:
+                h = sp.Symbol(f"H_{irred}")
+                print("H =", h)
+                return [h]
+            else:
+                n = len(salcs)
+                H = sp.zeros(n)
+                H_show = sp.zeros(n)
+                for i, j in itertools.product(range(n), repeat=2):
+                    H[i, j] = self.h_eff(salc_1=salcs[i], salc_2=salcs[j])
+                    H_show[i, j] = sp.Symbol(f"H_{irred}_{i}{j}")
+                print("H =")
+                sp.pprint(H_show)
+                print("=")
+                sp.pprint(H)
+                return H
+
+    # def get_sekular_equation(self, h_matrix):
+    #     for i in row:
+    #         for j in column:
+    #             if i == j:
+    #                 # abziehen von Wert "E" vom Matrixelement
 
 
 if __name__ == "__main__":
