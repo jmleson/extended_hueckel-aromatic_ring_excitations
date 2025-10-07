@@ -1,6 +1,8 @@
 from fractions import Fraction
+import sympy as sp
 
 from IrreducibleRepresentation import IrreducibleRepresentation
+from SALC import SALC
 from SymmetryOperation import SymmetryOperation
 
 
@@ -35,23 +37,25 @@ class PointGroup():
     def set_up_irreducible_representations(self):
         symmetry_names = [op.name for op in self.operations]
         if self.n == 3:
-            i = IrreducibleRepresentation({j: 1 for j in symmetry_names}, name="A\'1")
+            i = IrreducibleRepresentation(characters={j: 1 for j in symmetry_names}, name="A\'1")
             self.irreducible_representations.append(i)
             A2_chars = [1,1,-1,1,1,-1]
-            i = IrreducibleRepresentation(dict(zip(symmetry_names, A2_chars)), name="A\'2")
+            i = IrreducibleRepresentation(characters=dict(zip(symmetry_names, A2_chars)), name="A\'2")
             self.irreducible_representations.append(i)
             E_chars = [2,-1,0,2,-1,0]
-            i = IrreducibleRepresentation(dict(zip(symmetry_names, E_chars)), name="E\'")
+            i = IrreducibleRepresentation(characters=dict(zip(symmetry_names, E_chars)), name="E\'")
             self.irreducible_representations.append(i)
             A1_chars = [1,1,1,-1,-1,-1]
-            i = IrreducibleRepresentation(dict(zip(symmetry_names, A1_chars)), name="A\'\'1")
+            i = IrreducibleRepresentation(characters=dict(zip(symmetry_names, A1_chars)), name="A\'\'1")
             self.irreducible_representations.append(i)
             A2_chars = [1,1,-1,-1,-1,1]
-            i = IrreducibleRepresentation(dict(zip(symmetry_names, A2_chars)), name="A\'\'2")
+            i = IrreducibleRepresentation(characters=dict(zip(symmetry_names, A2_chars)), name="A\'\'2")
             self.irreducible_representations.append(i)
             E_chars = [2, -1, 0, -2, 1, 0]
-            i = IrreducibleRepresentation(dict(zip(symmetry_names, E_chars)), name="E\'\'")
+            i = IrreducibleRepresentation(characters=dict(zip(symmetry_names, E_chars)), name="E\'\'")
             self.irreducible_representations.append(i)
+        elif self.n == 6:
+            print("TODO")
         else:
             raise Exception("Not implemented")
 
@@ -78,7 +82,13 @@ class PointGroup():
     def get_symmetry_operation_by_name(self, name:str):
         for i in self.operations:
             if i.name == name:
-                return name
+                return i
+        raise Exception("Not found")
+
+    def get_irreducible_representation_by_name(self, name:str):
+        for i in self.irreducible_representations:
+            if i.name == name:
+                return i
         raise Exception("Not found")
 
     def decomposing_into_irreducible_representations(self, reducible_representation:dict):
@@ -98,11 +108,65 @@ class PointGroup():
             decomposition[irrep.name] = int(a_i)
         return decomposition
 
+    def project(self, irreducible_representation:dict, p_orbital_index:int):
+        # Symbolische Basisfunktionen
+        p_symbols = sp.symbols(f"p1:{self.n + 1}")
+        SALCs = []
+
+        for irred_name, value in irreducible_representation.items():
+            eq_expr = 0
+            collected_p_orbitals_in_expression = {}
+            if value != 0:
+                irred = self.get_irreducible_representation_by_name(irred_name)
+
+                for op_name, op_value in irred.characters.items():
+                    if op_value != 0:
+                        op = self.get_symmetry_operation_by_name(op_name)
+                        transformed_p = op.transform_p(p_orbital_index)
+                        coeff = op_value if transformed_p > 0 else -op_value
+                        transformed_p = p_symbols[abs(transformed_p) - 1]
+                        eq_expr += coeff * transformed_p
+                        collected_p_orbitals_in_expression[transformed_p] = collected_p_orbitals_in_expression.get(transformed_p, 0) + coeff
+                eq_expr /= self.group_order()
+                collected_p_orbitals_in_expression = {k: Fraction(v, self.group_order()) for k, v in collected_p_orbitals_in_expression.items()}
+                s = SALC(n=self.n, irred=irred_name, p_orbital_prefactors=collected_p_orbitals_in_expression, equation=eq_expr)
+                # s.print()
+                SALCs.append(s)
+        return SALCs
+
+
+
+    def get_all_SALCs(self):
+        reducible_representation = self.get_reducible_representation_for_ring_p_orbitals()
+        print(reducible_representation)
+
+        irreducible_representation = self.decomposing_into_irreducible_representations(reducible_representation)
+        print(irreducible_representation)
+
+        all_SALCs = []
+        for n in range(1, self.n + 1):
+            SALCs = self.project(irreducible_representation, p_orbital_index=n)
+            for s in SALCs:
+                # s.print()
+                usual_list = s.prefactors_of_AOs
+                negative_list = [-x for x in usual_list]# negative version of LC is still the same linear combination
+                old_list = [old_s.prefactors_of_AOs for old_s in all_SALCs]
+                if usual_list not in old_list and negative_list not in old_list :
+                    # print("not in", s.prefactors_of_AOs)
+                    all_SALCs.append(s)
+
+        # print(all_SALCs, len(all_SALCs), irreducible_representation, sum(irreducible_representation.values()))
+        assert len(all_SALCs) == sum(irreducible_representation.values())
+        return all_SALCs
+
 
 if __name__ == "__main__":
-    p = PointGroup(n=2)
+    p = PointGroup(n=4)
     reducible_representation = p.get_reducible_representation_for_ring_p_orbitals()
     print(reducible_representation)
 
-    irred = p.decomposing_into_irreducible_representations(reducible_representation)
-    print(irred)
+    irreducible_representation = p.decomposing_into_irreducible_representations(reducible_representation)
+    print(irreducible_representation)
+
+    p.project(irreducible_representation, p_orbital_index=1)
+
