@@ -51,7 +51,7 @@ class SALC:
 
 
         self.normalized = True
-        self.print()
+        # self.print()
 
 
 def norm_and_group_SALCs(list_of_SALCs:list[SALC]):

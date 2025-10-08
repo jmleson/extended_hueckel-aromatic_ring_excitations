@@ -3,9 +3,9 @@ import itertools
 import sympy as sp
 
 from IrreducibleRepresentation import IrreducibleRepresentation
-from PointGroup import PointGroup
+from MoleculeRepresentation import MoleculeRepresentation
 from SymmetryOperation import SymmetryOperation
-from PointGroup import PointGroup
+from MoleculeRepresentation import MoleculeRepresentation
 from SALC import SALC
 
 

@@ -1,15 +1,11 @@
 import unittest
 from fractions import Fraction
-
 import sympy as sp
 
-from IrreducibleRepresentation import IrreducibleRepresentation
-from PointGroup import PointGroup
+from MoleculeRepresentation import MoleculeRepresentation
 from SALC import SALC
-from SymmetryOperation import SymmetryOperation
 from is_multiple import is_multiple
-from tst.molecule_orbital import molecule_orbital
-from tst.solve_saekular_equation import calculate
+from molecule_orbital import molecule_orbital
 from round_and_collect import round_and_collect
 
 
@@ -17,7 +13,7 @@ class TestCyclobutadiene(unittest.TestCase):
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)  # sehr wichtig!
-        self.p = PointGroup(n=4)
+        self.p = MoleculeRepresentation(n=4)
         self.p.circular = True
 
         ######

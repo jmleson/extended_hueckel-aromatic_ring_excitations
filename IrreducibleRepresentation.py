@@ -4,6 +4,3 @@ class IrreducibleRepresentation:
         self.characters = characters
         self.name = name
         self.dimension = dimension
-
-    # def project(self) -> list[SALC]:
-    #     pass

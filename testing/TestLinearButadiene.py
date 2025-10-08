@@ -3,51 +3,23 @@ from fractions import Fraction
 
 import sympy as sp
 
-from IrreducibleRepresentation import IrreducibleRepresentation
-from PointGroup import PointGroup
+from MoleculeRepresentation import MoleculeRepresentation
+from PointGroups.C2v import C2v
 from SALC import SALC
-from SymmetryOperation import SymmetryOperation
-from tst.molecule_orbital import molecule_orbital
-from tst.solve_saekular_equation import calculate
+from molecule_orbital import molecule_orbital
+from tst.solve_saekular_equation import calculate_hueckel_secular_equation
 from round_and_collect import round_and_collect
 
 
 class TestLinearButadiene(unittest.TestCase):
 
     def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)  # sehr wichtig!
-        self.p = PointGroup(n=6)
-        # revert Point group to C2v for 1,3-Butadien:
-        self.p.n = 4
+        super().__init__(*args, **kwargs)
+        self.p = MoleculeRepresentation(n=4)
+        ### revert Point group to C2v for 1,3-Butadien:
+        self.p.pointgroup = C2v(n=4)
         self.p.circular = False
-        # set_up_symmetry_operations:
-        self.p.operations = []
-        o = SymmetryOperation(n=self.p.n, name="E", transform_p=lambda i: i, amount=1)
-        self.p.operations.append(o)
-        o = SymmetryOperation(n=self.p.n, name="C2", transform_p=lambda i: [-4, -3, -2, -1][i - 1], amount=1)
-        self.p.operations.append(o)
-        o = SymmetryOperation(n=self.p.n, name="σv(xz)", transform_p=lambda i: [-1, -2, -3, -4][i - 1], amount=1)
-        self.p.operations.append(o)
-        o = SymmetryOperation(n=self.p.n, name="σv(yz)", transform_p=lambda i: [4, 3, 2, 1][i - 1], amount=1)
-        self.p.operations.append(o)
-
-        #set_up_irreducible_representations:
-        self.p.irreducible_representations = []
-        symmetry_names = [op.name for op in self.p.operations]
-        i = IrreducibleRepresentation({j: 1 for j in symmetry_names}, name="A1")
-        self.p.irreducible_representations.append(i)
-        A2_chars = [1, 1, -1, -1]
-        i = IrreducibleRepresentation(dict(zip(symmetry_names, A2_chars)), name="A2")
-        self.p.irreducible_representations.append(i)
-        B1_chars = [1, -1, 1, -1]
-        i = IrreducibleRepresentation(dict(zip(symmetry_names, B1_chars)), name="B1")
-        self.p.irreducible_representations.append(i)
-        B2_chars = [1, -1, -1, 1]
-        i = IrreducibleRepresentation(dict(zip(symmetry_names, B2_chars)), name="B2")
-        self.p.irreducible_representations.append(i)
-
-
-        #####################################
+        ###############################################
         p1, p2, p3, p4, alpha, beta = sp.symbols(f"p1 p2 p3 p4 alpha beta")
         self.phi_1 = SALC(n=4, irred="B2", p_orbital_prefactors={p1: 1 / sp.sqrt(2), p4: 1 / sp.sqrt(2)})
         self.phi_2 = SALC(n=4, irred="B2", p_orbital_prefactors={p2: 1 / sp.sqrt(2), p3: 1 / sp.sqrt(2)})
@@ -172,7 +144,7 @@ class TestLinearButadiene(unittest.TestCase):
         ])
         assert h_matrix.shape == expected.shape
         assert h_matrix.equals(expected)
-        molecule_orbitals = calculate(h_matrix, info="tst", sorting_dict_values={alpha: 0, beta: -1})
+        molecule_orbitals = calculate_hueckel_secular_equation(h_matrix, info="tst", sorting_dict_values={alpha: 0, beta: -1})
         e_1 = alpha + beta * ((1+sp.sqrt(5))/2)
         e_2 = alpha + beta * ((1-sp.sqrt(5))/2)
         assert sp.simplify(e_1 - molecule_orbitals[0].eigenvalue) == 0
@@ -186,7 +158,7 @@ class TestLinearButadiene(unittest.TestCase):
         ])
         assert h_matrix.shape == expected.shape
         assert h_matrix.equals(expected)
-        molecule_orbitals = calculate(h_matrix, info="tst", sorting_dict_values={alpha: 0, beta: -1})
+        molecule_orbitals = calculate_hueckel_secular_equation(h_matrix, info="tst", sorting_dict_values={alpha: 0, beta: -1})
         e_1 = alpha - beta * ((1 + sp.sqrt(5)) / 2)
         e_2 = alpha - beta * ((1 - sp.sqrt(5)) / 2)
         assert sp.simplify(e_2 - molecule_orbitals[0].eigenvalue) == 0
