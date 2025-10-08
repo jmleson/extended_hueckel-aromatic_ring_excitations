@@ -43,3 +43,13 @@ class SALC:
 
         self.normalized = True
         self.print()
+
+
+def norm_and_group_SALCs(list_of_SALCs:list[SALC]):
+        SALCs_by_irred = {}
+        for s in list_of_SALCs:
+            s.norm()
+            SALCs_by_irred.setdefault(s.irred, []).append(s)
+
+        return SALCs_by_irred
+

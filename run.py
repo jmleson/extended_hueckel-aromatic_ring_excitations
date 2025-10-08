@@ -3,6 +3,7 @@ import sympy as sp
 
 from IrreducibleRepresentation import IrreducibleRepresentation
 from PointGroup import PointGroup
+from SALC import norm_and_group_SALCs
 from SymmetryOperation import SymmetryOperation
 from tst.solve_saekular_equation import calculate
 
@@ -45,12 +46,10 @@ p.irreducible_representations.append(i)
 # irreducible_representation = p.decomposing_into_irreducible_representations(reducible_representation)
 # print(irreducible_representation)
 
-SALCs = p.get_all_SALCs()
-[i.norm() for i in SALCs]
 
-H = p.get_effective_hamilton_matrix(SALCs)
-alpha, beta = sp.symbols(f"alpha beta")
-calculate(H, info="tst", sorting_dict_values = {alpha: 0, beta: -1})
+p.get_energy_levels()
+
+
 
 
 

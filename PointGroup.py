@@ -4,8 +4,9 @@ import sympy as sp
 
 
 from IrreducibleRepresentation import IrreducibleRepresentation
-from SALC import SALC
+from SALC import SALC, norm_and_group_SALCs
 from SymmetryOperation import SymmetryOperation
+from tst.solve_saekular_equation import calculate
 
 
 class PointGroup():
@@ -188,24 +189,20 @@ class PointGroup():
                 h_eff_integral += part
         return h_eff_integral
 
-    def get_effective_hamilton_matrix(self, SALCs: list[SALC]):
-        SALCs_by_irred = {}
-        for s in SALCs:
-            SALCs_by_irred.setdefault(s.irred, []).append(s)
+    def get_effective_hamilton_matrix(self, SALCs: list[SALC], irred:str):
+        print("get_effective_hamilton_matrix", [s.irred for s in SALCs], flush=True)
+        print(f"\n=== {irred} ===", type(irred), flush=True)
 
-        for irred, salcs in SALCs_by_irred.items():
-            print(f"\n=== {irred} ===")
-
-            if len(salcs) == 1:
+        if len(SALCs) == 1:
                 h = sp.Symbol(f"H_{irred}")
                 print("H =", h)
                 return [h]
-            else:
-                n = len(salcs)
+        else:
+                n = len(SALCs)
                 H = sp.zeros(n)
                 H_show = sp.zeros(n)
                 for i, j in itertools.product(range(n), repeat=2):
-                    H[i, j] = self.h_eff(salc_1=salcs[i], salc_2=salcs[j])
+                    H[i, j] = self.h_eff(salc_1=SALCs[i], salc_2=SALCs[j])
                     H_show[i, j] = sp.Symbol(f"H_{irred}_{i}{j}")
                 print("H =")
                 sp.pprint(H_show)
@@ -213,11 +210,25 @@ class PointGroup():
                 sp.pprint(H)
                 return H
 
-    # def get_sekular_equation(self, h_matrix):
-    #     for i in row:
-    #         for j in column:
-    #             if i == j:
-    #                 # abziehen von Wert "E" vom Matrixelement
+    def get_energy_levels(self):
+        SALCs = self.get_all_SALCs()
+        SALCs_by_irred = norm_and_group_SALCs(SALCs)
+
+        result = []
+        alpha, beta = sp.symbols(f"alpha beta")
+        sorting_dict_values = {alpha: 0, beta: -1}
+        for irred, salcs in SALCs_by_irred.items():
+            H = self.get_effective_hamilton_matrix(SALCs=salcs, irred=irred)
+            result_irred = calculate(H, info=irred, sorting_dict_values=sorting_dict_values)
+            for i in result_irred:
+                i.symmetry = irred
+                result.append(i)
+        # sorting:
+        molecule_orbitals = sorted(
+            result,
+            key=lambda m: m.eigenvalue.subs(sorting_dict_values)
+        )
+        return molecule_orbitals
 
 
 if __name__ == "__main__":
