@@ -15,7 +15,16 @@ class SALC:
             else:
                 self.prefactors_of_AOs.append(0)
         # print("prefactors_of_AOs", self.prefactors_of_AOs)
+        self.set_equation()
 
+    def set_equation(self):
+        if self.equation is not None:
+            return
+        p_symbols = sp.symbols(f"p1:{self.n + 1}")
+        eq = 0
+        for p in range(len(self.prefactors_of_AOs)):
+            eq += p_symbols[p] * self.prefactors_of_AOs[p]
+        self.equation = eq
 
     def print(self):
         print("SALC of", self.irred)

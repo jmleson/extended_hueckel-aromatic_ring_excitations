@@ -12,7 +12,7 @@ from tst.solve_saekular_equation import calculate
 from round_and_collect import round_and_collect
 
 
-class PointGroupTest(unittest.TestCase):
+class TestLinearButadiene(unittest.TestCase):
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)  # sehr wichtig!
@@ -125,6 +125,10 @@ class PointGroupTest(unittest.TestCase):
 
 
     def test_h_eff_of_SALCs(self):
+        self.phi_1.norm()
+        self.phi_2.norm()
+        self.phi_3.norm()
+        self.phi_4.norm()
         alpha, beta = sp.symbols(f"alpha beta")
 
         h = self.p.h_eff(salc_1=self.phi_1, salc_2=self.phi_1)
@@ -145,9 +149,21 @@ class PointGroupTest(unittest.TestCase):
         h = self.p.h_eff(salc_1=self.phi_3, salc_2=self.phi_4)
         assert h == beta
 
+        for i in [self.phi_1, self.phi_2, self.phi_3, self.phi_4]:
+            before = i.equation
+            before_factors = i.prefactors_of_AOs
+            i.norm()
+            assert i.normalized == True
+            assert i.prefactors_of_AOs == before_factors
+            assert i.equation == before
+
 
     def test_get_effective_hamilton_matrix(self):
         alpha, beta = sp.symbols(f"alpha beta")
+        self.phi_1.norm()
+        self.phi_2.norm()
+        self.phi_3.norm()
+        self.phi_4.norm()
         # B2:
         h_matrix = self.p.get_effective_hamilton_matrix(SALCs = [self.phi_1, self.phi_2], irred="B2")
         expected = sp.Matrix([
@@ -184,33 +200,19 @@ class PointGroupTest(unittest.TestCase):
 
         assert len(result) == 4
 
-        # testing lowest energy level:
-        assert isinstance(result[0], molecule_orbital)
-        assert result[0].symmetry == "B2"
-        assert sp.simplify(round_and_collect(result[0].eigenvalue, [alpha,beta], round_to)
-                           - ( alpha + 1.618 * beta )
-                           ) == 0
-        # testing 2nd lowest energy level:
-        assert isinstance(result[1], molecule_orbital)
-        assert result[1].symmetry == "A2"
-        assert sp.simplify(
-                        round_and_collect(result[1].eigenvalue, [alpha,beta], round_to)
-                        - (alpha + 0.618 * beta)
-                        ) == 0
-        # testing 2nd highest energy level:
-        assert isinstance(result[2], molecule_orbital)
-        assert result[2].symmetry == "B2"
-        assert sp.simplify(
-                        round_and_collect(result[2].eigenvalue, [alpha, beta], round_to)
-                        - (alpha - 0.618 * beta)
-                        ) == 0
-        # testing highest energy level:
-        assert isinstance(result[3], molecule_orbital)
-        assert result[3].symmetry == "A2"
-        assert sp.simplify(
-                        round_and_collect(result[3].eigenvalue, [alpha, beta], round_to)
-                        - (alpha - 1.618 * beta)
-                        ) == 0
+        for (index, symmetry, equation) in [
+            (0, "B2", alpha + 1.618 * beta),
+            (1, "A2", alpha + 0.618 * beta),
+            (2, "B2", alpha - 0.618 * beta),
+            (3, "A2", alpha - 1.618 * beta)
+        ]:
+            assert isinstance(result[index], molecule_orbital)
+            assert result[index].symmetry == symmetry
+            assert sp.simplify(round_and_collect(result[index].eigenvalue, [alpha, beta], round_to)
+                               - (equation)
+                               ) == 0
+
+
 
 
 
