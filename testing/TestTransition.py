@@ -2,138 +2,126 @@ import unittest
 import sympy as sp
 
 from MoleculeRepresentation import MoleculeRepresentation
-from SALC import SALC
-from TransitionIntegral import TransitionIntegral
+from MoleculeState import MoleculeState
+from Transition import Transition
 from molecule_orbital import molecule_orbital
 
 
-class TestTransitionIntegral(unittest.TestCase):
+class TestMoleculeRepresentation(unittest.TestCase):
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        self.p = MoleculeRepresentation(n=4)
+        p = MoleculeRepresentation(n=4)
+        p_mo_orbitals = p.get_energy_levels()
+        p.set_to_s_orbitals()
+        s_mo_orbitals = p.get_energy_levels()
+        self.m = MoleculeState(bonding_p=p_mo_orbitals, antibonding_s=s_mo_orbitals)
 
-        # P ORBITALS
-        self.p_mo_orbitals = self.p.get_energy_levels()
+        alpha, alpha_s, beta, beta_s = sp.symbols("alpha alpha_s beta beta_s")
 
-        #S ORBITALS
-        self.p.set_to_s_orbitals()
-        self.s_mo_orbitals = self.p.get_energy_levels()
+        # self.get_first_test_case()
 
-        self.p1, self.p2, self.p3, self.p4, self.s1, self.s2, self.s3, self.s4 = sp.symbols(f"p1 p2 p3 p4 s1 s2 s3 s4 ")
-        self.alpha, self.beta, self.alpha_s, self.beta_s, self.delta = sp.symbols("alpha beta alpha_s beta_s delta")
-
-        self.test_transition = {'s occupation after transition': (0, 1, 0, 0),
-                                'Delta E by transition': -4*self.alpha + self.alpha_s - 4*self.beta}
-        self.phi_1 = SALC(n=4, irred="A2u",
-                          p_orbital_prefactors={self.p1: 1 / sp.sqrt(4), self.p2: 1 / sp.sqrt(4), self.p3: 1 / sp.sqrt(4),
-                                                self.p4: 1 / sp.sqrt(4)},
-                          orbital_symbol="p")
-        self.phi_s_1 = SALC(n=4, irred="A1g",
-                            p_orbital_prefactors={self.s1: 1 / sp.sqrt(4), self.s2: 1 / sp.sqrt(4), self.s3: 1 / sp.sqrt(4),
-                                                  self.s4: 1 / sp.sqrt(4)},
-                            orbital_symbol="s")
-        self.phi_2 = SALC(n=4, irred="B2u",
-                          p_orbital_prefactors={self.p1: 1 / sp.sqrt(4), self.p2: -1 / sp.sqrt(4), self.p3: 1 / sp.sqrt(4),
-                                                self.p4: -1 / sp.sqrt(4)},
-                          orbital_symbol="p")
-        self.phi_s_2 = SALC(n=4, irred="B1g",
-                            p_orbital_prefactors={self.s1: 1 / sp.sqrt(4), self.s2: -1 / sp.sqrt(4), self.s3: 1 / sp.sqrt(4),
-                                                  self.s4: -1 / sp.sqrt(4)},
-                            orbital_symbol="s")
-        self.phi_3 = SALC(n=4, irred="Eg", p_orbital_prefactors={self.p1: 1 / sp.sqrt(2), self.p3: -1 / sp.sqrt(2)},
-                          orbital_symbol="p")
-        self.phi_s_3 = SALC(n=4, irred="Eg", p_orbital_prefactors={self.s1: 1 / sp.sqrt(2), self.s3: -1 / sp.sqrt(2)},
-                            orbital_symbol="s")
-        self.phi_4 = SALC(n=4, irred="Eg", p_orbital_prefactors={self.p2: 1 / sp.sqrt(2), self.p4: -1 / sp.sqrt(2)},
-                          orbital_symbol="p")
-        self.phi_s_4 = SALC(n=4, irred="Eg", p_orbital_prefactors={self.s2: 1 / sp.sqrt(2), self.s4: -1 / sp.sqrt(2)},
-                            orbital_symbol="s")
 
     def get_first_test_case(self):
+        # phi_2
         mo = molecule_orbital()
-        # mo.eigenvalue = self.alpha
-        # mo.eigenvector = sp.Matrix([[1], [0]])
+        mo.eigenvalue = self.alpha
+        mo.eigenvector = sp.Matrix([[1], [0]])
         mo.salcs = [{"factor": 1, "salc": self.phi_3}]
-        # mo.occupation = 0
-        # mo.symmetry = "Eg"
+        mo.occupation = 0
+        mo.symmetry = "Eg"
 
         mo_s = molecule_orbital()
-        # mo_s.eigenvalue = self.alpha_s
-        # mo_s.eigenvector = sp.Matrix([[1], [0]])
+        mo_s.eigenvalue = self.alpha_s
+        mo_s.eigenvector = sp.Matrix([[1], [0]])
         mo_s.salcs = [{"factor": 1, "salc": self.phi_s_3}]
-        # mo_s.occupation = 0
-        # mo_s.symmetry = "Eu"
+        mo_s.occupation = 0
+        mo_s.symmetry = "Eu"
 
-        return TransitionIntegral(bra=mo, ket=mo_s)
-
-    def get_second_test_case(self):
-        mo = molecule_orbital()
-        # mo.eigenvalue = self.alpha
-        # mo.eigenvector = sp.Matrix([[1]])
-        mo.salcs = [{"factor": 3, "salc": self.phi_1}]
-        # mo.occupation = 0
-        # mo.symmetry = "A2u"
-
-        mo_s = molecule_orbital()
-        # mo_s.eigenvalue = self.alpha_s
-        # mo_s.eigenvector = sp.Matrix([[1]])
-        mo_s.salcs = [{"factor": 7, "salc": self.phi_s_1}]
-        # mo_s.occupation = 0
-        # mo_s.symmetry = "A1g"
-
-        return TransitionIntegral(bra=mo, ket=mo_s)
+        self.m = MoleculeState(bonding_p=mo, antibonding_s=mo_s)
+        return
 
 
-    def test_get_multipliers_as_sum(self):
-        t = self.get_first_test_case()
 
-        bra_multipliers = t.get_multipliers_as_sum(t.bra)
-        assert len(bra_multipliers) == 2
-        assert bra_multipliers[0]["total_factor"] == 1 / sp.sqrt(2)
-        assert bra_multipliers[1]["total_factor"] == -1 / sp.sqrt(2)
-        for i in range(len(bra_multipliers)):
-            assert bra_multipliers[i]["p_symbols"] == sp.Symbol(f'p{bra_multipliers[i]["p_number"]}')
-        assert bra_multipliers[0]["p_symbols"] == self.p1
-        assert bra_multipliers[1]["p_symbols"] == self.p3
+    def get_occupation_expectations(self):
+        alpha, alpha_s, beta, beta_s = sp.symbols("alpha alpha_s beta beta_s")
+        diff_2 = alpha_s - alpha
+        diff_3 = diff_2
+        diff_4 = alpha_s - 2 * beta_s - alpha + 2 * beta
+        return [
+            # single occupation -> orbital energy / eigenvalue:
+            {"occ": (1,0,0,0), "exp": alpha + 2 * beta, "transitioning energy": [], "expected": []},
+            {"occ": (0, 1, 0, 0), "exp": alpha, "transitioning energy": [diff_2], "expected": [(0,1,0,0)]},
+            {"occ": (0, 0, 1, 0), "exp": alpha, "transitioning energy": [diff_2], "expected": [(0,0,1,0)]},
+            {"occ": (0, 0, 0, 1), "exp": alpha - 2 * beta, "transitioning energy": [diff_4], "expected": [(0,0,0,1)]},
+            # 2 electrons:
+            {"occ": (1,1,0,0) , "exp": 2*alpha + 2 * beta, "transitioning energy": [diff_2], "expected": [(0,1,0,0)]},
+            {"occ":  (1, 0, 0, 1), "exp": 2 * alpha, "transitioning energy": [diff_4], "expected": [(0,0,0,1)]},
+            {"occ": (2,0,0,0), "exp": 2 * alpha + 4 * beta, "transitioning energy": [], "expected": []},
+            {"occ": (0, 2, 0, 0), "exp": 2*alpha, "transitioning energy": [diff_2], "expected": [(0,1,0,0)]},
+            {"occ": (0, 0, 2, 0), "exp": 2*alpha, "transitioning energy": [diff_2], "expected": [(0,0,1,0)]},
+            {"occ": (0, 0, 0, 2), "exp": 2 * alpha - 4 * beta, "transitioning energy": [diff_4], "expected": [(0,0,0,1)]},
+            # 3 electrons:
+            {"occ":(1, 1, 1, 0) , "exp": 3 * alpha + 2 * beta, "transitioning energy": [diff_2, diff_3],
+                                                                "expected": [(0,1,0,0),(0,0,1,0)]},
+            {"occ": (1, 1, 0, 1), "exp": 3 * alpha, "transitioning energy": [diff_2, diff_4],
+                                                    "expected": [(0,1,0,0),(0,0,0,1)]},
+            {"occ": (0, 1, 1, 1), "exp": 3 * alpha - 2 * beta , "transitioning energy": [ diff_2, diff_3, diff_4],
+                                                                "expected": [(0,1,0,0),(0,0,1,0),(0,0,0,1)]},
+            # 4 electrons:
+            {"occ": (1, 1, 1, 1), "exp": 4 * alpha, "transitioning energy": [ diff_2, diff_3, diff_4],
+                                                                "expected": [(0,1,0,0),(0,0,1,0),(0,0,0,1)]},
+            {"occ": (2, 1, 1, 0), "exp": 4 * alpha + 4 * beta, "transitioning energy": [diff_2, diff_3],
+                                                                "expected": [(0,1,0,0),(0,0,1,0)]},
+            {"occ": (1, 2, 1, 0), "exp": 4 * alpha + 2 * beta, "transitioning energy": [diff_2, diff_3],
+                                                                "expected": [(0,1,0,0),(0,0,1,0)]}
+                        ]
 
-        ket_multipliers = t.get_multipliers_as_sum(t.ket)
-        assert len(ket_multipliers) == 2
-        assert ket_multipliers[0]["total_factor"] == 1 / sp.sqrt(2)
-        assert ket_multipliers[1]["total_factor"] == -1 / sp.sqrt(2)
-        for i in range(len(ket_multipliers)):
-            assert ket_multipliers[i]["p_symbols"] == sp.Symbol(f's{ket_multipliers[i]["p_number"]}')
-        assert ket_multipliers[0]["p_symbols"] == self.s1
-        assert ket_multipliers[1]["p_symbols"] == self.s3
 
-        #
-        t = self.get_second_test_case()
+    def test_calculate_energy_for_state_and_occupation(self):
+        for occupation in self.get_occupation_expectations():
+            assert self.m.calculate_energy_for_state_and_occupation(state=self.m.bonding_p,
+                                                                occupation=occupation["occ"]) == occupation["exp"]
 
-        bra_multipliers = t.get_multipliers_as_sum(t.bra)
-        assert len(bra_multipliers) == 4
-        for i in range(len(bra_multipliers)):
-            assert bra_multipliers[i]["total_factor"] == 3 * 1 / sp.sqrt(4)
-            assert bra_multipliers[i]["p_symbols"] == sp.Symbol(f'p{bra_multipliers[i]["p_number"]}')
-        assert bra_multipliers[0]["p_symbols"] == self.p1
-        assert bra_multipliers[1]["p_symbols"] == self.p2
-        assert bra_multipliers[2]["p_symbols"] == self.p3
-        assert bra_multipliers[3]["p_symbols"] == self.p4
+    def test_calculate_energy_before_transition(self):
+        for occupation in self.get_occupation_expectations():
+            self.m.set_occupation(p_occupation=occupation["occ"])
+            assert self.m.calculate_energy_before_transition() == occupation["exp"]
 
-        ket_multipliers = t.get_multipliers_as_sum(t.ket)
-        assert len(ket_multipliers) == 4
-        for i in range(len(ket_multipliers)):
-            assert ket_multipliers[i]["total_factor"] == 7 * 1 / sp.sqrt(4)
-            assert ket_multipliers[i]["p_symbols"] == sp.Symbol(f's{ket_multipliers[i]["p_number"]}')
-        assert ket_multipliers[0]["p_symbols"] == self.s1
-        assert ket_multipliers[1]["p_symbols"] == self.s2
-        assert ket_multipliers[2]["p_symbols"] == self.s3
-        assert ket_multipliers[3]["p_symbols"] == self.s4
+    def test_get_changed_orbital_index(self):
+        t = Transition(n=4, s_after_transition=(1,0,0,0), p_before_transition=(0,0,0,0))
+        assert t.get_changed_orbital_index() == 0
+        t = Transition(n=4, s_after_transition=(0, 1, 0, 0), p_before_transition=(0, 0, 0, 0))
+        assert t.get_changed_orbital_index() == 1
+        t = Transition(n=4, s_after_transition=(0, 0, 1, 0), p_before_transition=(0, 0, 0, 0))
+        assert t.get_changed_orbital_index() == 2
+        t = Transition(n=4, s_after_transition=(0, 0, 0, 1), p_before_transition=(0, 0, 0, 0))
+        assert t.get_changed_orbital_index() == 3
+        try:
+            t = Transition(n=4, s_after_transition=(0, 1, 0, 1), p_before_transition=(0, 0, 0, 0))
+            t.get_changed_orbital_index()
+        except Exception:
+            pass
+        else:
+            raise AssertionError("Expected an exception but none was raised")
 
-    def test_multiply_out(self):
-        t = self.get_first_test_case()
-        result = t.multiply_out()
-        assert result == self.delta
 
-        t = self.get_second_test_case()
-        result = t.multiply_out()
-        assert result == 3*7*self.delta
+
+
+    def test_get_thinkable_transitions(self):
+        for occupation in self.get_occupation_expectations():
+            print("OCC", occupation, flush=True)
+            self.m.set_occupation(p_occupation=occupation["occ"])
+
+            s_occupations = self.m.get_thinkable_transitions()
+            assert len(s_occupations) == len(occupation["transitioning energy"])
+            for s in range(len(s_occupations)):
+                assert isinstance(s_occupations[s], Transition)
+                assert s_occupations[s].n == 4
+                assert s_occupations[s].p_before_transition == occupation["occ"]
+                # print(occupation, s_occupations[s].s_occupation_after_transition,occupation["expected"])
+                assert s_occupations[s].s_occupation_after_transition == occupation["expected"][s]
+                print(occupation,"\n\t", s_occupations[s].get_transitioning_energy(),"==",occupation["transitioning energy"][s],"\n\t=",
+                      s_occupations[s].orbital_to_excite_to.eigenvalue, "-", s_occupations[s].orbital_to_excite_of.eigenvalue,
+                      )
+                assert s_occupations[s].get_transitioning_energy() == occupation["transitioning energy"][s]

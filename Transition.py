@@ -10,19 +10,21 @@ class Transition:
         self.s_occupation_after_transition = s_after_transition
         self.p_before_transition = p_before_transition
 
-        self.transition_energy = None
         self.orbital_to_excite_of = None
         self.orbital_to_excite_to = None
         self.transition_integral = None
 
-    def set_up(self, transition_energy, orbital_to_excite_of, orbital_to_excite_to):
-        self.transition_energy = transition_energy
+    def set_up(self, energy_of_state_before_excitation, energy_of_state_after_excitation, orbital_to_excite_of, orbital_to_excite_to):
+        self.energy_of_state_before_excitation = energy_of_state_before_excitation
+        self.energy_of_state_after_excitation = energy_of_state_after_excitation
         self.orbital_to_excite_to = orbital_to_excite_to
         self.orbital_to_excite_of = orbital_to_excite_of
         self.transition_integral = TransitionIntegral(bra=self.orbital_to_excite_of, ket=self.orbital_to_excite_to)
 
     def get_changed_orbital_index(self):
-        return [i for i in range(len(self.s_occupation_after_transition)) if i != 0][0]
+        if sum(self.s_occupation_after_transition) != 1:
+            raise Exception("get_changed_orbital_index is only able to handle one excited electron")
+        return [i for i, occ in enumerate(self.s_occupation_after_transition) if occ != 0][0]
 
     def get_s_before_transition(self):
         return tuple([0 for i in range(self.n)])
@@ -30,6 +32,11 @@ class Transition:
     def get_p_after_transition(self):
         return tuple([self.p_before_transition[i] - self.s_occupation_after_transition[i] for i in range(self.n)])
 
+    def get_transitioning_energy(self):
+        e1 = self.orbital_to_excite_to.eigenvalue - self.orbital_to_excite_of.eigenvalue
+        e2 = self.energy_of_state_after_excitation - self.energy_of_state_before_excitation
+        assert e1 == e2
+        return e2
 
     def print(self):
         changed_orbital_index = self.get_changed_orbital_index()
@@ -49,7 +56,8 @@ class Transition:
                 print(f"\t- sigma_{changed_orbital_index + 1}:\t linear combination =", lc,
                       f"\t, energy = {self.orbital_to_excite_to.eigenvalue}"
                       )
-        print("\t- Transition Energy:\t", self.transition_energy)
+        print("\t- Delta Energy:\t", self.get_transitioning_energy())
+        # print("\t- Energy of State after Excitation:\t", self.energy_of_state_after_excitation)
         if self.transition_integral is not None:
             print("\t- dipole transition moment:\t", self.transition_integral.multiply_out())
         print()

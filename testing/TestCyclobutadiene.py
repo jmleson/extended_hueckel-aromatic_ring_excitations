@@ -250,5 +250,32 @@ class TestCyclobutadiene(unittest.TestCase):
                 assert is_multiple(s.equation, self.phi_s_3.equation) or is_multiple(s.equation, self.phi_s_4.equation)
 
 
+    def test_h_eff_of_SALCs(self):
+        self.p.set_to_s_orbitals()
+        self.phi_s_1.norm()
+        self.phi_s_2.norm()
+        self.phi_s_3.norm()
+        self.phi_s_4.norm()
+        alpha_s, beta_s = sp.symbols(f"alpha_s beta_s")
+
+        h = self.p.h_eff(salc_1=self.phi_s_1, salc_2=self.phi_s_1)
+        assert h == alpha_s + 2 * beta_s
+
+        h = self.p.h_eff(salc_1=self.phi_s_2, salc_2=self.phi_s_2)
+        assert h == alpha_s - 2 * beta_s
+
+        h = self.p.h_eff(salc_1=self.phi_s_3, salc_2=self.phi_s_3)
+        assert h == alpha_s
+
+        h = self.p.h_eff(salc_1=self.phi_s_3, salc_2=self.phi_s_4)
+        assert h == 0
+
+        h = self.p.h_eff(salc_1=self.phi_s_4, salc_2=self.phi_s_3)
+        assert h == 0
+
+        h = self.p.h_eff(salc_1=self.phi_s_4, salc_2=self.phi_s_4)
+        assert h == alpha_s
+
+
 if __name__ == "__main__":
     unittest.main()

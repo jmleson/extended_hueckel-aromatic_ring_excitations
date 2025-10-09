@@ -16,19 +16,19 @@ p_mo_orbitals = p.get_energy_levels()
 #     print("\t", x.symmetry, ":\t", x.eigenvalue)
 
 
-# print("\nS ORBITALS")
+print("\nS ORBITALS")
 p.set_to_s_orbitals()
 s_mo_orbitals = p.get_energy_levels()
 
-# for s in s_mo_orbitals:
-#     print("\t", s.symmetry, ":\t", s.eigenvalue)
+for s in s_mo_orbitals:
+    print("\t", s.symmetry, ":\t", s.eigenvalue)
 
 
 
 
 
-# for px in p_mo_orbitals:
-#     px.print()
+for px in p_mo_orbitals:
+    px.print()
 
 
 m = MoleculeState(bonding_p=p_mo_orbitals, antibonding_s=s_mo_orbitals)

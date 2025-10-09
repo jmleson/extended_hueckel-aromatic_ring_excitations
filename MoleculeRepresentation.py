@@ -140,7 +140,7 @@ class MoleculeRepresentation():
 
 
     def orbitals_adjoint(self, p1, p2):
-        alpha, beta = sp.symbols("alpha beta")
+        alpha, beta = sp.symbols("alpha_s beta_s") if self.s_orbital_active else sp.symbols("alpha beta")
         if p1 == p2:
             return alpha
         if p1 + 1 == p2 or p1 -1 == p2 :
@@ -196,8 +196,8 @@ class MoleculeRepresentation():
         SALCs_by_irred = norm_and_group_SALCs(SALCs)
 
         result = []
-        alpha, beta = sp.symbols(f"alpha beta")
-        sorting_dict_values = {alpha: 0, beta: -1}
+        alpha, beta, alpha_s, beta_s = sp.symbols(f"alpha beta alpha_s beta_s")
+        sorting_dict_values = {alpha: 0, beta: -1, alpha_s: 0, beta_s: -1}
         for irred, salcs in SALCs_by_irred.items():
             H = self.get_effective_hamilton_matrix(SALCs=salcs, irred=irred)
             result_irred = calculate_hueckel_secular_equation(H, info=irred, sorting_dict_values=sorting_dict_values)
