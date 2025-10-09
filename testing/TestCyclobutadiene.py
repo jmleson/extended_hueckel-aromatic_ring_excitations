@@ -17,11 +17,29 @@ class TestCyclobutadiene(unittest.TestCase):
         self.p.circular = True
 
         ######
-        p1, p2, p3, p4, alpha, beta = sp.symbols(f"p1 p2 p3 p4 alpha beta")
-        self.phi_1 = SALC(n=4, irred="A2u", p_orbital_prefactors={p1: 1 / sp.sqrt(4), p2: 1 / sp.sqrt(4), p3: 1 / sp.sqrt(4), p4: 1 / sp.sqrt(4)})
-        self.phi_2 = SALC(n=4, irred="B2u", p_orbital_prefactors={p1: 1 / sp.sqrt(4), p2: -1 / sp.sqrt(4), p3: 1 / sp.sqrt(4), p4: -1 / sp.sqrt(4)})
-        self.phi_3 = SALC(n=4, irred="Eg", p_orbital_prefactors={p1: 1 / sp.sqrt(2), p3: -1 / sp.sqrt(2)})
-        self.phi_4 = SALC(n=4, irred="Eg", p_orbital_prefactors={p2: 1 / sp.sqrt(2), p4: -1 / sp.sqrt(2)})
+        p1, p2, p3, p4, s1, s2, s3, s4, alpha, beta = sp.symbols(f"p1 p2 p3 p4 s1 s2 s3 s4 alpha beta")
+        self.phi_1 = SALC(n=4, irred="A2u",
+                          p_orbital_prefactors={p1: 1 / sp.sqrt(4), p2: 1 / sp.sqrt(4), p3: 1 / sp.sqrt(4), p4: 1 / sp.sqrt(4)},
+                          orbital_symbol="p")
+        self.phi_s_1 = SALC(n=4, irred="A1g",
+                          p_orbital_prefactors={s1: 1 / sp.sqrt(4), s2: 1 / sp.sqrt(4), s3: 1 / sp.sqrt(4),
+                                                s4: 1 / sp.sqrt(4)},
+                          orbital_symbol="s")
+        self.phi_2 = SALC(n=4, irred="B2u",
+                          p_orbital_prefactors={p1: 1 / sp.sqrt(4), p2: -1 / sp.sqrt(4), p3: 1 / sp.sqrt(4), p4: -1 / sp.sqrt(4)},
+                          orbital_symbol="p")
+        self.phi_s_2 = SALC(n=4, irred="B1g",
+                          p_orbital_prefactors={s1: 1 / sp.sqrt(4), s2: -1 / sp.sqrt(4), s3: 1 / sp.sqrt(4),
+                                                s4: -1 / sp.sqrt(4)},
+                          orbital_symbol="s")
+        self.phi_3 = SALC(n=4, irred="Eg", p_orbital_prefactors={p1: 1 / sp.sqrt(2), p3: -1 / sp.sqrt(2)},
+                          orbital_symbol="p")
+        self.phi_s_3 = SALC(n=4, irred="Eg", p_orbital_prefactors={s1: 1 / sp.sqrt(2), s3: -1 / sp.sqrt(2)},
+                          orbital_symbol="s")
+        self.phi_4 = SALC(n=4, irred="Eg", p_orbital_prefactors={p2: 1 / sp.sqrt(2), p4: -1 / sp.sqrt(2)},
+                          orbital_symbol="p")
+        self.phi_s_4 = SALC(n=4, irred="Eg", p_orbital_prefactors={s2: 1 / sp.sqrt(2), s4: -1 / sp.sqrt(2)},
+                          orbital_symbol="s")
 
     def test_reducible_representations(self):
         reducible_representation = self.p.get_reducible_representation_for_ring_p_orbitals()
@@ -94,7 +112,7 @@ class TestCyclobutadiene(unittest.TestCase):
 
     def test_SALC_norm(self):
         p1, p2, p3, p4 = sp.symbols(f"p1 p2 p3 p4")
-        s = SALC(n=4, irred = "A2", p_orbital_prefactors = {p1: Fraction(1, 4), p2: Fraction(1, 4), p3: Fraction(1, 4), p4: Fraction(1, 4)} )
+        s = SALC(n=4, irred = "A2", p_orbital_prefactors = {p1: Fraction(1, 4), p2: Fraction(1, 4), p3: Fraction(1, 4), p4: Fraction(1, 4)}, orbital_symbol="p" )
         assert s.normalized == False
         s.norm()
         assert s.normalized == True
@@ -157,6 +175,79 @@ class TestCyclobutadiene(unittest.TestCase):
             assert sp.simplify(round_and_collect(result[index].eigenvalue, [alpha,beta], round_to)
                                - ( equation)
                                ) == 0
+
+############################ S ORBITALS ###################################
+    def test_S_reducible_representations(self):
+        self.p.set_to_s_orbitals()
+        reducible_representation = self.p.get_reducible_representation_for_ring_p_orbitals()
+        # expected: absolute of p version: {'E': 4, 'C4(z)': 0, 'C2': 0, "C'2": 2, "2C''2": 0, 'i': 0, 'S4': 0, 'σh': 4, 'σv': 2, 'σd': 0}
+        assert len(reducible_representation.keys()) == 10
+        assert reducible_representation["E"] == 4
+        assert reducible_representation['C4(z)'] == 0
+        assert reducible_representation['C2'] == 0
+        assert reducible_representation["C'2"] == 2
+        assert reducible_representation["2C''2"] == 0
+        assert reducible_representation['i'] == 0
+        assert reducible_representation['S4'] == 0
+        assert reducible_representation['σh'] == 4
+        assert reducible_representation['σv'] == 2
+        assert reducible_representation['σd'] == 0
+
+    def test_irreducible_representations(self):
+        self.p.set_to_s_orbitals()
+        reducible_representation = {'E': 4, 'C4(z)': 0, 'C2': 0, "C'2": 2, "2C''2": 0, 'i': 0, 'S4': 0, 'σh': 4, 'σv': 2, 'σd': 0}
+        irreducible_representation = self.p.decomposing_into_irreducible_representations(reducible_representation)
+        # expected: {'A1g': 1, 'A2g': 0, 'B1g': 1, 'B2g': 0, 'Eg': 0, 'A1u': 0, 'A2u': 0, 'B1u': 0, 'B2u': 0, 'Eu': 1}
+        assert len(irreducible_representation.keys()) == 10
+        assert irreducible_representation["Eu"] == 1
+        assert irreducible_representation["A1g"] == 1
+        assert irreducible_representation["B1g"] == 1
+        #all others 0:
+        total_other = sum(
+            v for k, v in irreducible_representation.items()
+            if k not in {"Eu", "A1g", "B1g"}
+        )
+        assert total_other == 0
+
+    def test_SALC_generation(self):
+        self.p.set_to_s_orbitals()
+        irreducible_representation = {'A1g': 1, 'A2g': 0, 'B1g': 1, 'B2g': 0, 'Eg': 0, 'A1u': 0, 'A2u': 0, 'B1u': 0, 'B2u': 0, 'Eu': 1}
+        # function of expected number of SALCs per irred:
+        expectation = self.p.get_expected_number_of_SALC_per_irreducible_representation(irreducible_representation)
+        assert expectation["Eu"] == 2
+        assert expectation["A1g"] == 1
+        assert expectation["B1g"] == 1
+        # all others 0:
+        assert sum(v for k, v in expectation.items() if k not in {"Eu", "A1g", "B1g"}) == 0
+
+        # project function:
+        SALCs = self.p.project(irreducible_representation, p_orbital_index=1)
+        for s in SALCs:
+            p_symbols = sp.symbols(f"s1:{s.n + 1}")
+            eq = sum(coeff * p_symbols[idx]
+                     for idx, coeff in enumerate(s.prefactors_of_AOs, 0))
+            assert sp.simplify(eq - s.equation) == 0
+
+            if s.irred == "Eu":
+                assert s.prefactors_of_AOs == [1 / 4, 0, -1 / 4, 0]
+            elif s.irred == "B1g":
+                assert s.prefactors_of_AOs == [1 / 4, -1 / 4, 1 / 4, -1 / 4]
+            elif s.irred == "A1g":
+                assert s.prefactors_of_AOs == [1 / 4, 1 / 4, 1 / 4, 1 / 4]
+            else:
+                raise Exception("not supposed to be here")
+
+        # get_all_SALCs function:
+        salcs = self.p.get_all_SALCs()
+        assert len(salcs) == 4
+        p1, p2, p3, p4, s1, s2, s3, s4 = sp.symbols(f"p1 p2 p3 p4 s1 s2 s3 s4")
+        for s in SALCs:
+            if s.irred == "A1g":
+                assert is_multiple(s.equation, self.phi_s_1.equation)
+            if s.irred == "B1g":
+                assert is_multiple(s.equation, self.phi_s_2.equation)
+            if s.irred == "Eu":
+                assert is_multiple(s.equation, self.phi_s_3.equation) or is_multiple(s.equation, self.phi_s_4.equation)
 
 
 if __name__ == "__main__":

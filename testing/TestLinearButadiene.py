@@ -21,10 +21,10 @@ class TestLinearButadiene(unittest.TestCase):
         self.p.circular = False
         ###############################################
         p1, p2, p3, p4, alpha, beta = sp.symbols(f"p1 p2 p3 p4 alpha beta")
-        self.phi_1 = SALC(n=4, irred="B2", p_orbital_prefactors={p1: 1 / sp.sqrt(2), p4: 1 / sp.sqrt(2)})
-        self.phi_2 = SALC(n=4, irred="B2", p_orbital_prefactors={p2: 1 / sp.sqrt(2), p3: 1 / sp.sqrt(2)})
-        self.phi_3 = SALC(n=4, irred="A2", p_orbital_prefactors={p1: 1 / sp.sqrt(2), p4: -1 / sp.sqrt(2)})
-        self.phi_4 = SALC(n=4, irred="A2", p_orbital_prefactors={p2: 1 / sp.sqrt(2), p3: -1 / sp.sqrt(2)})
+        self.phi_1 = SALC(n=4, irred="B2", p_orbital_prefactors={p1: 1 / sp.sqrt(2), p4: 1 / sp.sqrt(2)}, orbital_symbol="p")
+        self.phi_2 = SALC(n=4, irred="B2", p_orbital_prefactors={p2: 1 / sp.sqrt(2), p3: 1 / sp.sqrt(2)}, orbital_symbol="p")
+        self.phi_3 = SALC(n=4, irred="A2", p_orbital_prefactors={p1: 1 / sp.sqrt(2), p4: -1 / sp.sqrt(2)}, orbital_symbol="p")
+        self.phi_4 = SALC(n=4, irred="A2", p_orbital_prefactors={p2: 1 / sp.sqrt(2), p3: -1 / sp.sqrt(2)}, orbital_symbol="p")
 
 
     def test_reducible_representations(self):
@@ -86,7 +86,7 @@ class TestLinearButadiene(unittest.TestCase):
 
     def test_SALC_norm(self):
         p1, p4 = sp.symbols(f"p1 p4")
-        s = SALC(n=4, irred = "A2", p_orbital_prefactors = {p1: Fraction(1, 2), p4: Fraction(-1, 2)} )
+        s = SALC(n=4, irred = "A2", p_orbital_prefactors = {p1: Fraction(1, 2), p4: Fraction(-1, 2)}, orbital_symbol="p" )
         assert s.normalized == False
         s.norm()
         assert s.normalized == True

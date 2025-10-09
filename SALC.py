@@ -1,15 +1,16 @@
 import sympy as sp
 
 class SALC:
-    def __init__(self, n:int, irred:str, p_orbital_prefactors:dict, equation:sp.Expr=None):
+    def __init__(self, n:int, irred:str, p_orbital_prefactors:dict, orbital_symbol:str, equation:sp.Expr=None):
         self.n = n
         self.irred = irred
         self.equation = equation
         self.normalized = False
+        self.orbital_symbol = orbital_symbol
 
         self.prefactors_of_AOs = []
         for i in range(1, self.n+1):
-            p_i = sp.symbols(f"p{i}")
+            p_i = sp.symbols(f"{self.orbital_symbol}{i}")
             if p_i in p_orbital_prefactors.keys():
                 self.prefactors_of_AOs.append( p_orbital_prefactors[p_i] )
             else:
@@ -20,7 +21,7 @@ class SALC:
     def set_equation(self):
         if self.equation is not None:
             return
-        p_symbols = sp.symbols(f"p1:{self.n + 1}")
+        p_symbols = sp.symbols(f"{self.orbital_symbol}1:{self.n + 1}")
         eq = 0
         for p in range(len(self.prefactors_of_AOs)):
             eq += p_symbols[p] * self.prefactors_of_AOs[p]
@@ -45,7 +46,7 @@ class SALC:
             self.prefactors_of_AOs = [x/sp.sqrt(current_norm_value) for x in self.prefactors_of_AOs]
 
             #update equation:
-            p_symbols = sp.symbols(f"p1:{self.n + 1}")
+            p_symbols = sp.symbols(f"{self.orbital_symbol}1:{self.n + 1}")
             self.equation = sum(coeff * p_symbols[idx]
                      for idx, coeff in enumerate(self.prefactors_of_AOs, 0))
 

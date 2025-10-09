@@ -2,11 +2,8 @@ import itertools
 from fractions import Fraction
 import sympy as sp
 
-
-from IrreducibleRepresentation import IrreducibleRepresentation
 from PointGroups.D4h import D4h
 from SALC import SALC, norm_and_group_SALCs
-from SymmetryOperation import SymmetryOperation
 from is_multiple import is_multiple
 from tst.solve_saekular_equation import calculate_hueckel_secular_equation
 
@@ -15,6 +12,7 @@ class MoleculeRepresentation():
     def __init__(self, n:int):
         self.n = n
         self.circular = True
+        self.s_orbital_active = False
         self.set_up_point_group()
 
 
@@ -29,46 +27,9 @@ class MoleculeRepresentation():
     def set_to_s_orbitals(self):
         # can't be undone!!!
         self.s_orbital_active = True
-        for s in range(len(self.operations)):
-            old_transform = self.operations[s].transform_p
-            self.operations[s].transform_p = lambda x, f=old_transform: abs(f(x))
-
-    def set_up_irreducible_representations(self):
-        symmetry_names = list(dict.fromkeys(op.name for op in self.operations))
-        if self.n == 4:
-            i = IrreducibleRepresentation(characters={j: 1 for j in symmetry_names}, name="A1g")
-            self.irreducible_representations.append(i)
-            A2g_chars = [1	,1,	1,	-1	,-1	,1,	1,	1,	-1,	-1	]
-            i = IrreducibleRepresentation(characters=dict(zip(symmetry_names, A2g_chars)), name="A2g")
-            self.irreducible_representations.append(i)
-            B1g_chars = [1,	-1,	1,	1,	-1	,1	,-1	,1,	1,	-1]
-            i = IrreducibleRepresentation(characters=dict(zip(symmetry_names, B1g_chars)), name="B1g")
-            self.irreducible_representations.append(i)
-            B2g_chars = [1	,-1	,1	,-1	,1,	1,	-1,	1,	-1,	1	]
-            i = IrreducibleRepresentation(characters=dict(zip(symmetry_names, B2g_chars)), name="B2g")
-            self.irreducible_representations.append(i)
-            Eg_chars = [2,	0,	-2,	0,	0,	2,	0,	-2,	0,	0]
-            i = IrreducibleRepresentation(characters=dict(zip(symmetry_names, Eg_chars)), name="Eg", dimension=2)
-            self.irreducible_representations.append(i)
-            A1u_chars = [1,	1,	1,	1,	1,	-1,	-1,	-1,	-1,	-1	]
-            i = IrreducibleRepresentation(characters=dict(zip(symmetry_names, A1u_chars)), name="A1u")
-            self.irreducible_representations.append(i)
-            A2u_chars = [1,	1	,1,	-1,	-1,	-1	,-1,	-1	,1,	1]
-            i = IrreducibleRepresentation(characters=dict(zip(symmetry_names, A2u_chars)), name="A2u")
-            self.irreducible_representations.append(i)
-            B1u_chars = [1,	-1,	1,	1,	-1	,-1,	1	,-1	,-1	,1	]
-            i = IrreducibleRepresentation(characters=dict(zip(symmetry_names, B1u_chars)), name="B1u")
-            self.irreducible_representations.append(i)
-            B2u_chars = [1,	-1	,1	,-1,	1,	-1,	1	,-1	,1,	-1	]
-            i = IrreducibleRepresentation(characters=dict(zip(symmetry_names, B2u_chars)), name="B2u")
-            self.irreducible_representations.append(i)
-            Eu_chars = [2,	0, -2	,0	,0,	-2	,0,	2,	0,	0]
-            i = IrreducibleRepresentation(characters=dict(zip(symmetry_names, Eu_chars)), name="Eu", dimension=2)
-            self.irreducible_representations.append(i)
-        elif self.n == 6:
-            print("TODO")
-        else:
-            raise Exception("Not implemented")
+        for s in range(len(self.pointgroup.operations)):
+            old_transform = self.pointgroup.operations[s].transform_p
+            self.pointgroup.operations[s].transform_p = lambda x, f=old_transform: abs(f(x))
 
 
     def get_reducible_representation_for_ring_p_orbitals(self):
@@ -119,7 +80,10 @@ class MoleculeRepresentation():
 
     def project(self, irreducible_representation:dict, p_orbital_index:int):
         # Symbolische Basisfunktionen
-        p_symbols = sp.symbols(f"p1:{self.n + 1}")
+        if self.s_orbital_active:
+            p_symbols = sp.symbols(f"s1:{self.n + 1}")
+        else:
+            p_symbols = sp.symbols(f"p1:{self.n + 1}")
         SALCs = []
         for irred_name, value in irreducible_representation.items():
             eq_expr = 0
@@ -141,7 +105,8 @@ class MoleculeRepresentation():
                         # print("adding", op.name, "=",coeff , f"{transformed_p}")
                 eq_expr /= self.pointgroup.group_order()
                 collected_p_orbitals_in_expression = {k: Fraction(v, self.pointgroup.group_order()) for k, v in collected_p_orbitals_in_expression.items()}
-                s = SALC(n=self.n, irred=irred_name, p_orbital_prefactors=collected_p_orbitals_in_expression, equation=eq_expr)
+                s = SALC(n=self.n, irred=irred_name, p_orbital_prefactors=collected_p_orbitals_in_expression,
+                         equation=eq_expr, orbital_symbol="s" if self.s_orbital_active else "p")
                 # s.print()
                 SALCs.append(s)
         return SALCs
@@ -197,7 +162,10 @@ class MoleculeRepresentation():
                     if salc_2.prefactors_of_AOs[combi - 1] != 0:
                         factor = salc_1.prefactors_of_AOs[p_orbital - 1] * salc_2.prefactors_of_AOs[combi - 1]
                         part += factor * self.orbitals_adjoint(p_orbital, combi)
-                        print("p", p_orbital, "|", "p", combi, "=")
+                        if self.s_orbital_active:
+                            print("s", p_orbital, "|", "s", combi, "=")
+                        else:
+                            print("p", p_orbital, "|", "p", combi, "=")
                         print("+", self.orbitals_adjoint(p_orbital, combi) ,"*", factor)
                 h_eff_integral += part
         return h_eff_integral
@@ -235,6 +203,11 @@ class MoleculeRepresentation():
             result_irred = calculate_hueckel_secular_equation(H, info=irred, sorting_dict_values=sorting_dict_values)
             for i in result_irred:
                 i.symmetry = irred
+                # print(i.symmetry)
+                # sp.pprint(i.eigenvector)
+                for row in range(len(i.eigenvector)):
+                    if i.eigenvector[row] != 0:
+                        i.salcs.append({"factor": i.eigenvector[row], "salc": salcs[row]})
                 result.append(i)
         # sorting:
         molecule_orbitals = sorted(
