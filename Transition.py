@@ -41,7 +41,7 @@ class Transition:
     def print(self):
         changed_orbital_index = self.get_changed_orbital_index()
         print(f"\033[1mtransition\033[0m from phi_{changed_orbital_index+1} into phi_s_{changed_orbital_index+1}:")
-        print("\t- ", self.p_before_transition, ",", self.get_s_before_transition(), "-->", self.get_p_after_transition(), ",", self.s_occupation_after_transition )
+        print("\t-", self.p_before_transition, ",", self.get_s_before_transition(), "-->", self.get_p_after_transition(), ",", self.s_occupation_after_transition )
         if self.orbital_to_excite_of is not None:
                 lc = 0
                 for i in range(len(self.orbital_to_excite_of.salcs)):
@@ -57,7 +57,8 @@ class Transition:
                       f"\t, energy = {self.orbital_to_excite_to.eigenvalue}"
                       )
         print("\t- Delta Energy:\t", self.get_transitioning_energy())
-        # print("\t- Energy of State after Excitation:\t", self.energy_of_state_after_excitation)
+        print("\t- Energy of State before Excitation:\t", self.energy_of_state_before_excitation)
+        print("\t- Energy of State after Excitation:\t", self.energy_of_state_after_excitation)
         if self.transition_integral is not None:
             print("\t- dipole transition moment:\t", self.transition_integral.multiply_out())
         print()

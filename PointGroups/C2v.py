@@ -8,6 +8,7 @@ class C2v(PointGroup):
         super().__init__(order=16, n=4)
         self.set_up_symmetry_operations()
         self.set_up_irreducible_representations()
+        self.total_symmetric_representation = "A1"
 
     def set_up_symmetry_operations(self):
         if self.n == 4:
@@ -20,6 +21,8 @@ class C2v(PointGroup):
             self.operations.append(o)
             o = SymmetryOperation(n=self.n, name="σv(yz)", transform_p=lambda i: [4, 3, 2, 1][i - 1], amount=1)
             self.operations.append(o)
+
+            self.dipole_operator_symmetry = "B2"# 1  -1   -1  1
 
     def set_up_irreducible_representations(self):
         if self.n == 4:

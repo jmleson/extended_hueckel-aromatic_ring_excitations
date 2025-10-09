@@ -1,24 +1,43 @@
-
+from MoleculeRepresentation import MoleculeRepresentation
 from Transition import Transition
 from molecule_orbital import molecule_orbital
 import sympy as sp
 
 
 class MoleculeState:
-    def __init__(self, bonding_p: list[molecule_orbital], antibonding_s: list[molecule_orbital]):
-        self.bonding_p = bonding_p
-        self.n = len(self.bonding_p)
-
-        alpha, alpha_s, beta, beta_s = sp.symbols("alpha alpha_s beta beta_s")
-        self.antibonding_s = []
-        for s in range(len(antibonding_s)):
-            antibonding_s[s].eigenvalue = antibonding_s[s].eigenvalue.subs(alpha, alpha_s)
-            antibonding_s[s].eigenvector = antibonding_s[s].eigenvector.subs(beta, beta_s)
-            self.antibonding_s.append(antibonding_s[s])
+    def __init__(self, n:int):
+        self.n = n
+        self.p = MoleculeRepresentation(n=n)
+        self.s = MoleculeRepresentation(n=n)
+        self.set_up()
 
         self.p_occupation = None
 
+    def set_up(self):
+        # print("P ORBITALS")
+        p_mo_orbitals = self.p.get_energy_levels()
+        # for x in p_mo_orbitals:
+        #     print("\t", x.symmetry, ":\t", x.eigenvalue)
+        self.bonding_p = p_mo_orbitals
+
+        # print("\nS ORBITALS")
+        self.s.set_to_s_orbitals()
+        s_mo_orbitals = self.s.get_energy_levels()
+        # for s in s_mo_orbitals:
+        #     print("\t", s.symmetry, ":\t", s.eigenvalue)
+        self.antibonding_s = []
+        alpha, alpha_s, beta, beta_s = sp.symbols("alpha alpha_s beta beta_s")
+        for s in range(len(s_mo_orbitals)):
+            s_mo_orbitals[s].eigenvalue = s_mo_orbitals[s].eigenvalue.subs(alpha, alpha_s)
+            s_mo_orbitals[s].eigenvector = s_mo_orbitals[s].eigenvector.subs(beta, beta_s)
+            self.antibonding_s.append(s_mo_orbitals[s])
+
     def set_occupation(self, p_occupation):
+        if len(p_occupation) != self.n:
+            raise Exception("wrong number of orbitals")
+        for n in p_occupation:
+            if n not in [0,1,2]:
+                raise Exception("wrong occupation")
         self.p_occupation = p_occupation
 
     def calculate_energy_before_transition(self):
@@ -34,10 +53,8 @@ class MoleculeState:
             e += state[i].eigenvalue * occupation[i]
         return e
 
-
     def get_p_after_transition(self, s_after_transition:tuple[int]):
         return tuple([self.p_occupation[i] - s_after_transition[i] for i in range(len(self.p_occupation))])
-
 
     def get_thinkable_transitions(self) -> list[Transition]:
         if self.p_occupation is None:
@@ -70,12 +87,18 @@ class MoleculeState:
                 s_occupations.append(transition)
         return s_occupations
 
-
-    def symmetry_allowed_transition(self):
-        pass#TODO
+    def symmetry_allowed_transition(self, transition:Transition):
+        sym_p = transition.orbital_to_excite_of.symmetry
+        sym_s = transition.orbital_to_excite_to.symmetry
+        dipole_operator = self.p.pointgroup.dipole_operator_symmetry
+        # calculate symmetry of total integral: sym_p  x  dipole_operator  x  sym_s
+        part_I = self.p.pointgroup.multiply(dipole_operator, sym_s)# new pseudo p orbital
+        part_II = [self.p.pointgroup.multiply(sym_p, i) for i in part_I]
+        return self.p.pointgroup.total_symmetric_representation in [x for row in part_II for x in row]
 
     def calculate_result_for_all_transitions_of_set_occupation(self):
         transitions = self.get_thinkable_transitions()
 
         for transition in transitions:
-            transition.print()
+            if self.symmetry_allowed_transition(transition):
+                transition.print()

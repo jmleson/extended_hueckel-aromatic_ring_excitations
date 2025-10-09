@@ -1,46 +1,16 @@
 import unittest
 import sympy as sp
 
-from MoleculeRepresentation import MoleculeRepresentation
 from MoleculeState import MoleculeState
 from Transition import Transition
 from molecule_orbital import molecule_orbital
 
 
-class TestMoleculeRepresentation(unittest.TestCase):
+class TestMoleculeState(unittest.TestCase):
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        p = MoleculeRepresentation(n=4)
-        p_mo_orbitals = p.get_energy_levels()
-        p.set_to_s_orbitals()
-        s_mo_orbitals = p.get_energy_levels()
-        self.m = MoleculeState(bonding_p=p_mo_orbitals, antibonding_s=s_mo_orbitals)
-
-        alpha, alpha_s, beta, beta_s = sp.symbols("alpha alpha_s beta beta_s")
-
-        # self.get_first_test_case()
-
-
-    def get_first_test_case(self):
-        # phi_2
-        mo = molecule_orbital()
-        mo.eigenvalue = self.alpha
-        mo.eigenvector = sp.Matrix([[1], [0]])
-        mo.salcs = [{"factor": 1, "salc": self.phi_3}]
-        mo.occupation = 0
-        mo.symmetry = "Eg"
-
-        mo_s = molecule_orbital()
-        mo_s.eigenvalue = self.alpha_s
-        mo_s.eigenvector = sp.Matrix([[1], [0]])
-        mo_s.salcs = [{"factor": 1, "salc": self.phi_s_3}]
-        mo_s.occupation = 0
-        mo_s.symmetry = "Eu"
-
-        self.m = MoleculeState(bonding_p=mo, antibonding_s=mo_s)
-        return
-
+        self.m = MoleculeState(n=4)
 
 
     def get_occupation_expectations(self):
@@ -77,7 +47,6 @@ class TestMoleculeRepresentation(unittest.TestCase):
                                                                 "expected": [(0,1,0,0),(0,0,1,0)]}
                         ]
 
-
     def test_calculate_energy_for_state_and_occupation(self):
         for occupation in self.get_occupation_expectations():
             assert self.m.calculate_energy_for_state_and_occupation(state=self.m.bonding_p,
@@ -105,12 +74,8 @@ class TestMoleculeRepresentation(unittest.TestCase):
         else:
             raise AssertionError("Expected an exception but none was raised")
 
-
-
-
     def test_get_thinkable_transitions(self):
         for occupation in self.get_occupation_expectations():
-            print("OCC", occupation, flush=True)
             self.m.set_occupation(p_occupation=occupation["occ"])
 
             s_occupations = self.m.get_thinkable_transitions()
@@ -119,9 +84,40 @@ class TestMoleculeRepresentation(unittest.TestCase):
                 assert isinstance(s_occupations[s], Transition)
                 assert s_occupations[s].n == 4
                 assert s_occupations[s].p_before_transition == occupation["occ"]
-                # print(occupation, s_occupations[s].s_occupation_after_transition,occupation["expected"])
                 assert s_occupations[s].s_occupation_after_transition == occupation["expected"][s]
-                print(occupation,"\n\t", s_occupations[s].get_transitioning_energy(),"==",occupation["transitioning energy"][s],"\n\t=",
-                      s_occupations[s].orbital_to_excite_to.eigenvalue, "-", s_occupations[s].orbital_to_excite_of.eigenvalue,
-                      )
                 assert s_occupations[s].get_transitioning_energy() == occupation["transitioning energy"][s]
+
+
+    def test_get_p_after_transition(self):
+        p_before = (3, 7, 4, 2, 3, 10)
+        with self.assertRaises(Exception):
+            self.m.set_occupation(p_occupation=p_before)
+
+        p_before = (4, 2, -3, 10)
+        with self.assertRaises(Exception):
+            self.m.set_occupation(p_occupation=p_before)
+
+        # Normale Funktionalität testen
+        p_before = (2, 1, 1, 0)
+        self.m.set_occupation(p_occupation=p_before)
+        result = self.m.get_p_after_transition(s_after_transition=(1, 0, 0, 0))
+        assert result == (1, 1, 1, 0)
+        result = self.m.get_p_after_transition(s_after_transition=(0, 1, 0, 0))
+        assert result == (2, 0, 1, 0)
+
+    def test_symmetry_allowed_transition(self):
+        t = Transition(n=4, s_after_transition=(1,0,0,0), p_before_transition=(0,0,0,0))
+        mo_p = molecule_orbital()
+        mo_s = molecule_orbital()
+
+
+        for combi in [("Eg", "Eu", True), ("A2u", "A1g", True), ("B2u", "B1g", True),
+                      ("Eg", "A1g", False), ("Eg", "B2u", False), ("Eg", "B1g", False),
+                      ("A1g", "A2u", True), ("A1g", "B2u", False), ("A1g", "A1g", False),
+                      ]:
+            mo_p.symmetry = combi[0]
+            mo_s.symmetry = combi[1]
+            t.set_up(energy_of_state_before_excitation=0, energy_of_state_after_excitation=1,
+                     orbital_to_excite_of=mo_p, orbital_to_excite_to=mo_s)
+            assert self.m.symmetry_allowed_transition(transition=t) is combi[2]
+

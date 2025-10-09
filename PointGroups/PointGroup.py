@@ -1,5 +1,3 @@
-from IrreducibleRepresentation import IrreducibleRepresentation
-from SymmetryOperation import SymmetryOperation
 
 
 class PointGroup:
@@ -9,6 +7,9 @@ class PointGroup:
         self.n = n
         self.operations = [] # symmetry operations
         self.irreducible_representations = []
+
+        self.total_symmetric_representation = "A1"
+        self.dipole_operator_symmetry = None
 
 
     def group_order(self):

@@ -7,6 +7,7 @@ class D4h(PointGroup):
 
     def __init__(self, n:int=4):
         super().__init__(order=16, n=n)
+        self.total_symmetric_representation = "A1g"
         self.set_up_symmetry_operations()
         self.set_up_irreducible_representations()
 
@@ -52,6 +53,8 @@ class D4h(PointGroup):
         self.operations.append(o)
         o = SymmetryOperation(n=self.n, name="σd", transform_p=lambda i: [4, 3, 2, 1][i - 1], amount=1)
         self.operations.append(o)
+
+        self.dipole_operator_symmetry = "A2u"
 
 
     def set_up_irreducible_representations(self):
