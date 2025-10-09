@@ -7,7 +7,7 @@ from TransitionIntegral import TransitionIntegral
 from molecule_orbital import molecule_orbital
 
 
-class TestTransition(unittest.TestCase):
+class TestTransitionIntegral(unittest.TestCase):
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
