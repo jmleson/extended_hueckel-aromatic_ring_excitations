@@ -1,5 +1,6 @@
 
 from MoleculeRepresentation import MoleculeRepresentation
+from TransitionIntegral import TransitionIntegral
 from molecule_orbital import molecule_orbital
 import sympy as sp
 
@@ -89,10 +90,9 @@ for px in p_mo_orbitals:
 
 m = MoleculeState(bonding_p=p_mo_orbitals, antibonding_s=s_mo_orbitals)
 m.set_occupation(p_occupation=(2, 1, 1, 0))
-print(m.calculate_energy_before_transition())
+# print(m.calculate_energy_before_transition())
 
-transitions =  m.get_thinkable_transitions()
-
+transitions = m.get_thinkable_transitions()
 
 for transition in transitions:
     print("\n\ntransition", transition)
@@ -103,22 +103,13 @@ for transition in transitions:
     relevant_s_mo_orbital = s_mo_orbitals[changed_orbital_index]  # phi_3
     relevant_s_mo_orbital.print()
 
-    integral = "< " + str(relevant_p_mo_orbital.get_salc_equation()) + " | q_z | " + str(relevant_s_mo_orbital.get_salc_equation()) + " >"
-    print(integral)
+    t = TransitionIntegral(bra=relevant_p_mo_orbital, ket=relevant_s_mo_orbital)
+    t.print()
+
+    t.multiply_out()
 
     break
 
-reducible_representation = {}
-# for op in p.pointgroup.operations:
-#             sum = 0
-#             for orbital in range(1, p.n+1):
-#                 transformed_orbital_at_place_orbital = op.transform_p(orbital)
-#                 if transformed_orbital_at_place_orbital == orbital:
-#                     sum += 1
-#                 elif -transformed_orbital_at_place_orbital == orbital:
-#                     sum -= 1
-#             print(sum, op.name)
-#             reducible_representation[op.name] = sum
 
 
 

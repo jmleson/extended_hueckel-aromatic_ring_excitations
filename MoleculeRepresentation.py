@@ -162,11 +162,11 @@ class MoleculeRepresentation():
                     if salc_2.prefactors_of_AOs[combi - 1] != 0:
                         factor = salc_1.prefactors_of_AOs[p_orbital - 1] * salc_2.prefactors_of_AOs[combi - 1]
                         part += factor * self.orbitals_adjoint(p_orbital, combi)
-                        if self.s_orbital_active:
-                            print("s", p_orbital, "|", "s", combi, "=")
-                        else:
-                            print("p", p_orbital, "|", "p", combi, "=")
-                        print("+", self.orbitals_adjoint(p_orbital, combi) ,"*", factor)
+                        # if self.s_orbital_active:
+                        #     print("s", p_orbital, "|", "s", combi, "=")
+                        # else:
+                        #     print("p", p_orbital, "|", "p", combi, "=")
+                        # print("+", self.orbitals_adjoint(p_orbital, combi) ,"*", factor)
                 h_eff_integral += part
         return h_eff_integral
 

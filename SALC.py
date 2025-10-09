@@ -10,7 +10,7 @@ class SALC:
 
         self.prefactors_of_AOs = []
         for i in range(1, self.n+1):
-            p_i = sp.symbols(f"{self.orbital_symbol}{i}")
+            p_i = self.get_symbols()[i-1]
             if p_i in p_orbital_prefactors.keys():
                 self.prefactors_of_AOs.append( p_orbital_prefactors[p_i] )
             else:
@@ -18,10 +18,13 @@ class SALC:
         # print("prefactors_of_AOs", self.prefactors_of_AOs)
         self.set_equation()
 
+    def get_symbols(self):
+        return sp.symbols(f"{self.orbital_symbol}1:{self.n + 1}")
+
     def set_equation(self):
         if self.equation is not None:
             return
-        p_symbols = sp.symbols(f"{self.orbital_symbol}1:{self.n + 1}")
+        p_symbols = self.get_symbols()
         eq = 0
         for p in range(len(self.prefactors_of_AOs)):
             eq += p_symbols[p] * self.prefactors_of_AOs[p]
@@ -63,3 +66,13 @@ def norm_and_group_SALCs(list_of_SALCs:list[SALC]):
 
         return SALCs_by_irred
 
+
+
+if __name__ == "__main__":
+    p1, p2, p3, p4, = sp.symbols(f"p1 p2 p3 p4")
+    s = SALC(n=4, irred="A2u",
+         p_orbital_prefactors={p1: 1 / sp.sqrt(4), p2: 1 / sp.sqrt(4), p3: 1 / sp.sqrt(4),
+                               p4: 1 / sp.sqrt(4)},
+         orbital_symbol="p")
+
+    print(s.prefactors_of_AOs)
