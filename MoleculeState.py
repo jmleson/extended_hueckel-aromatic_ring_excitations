@@ -28,8 +28,8 @@ class MoleculeState:
         self.antibonding_s = []
         alpha, alpha_s, beta, beta_s = sp.symbols("alpha alpha_s beta beta_s")
         for s in range(len(s_mo_orbitals)):
-            s_mo_orbitals[s].eigenvalue = s_mo_orbitals[s].eigenvalue.subs(alpha, alpha_s)
-            s_mo_orbitals[s].eigenvector = s_mo_orbitals[s].eigenvector.subs(beta, beta_s)
+            s_mo_orbitals[s].eigenvalue = s_mo_orbitals[s].eigenvalue.subs(alpha, alpha_s).subs(beta, beta_s)
+            s_mo_orbitals[s].eigenvector = s_mo_orbitals[s].eigenvector.subs(alpha, alpha_s).subs(beta, beta_s)
             self.antibonding_s.append(s_mo_orbitals[s])
 
     def set_occupation(self, p_occupation):
@@ -50,7 +50,9 @@ class MoleculeState:
             raise Exception("state and occupation must have same length")
         e = 0
         for i in range(self.n):
-            e += state[i].eigenvalue * occupation[i]
+            state[i].occupation = occupation[i]
+            # state[i].print()
+            e += state[i].getEnergy()
         return e
 
     def get_p_after_transition(self, s_after_transition:tuple[int]):
@@ -74,7 +76,7 @@ class MoleculeState:
                                                                    occupation=s_after_transition)
                 energy_single_p = self.calculate_energy_for_state_and_occupation(state=self.bonding_p,
                                                                    occupation=s_after_transition)
-                E_state_after = E_s_state + e_state_before - energy_single_p
+                E_state_after = E_s_state + (e_state_before - energy_single_p)
                 changed_orbital_index = transition.get_changed_orbital_index()
                 transition.set_up(orbital_to_excite_of = self.bonding_p[changed_orbital_index],
                                   orbital_to_excite_to = self.antibonding_s[changed_orbital_index],
@@ -82,18 +84,20 @@ class MoleculeState:
                                   energy_of_state_after_excitation = E_state_after)
 
                 assert E_s_state - energy_single_p == E_state_after - e_state_before
-                assert transition.get_transitioning_energy() == E_s_state - energy_single_p
+                assert transition.get_transitioning_energy() == E_state_after - e_state_before
 
                 s_occupations.append(transition)
         return s_occupations
 
     def symmetry_allowed_transition(self, transition:Transition):
+
         sym_p = transition.orbital_to_excite_of.symmetry
         sym_s = transition.orbital_to_excite_to.symmetry
         dipole_operator = self.p.pointgroup.dipole_operator_symmetry
         # calculate symmetry of total integral: sym_p  x  dipole_operator  x  sym_s
         part_I = self.p.pointgroup.multiply(dipole_operator, sym_s)# new pseudo p orbital
         part_II = [self.p.pointgroup.multiply(sym_p, i) for i in part_I]
+        # print(dipole_operator, "x", sym_s, "x", sym_p,  "=", part_II)
         return self.p.pointgroup.total_symmetric_representation in [x for row in part_II for x in row]
 
     def calculate_result_for_all_transitions_of_set_occupation(self):
@@ -102,3 +106,6 @@ class MoleculeState:
         for transition in transitions:
             if self.symmetry_allowed_transition(transition):
                 transition.print()
+            else:
+                print("FORBIDDEN\n")
+            #     transition.print()

@@ -158,8 +158,9 @@ class MoleculeRepresentation():
         # print(len(all_SALCs), irreducible_representation, sum(irreducible_representation.values()))
         all_SALCs = self.get_linear_independent_SALCs(all_SALCs, irreducible_representation)
 
+
         # expectation:
-        # print( len(all_SALCs) , sum(self.get_expected_number_of_SALC_per_irreducible_representation(irreducible_representation).values()))#TODO
+        # print( len(all_SALCs) , sum(self.get_expected_number_of_SALC_per_irreducible_representation(irreducible_representation).values()))
         assert len(all_SALCs) == sum(self.get_expected_number_of_SALC_per_irreducible_representation(irreducible_representation).values())
         return all_SALCs
 
@@ -204,7 +205,7 @@ class MoleculeRepresentation():
         H = sp.zeros(n)
         H_show = sp.zeros(n)
         if len(SALCs) == 1:
-                h = sp.Symbol(f"H_{irred}")
+                # h = sp.Symbol(f"H_{irred}")
                 # print("H =", h)
                 H[0, 0] = self.h_eff(salc_1=SALCs[0], salc_2=SALCs[0])
         else:
@@ -219,6 +220,8 @@ class MoleculeRepresentation():
 
     def get_energy_levels(self):
         SALCs = self.get_all_SALCs()
+        # for s in SALCs:
+        #     s.print()
         SALCs_by_irred = norm_and_group_SALCs(SALCs)
 
         result = []

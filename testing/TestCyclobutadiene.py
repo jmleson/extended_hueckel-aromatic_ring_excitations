@@ -240,8 +240,7 @@ class TestCyclobutadiene(unittest.TestCase):
         # get_all_SALCs function:
         salcs = self.p.get_all_SALCs()
         assert len(salcs) == 4
-        p1, p2, p3, p4, s1, s2, s3, s4 = sp.symbols(f"p1 p2 p3 p4 s1 s2 s3 s4")
-        for s in SALCs:
+        for s in salcs:
             if s.irred == "A1g":
                 assert is_multiple(s.equation, self.phi_s_1.equation)
             if s.irred == "B1g":

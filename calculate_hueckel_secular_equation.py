@@ -8,9 +8,9 @@ def calculate_hueckel_secular_equation(H, info: str, sorting_dict_values: dict):
     if H.rows != H.cols:
         raise Exception("Hamilton matrix has wrong dimensions")
 
-    S = sp.eye(H.rows)
-    E = sp.symbols("E")
-    secular_matrix = H - E * S
+    # S = sp.eye(H.rows)
+    # E = sp.symbols("E")
+    # secular_matrix = H - E * S
 
     # det = sp.simplify(secular_matrix.det())
     # print("\n", info, ":")
@@ -36,6 +36,8 @@ def calculate_hueckel_secular_equation(H, info: str, sorting_dict_values: dict):
     for val, vec in sorted_pairs:
         m = molecule_orbital()
         m.eigenvalue = val
+        if val == 0:
+            raise Exception("0 eigenvalue")
         m.eigenvector = vec
         molecule_orbitals.append(m)
         # print("E =", end=" ")

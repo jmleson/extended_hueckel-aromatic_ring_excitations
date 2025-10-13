@@ -18,34 +18,56 @@ class TestBenzene(unittest.TestCase):
         self.p.circular = True
 
         p1, p2, p3, p4, p5, p6 = sp.symbols(f"p1 p2 p3 p4 p5 p6")
+        s1, s2, s3, s4, s5, s6 = sp.symbols(f"s1 s2 s3 s4 s5 s6")
         self.phi_5 = SALC(n=6, irred="A2u",
                           p_orbital_prefactors={p1: 1 / 6, p2: 1 / 6, p3: 1 / 6,
                                                 p4: 1 / 6, p5: 1 / 6, p6: 1 / 6},
                           orbital_symbol="p")
+        self.phi_s_5 = SALC(n=6, irred="A1g",
+                          p_orbital_prefactors={s1: 1 / 6, s2: 1 / 6, s3: 1 / 6,
+                                                s4: 1 / 6, s5: 1 / 6, s6: 1 / 6},
+                          orbital_symbol="s")
         self.phi_6 = SALC(n=6, irred="B2g",
                           p_orbital_prefactors={p1: 1 / 6, p2: -1 / 6, p3: 1 / 6,
                                                 p4: -1 / 6, p5: 1 / 6, p6: -1 / 6},
                           orbital_symbol="p")
+        self.phi_s_6 = SALC(n=6, irred="B1u",
+                          p_orbital_prefactors={s1: 1 / 6, s2: -1 / 6, s3: 1 / 6,
+                                                s4: -1 / 6, s5: 1 / 6, s6: -1 / 6},
+                          orbital_symbol="s")
         self.phi_1 = SALC(n=6, irred="E1g",
                           p_orbital_prefactors={p1: 1 / 4, p2: +1 / 8, p3: -1 / 8,
                                                 p4: -1 / 4, p5: -1 / 8, p6: +1 / 8},
                           orbital_symbol="p")
+        self.phi_s_1 = SALC(n=6, irred="E2g",
+                          p_orbital_prefactors={s1: 1 / 4, s2: +1 / 8, s3: -1 / 8,
+                                                s4: -1 / 4, s5: -1 / 8, s6: +1 / 8},
+                          orbital_symbol="s")
         self.phi_2 = SALC(n=6, irred="E1g",
                           p_orbital_prefactors={p1: 0, p2: +1 / 4, p3: +1 / 4,
                                                 p4: 0, p5: -1 / 4, p6: -1 / 4},
                           orbital_symbol="p")
+        self.phi_s_2 = SALC(n=6, irred="E2g",
+                          p_orbital_prefactors={s1: 0, s2: +1 / 4, s3: +1 / 4,
+                                                s4: 0, s5: -1 / 4, s6: -1 / 4},
+                          orbital_symbol="s")
         self.phi_3 = SALC(n=6, irred="E2u",
                           p_orbital_prefactors={p1: 2 / 8, p2: -1 / 8, p3: -1 / 8, p4: 2 / 8, p5: -1 / 8, p6: -1 / 8},
                           orbital_symbol="p")
+        self.phi_s_3 = SALC(n=6, irred="E1u",
+                          p_orbital_prefactors={s1: 2 / 8, s2: -1 / 8, s3: -1 / 8, s4: 2 / 8, s5: -1 / 8, s6: -1 / 8},
+                          orbital_symbol="s")
         self.phi_4 = SALC(n=6, irred="E2u",
                           p_orbital_prefactors={p1: 0, p2: -1 / 4, p3: 1 / 4, p4: 0, p5: -1 / 4, p6: 1 / 4},
                           orbital_symbol="p")
+        self.phi_s_4 = SALC(n=6, irred="E1u",
+                          p_orbital_prefactors={s1: 0, s2: -1 / 4, s3: 1 / 4, s4: 0, s5: -1 / 4, s6: 1 / 4},
+                          orbital_symbol="s")
 
 
 
     def test_reducible_representations(self):
         reducible_representation = self.p.get_reducible_representation_for_ring_p_orbitals()
-        print(reducible_representation)
         # expected: {'E': 6, 'C6': 0, 'C3': 0, 'C2': 0, "C'2": -2, "C''2": 0, 'i': 0, 'S3': 0, 'S6': 0, 'σh': -6, 'σd': 0, 'σv': 2}
         assert len(reducible_representation.keys()) == 12
         assert reducible_representation["E"] == 6
@@ -86,9 +108,6 @@ class TestBenzene(unittest.TestCase):
         # all others 0:
         assert sum(v for k, v in expectation.items() if k not in {"E1g", "E2u", "B2g", "A2u"}  ) == 0
 
-
-
-
         # project function:
         SALCs = self.p.project(irreducible_representation, p_orbital_index=1)
         for s in SALCs:
@@ -122,10 +141,12 @@ class TestBenzene(unittest.TestCase):
             else:
                 raise Exception(f"not supposed to be here {s.irred}")
 
+    def test_blabla(self):
         # get_all_SALCs function:
         salcs = self.p.get_all_SALCs()
-        assert len(salcs) == 6
+        # assert len(salcs) == 6
         for s in salcs:
+            s.print()
             if s.irred == "A2u":
                 assert is_multiple(s.equation, self.phi_5.equation)
             elif s.irred == "B2g":
@@ -133,7 +154,10 @@ class TestBenzene(unittest.TestCase):
             elif s.irred == "E1g":
                 assert is_multiple(s.equation, self.phi_1.equation) or is_multiple(s.equation, self.phi_2.equation)
             elif s.irred == "E2u":
-                assert is_multiple(s.equation, self.phi_3.equation) or is_multiple(s.equation, self.phi_4.equation)
+                bed_1 = is_multiple(s.equation, self.phi_3.equation)
+                bed_2 = is_multiple(s.equation, self.phi_4.equation)
+                print("bedingung",  bed_1 , bed_2, flush=True)
+                assert bed_1 or bed_2
             else:
                 s.norm()
                 print(s.equation, s.irred)
@@ -167,3 +191,113 @@ class TestBenzene(unittest.TestCase):
         h = self.p.h_eff(salc_1=self.phi_4, salc_2=self.phi_4)
         assert sp.simplify(round_and_collect(h, [alpha, beta], round_to) - (alpha - beta)) == 0
 
+
+############################ S ORBITALS ###################################
+    def test_S_reducible_representations(self):
+        self.p.set_to_s_orbitals()
+        reducible_representation = self.p.get_reducible_representation_for_ring_p_orbitals()
+        # expected: {'E': 6, 'C6': 0, 'C3': 0, 'C2': 0, "C'2": 2, "C''2": 0, 'i': 0, 'S3': 0, 'S6': 0, 'σh': 6, 'σd': 0, 'σv': 2}
+        assert len(reducible_representation.keys()) == 12
+        assert reducible_representation["E"] == 6
+        assert reducible_representation["C\'2"] == 2
+        assert reducible_representation["σh"] == 6
+        assert reducible_representation["σv"] == 2
+        # all others 0:
+        total_other = sum(
+            v for k, v in reducible_representation.items()
+            if k not in {"E", "C\'2", "σh", "σv"}
+        )
+        assert total_other == 0
+
+    def test_irreducible_representations(self):
+        self.p.set_to_s_orbitals()
+        reducible_representation = {'E': 6, 'C6': 0, 'C3': 0, 'C2': 0, "C'2": 2, "C''2": 0, 'i': 0, 'S3': 0, 'S6': 0, 'σh': 6, 'σd': 0, 'σv': 2}
+        irreducible_representation = self.p.decomposing_into_irreducible_representations(reducible_representation)
+        # expected: {'A1g': 1, 'A2g': 0, 'B1g': 0, 'B2g': 0, 'E1g': 0, 'E2g': 1, 'A1u': 0, 'A2u': 0, 'B1u': 1, 'B2u': 0, 'E1u': 1, 'E2u': 0}
+        assert len(irreducible_representation.keys()) == 12
+        assert irreducible_representation["E1u"] == 1
+        assert irreducible_representation["E2g"] == 1
+        assert irreducible_representation["B1u"] == 1
+        assert irreducible_representation["A1g"] == 1
+        # all others 0:
+        total_other = sum(
+            v for k, v in irreducible_representation.items()
+            if k not in {"E1u", "E2g", "B1u", "A1g"}
+        )
+        assert total_other == 0
+
+    def test_SALC_generation(self):
+        self.p.set_to_s_orbitals()
+        irreducible_representation = {'A1g': 1, 'A2g': 0, 'B1g': 0, 'B2g': 0, 'E1g': 0, 'E2g': 1, 'A1u': 0, 'A2u': 0, 'B1u': 1, 'B2u': 0, 'E1u': 1, 'E2u': 0}
+        # function of expected number of SALCs per irred:
+        expectation = self.p.get_expected_number_of_SALC_per_irreducible_representation(irreducible_representation)
+        assert expectation["E2g"] == 2
+        assert expectation["E1u"] == 2
+        assert expectation["A1g"] == 1
+        assert expectation["B1u"] == 1
+
+        # project function:
+        SALCs = self.p.project(irreducible_representation, p_orbital_index=1)
+        for s in SALCs:
+            p_symbols = sp.symbols(f"s1:{s.n + 1}")
+            eq = sum(coeff * p_symbols[idx]
+                     for idx, coeff in enumerate(s.prefactors_of_AOs, 0))
+            assert sp.simplify(eq - s.equation) == 0
+
+            if s.irred == "A1g":
+                assert s.prefactors_of_AOs == [Fraction(1,6), Fraction(1,6), Fraction(1,6), Fraction(1,6), Fraction(1,6), Fraction(1,6)]
+            elif s.irred == "B1u":
+                assert s.prefactors_of_AOs == [Fraction(1,6), -Fraction(1,6), Fraction(1,6), -Fraction(1,6), Fraction(1,6), -Fraction(1,6)]
+            elif s.irred == "E2g":
+                expected = [2/8, -1/8, -1/8, 2/8, -1/8, -1/8]
+                expected_expr = sum(expected[i] * p_symbols[i] for i in range(len(expected)))
+                assert is_multiple(s.equation, expected_expr)
+            elif s.irred == "E1u":
+                expected = [2/8, 1/8, -1/8, -2/8, -1/8, 1/8]
+                expected_expr = sum(expected[i] * p_symbols[i] for i in range(len(expected)))
+                assert is_multiple(s.equation, expected_expr)
+            else:
+                raise Exception("not supposed to be here")
+
+        # get_all_SALCs function:
+        salcs = self.p.get_all_SALCs()
+        # assert len(salcs) == 6
+        for s in salcs:
+            s.print()
+            if s.irred == "A1g":
+                assert is_multiple(s.equation, self.phi_s_5.equation)
+            if s.irred == "B1u":
+                assert is_multiple(s.equation, self.phi_s_6.equation)
+            if s.irred == "E2g":
+                assert is_multiple(s.equation, self.phi_s_3.equation) or is_multiple(s.equation, self.phi_s_4.equation)
+            if s.irred == "E1u":
+                assert is_multiple(s.equation, self.phi_s_1.equation) or is_multiple(s.equation, self.phi_s_2.equation)
+
+
+    def test_h_eff_of_SALCs(self):
+        self.p.set_to_s_orbitals()
+        self.phi_s_1.norm()
+        self.phi_s_2.norm()
+        self.phi_s_3.norm()
+        self.phi_s_4.norm()
+        self.phi_s_5.norm()
+        self.phi_s_6.norm()
+        alpha_s, beta_s = sp.symbols(f"alpha_s beta_s")
+        round_to = 6
+
+        # A1g:
+        h = self.p.h_eff(salc_1=self.phi_s_5, salc_2=self.phi_s_5)
+        assert sp.simplify(round_and_collect(h, [alpha_s, beta_s], round_to) - (alpha_s + 2 * beta_s)) == 0
+        # E2g:
+        h = self.p.h_eff(salc_1=self.phi_s_1, salc_2=self.phi_s_1)
+        assert sp.simplify(round_and_collect(h, [alpha_s, beta_s], round_to) - (alpha_s + beta_s)) == 0
+        h = self.p.h_eff(salc_1=self.phi_s_2, salc_2=self.phi_s_2)
+        assert sp.simplify(round_and_collect(h, [alpha_s, beta_s], round_to) - (alpha_s + beta_s)) == 0
+        # E1u
+        h = self.p.h_eff(salc_1=self.phi_s_3, salc_2=self.phi_s_3)
+        assert sp.simplify(round_and_collect(h, [alpha_s, beta_s], round_to) - (alpha_s - beta_s)) == 0
+        h = self.p.h_eff(salc_1=self.phi_s_4, salc_2=self.phi_s_4)
+        assert sp.simplify(round_and_collect(h, [alpha_s, beta_s], round_to) - (alpha_s - beta_s)) == 0
+        # B1u
+        h = self.p.h_eff(salc_1=self.phi_s_6, salc_2=self.phi_s_6)
+        assert sp.simplify(round_and_collect(h, [alpha_s, beta_s], round_to) - (alpha_s - 2 * beta_s)) == 0

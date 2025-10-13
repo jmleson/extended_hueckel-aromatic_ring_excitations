@@ -33,7 +33,7 @@ class Transition:
         return tuple([self.p_before_transition[i] - self.s_occupation_after_transition[i] for i in range(self.n)])
 
     def get_transitioning_energy(self):
-        e1 = self.orbital_to_excite_to.eigenvalue - self.orbital_to_excite_of.eigenvalue
+        e1 = self.orbital_to_excite_to.eigenvalue - self.orbital_to_excite_of.eigenvalue# single occupation assumed
         e2 = self.energy_of_state_after_excitation - self.energy_of_state_before_excitation
         assert e1 == e2
         return e2

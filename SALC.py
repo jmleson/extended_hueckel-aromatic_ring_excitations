@@ -1,5 +1,8 @@
 import sympy as sp
 
+from is_multiple import is_multiple
+
+
 class SALC:
     def __init__(self, n:int, irred:str, p_orbital_prefactors:dict, orbital_symbol:str, equation:sp.Expr=None):
         self.n = n
@@ -36,6 +39,12 @@ class SALC:
         print(self.prefactors_of_AOs)
         print()
 
+    def multiple_in_list(self, list_of_other_salcs:list):
+        for i in list_of_other_salcs:
+            if is_multiple(i.equation, self.equation):
+                return True
+        return False
+
 
     def norm(self):
         if self.normalized:
@@ -62,8 +71,10 @@ def norm_and_group_SALCs(list_of_SALCs:list[SALC]):
         SALCs_by_irred = {}
         for s in list_of_SALCs:
             s.norm()
-            SALCs_by_irred.setdefault(s.irred, []).append(s)
-
+            if s.irred not in SALCs_by_irred.keys():
+                SALCs_by_irred[s.irred] = [s]
+            else:
+                SALCs_by_irred[s.irred] += [s]
         return SALCs_by_irred
 
 
@@ -91,7 +102,8 @@ def get_linear_independent_SALCs(salc_list: list[SALC], expected_no:int) -> list
         raise Exception("method supposed to use with one irred only")
 
     n = salc_list[0].n
-    p = sp.symbols(f"p1:{n+1}")
+    orbital_symbol = salc_list[0].orbital_symbol
+    p = sp.symbols(f"{orbital_symbol}1:{n+1}")
 
     # take last two salcs and build linear combination:
     s1, s2 = salc_list[-2], salc_list[-1]
@@ -100,12 +112,22 @@ def get_linear_independent_SALCs(salc_list: list[SALC], expected_no:int) -> list
         n=n,
         p_orbital_prefactors={p[i]: new_prefactors[i] for i in range(n)},
         irred=s1.irred,
-        orbital_symbol=s1.orbital_symbol
+        orbital_symbol=orbital_symbol
     )
-
-    # replace old two salcs by new one:
+    if new_salc.multiple_in_list(salc_list):
+        new_prefactors = [s1.prefactors_of_AOs[i] - s2.prefactors_of_AOs[i] for i in range(n)]
+        new_salc = SALC(
+            n=n,
+            p_orbital_prefactors={p[i]: new_prefactors[i] for i in range(n)},
+            irred=s1.irred,
+            orbital_symbol=orbital_symbol
+        )
+        # 2nd test:
+        if new_salc.multiple_in_list(salc_list):
+            raise Exception("case not implemented yet")
     new_list = salc_list[:-2] + [new_salc]
     return get_linear_independent_SALCs(new_list, expected_no)
+
 
 
 
