@@ -67,6 +67,47 @@ def norm_and_group_SALCs(list_of_SALCs:list[SALC]):
         return SALCs_by_irred
 
 
+def linear_independent( salc_list:list):
+    A = sp.Matrix([
+        [sp.Rational(val) if not isinstance(val, sp.Basic) else val
+         for val in salc.prefactors_of_AOs]
+        for salc in salc_list
+    ])
+    rank = A.rank()
+    #rank == len(salc_list):
+    # not linearly dependent
+    return rank == len(salc_list)
+
+
+def get_linear_independent_SALCs(salc_list: list[SALC], expected_no:int) -> list[SALC]:
+    if len(salc_list) == expected_no:
+        return salc_list
+    if linear_independent(salc_list):
+        return salc_list
+    if not salc_list:
+        return []
+    set_of_irreds = set([i.irred for i in salc_list])
+    if len(set_of_irreds) != 1:
+        raise Exception("method supposed to use with one irred only")
+
+    n = salc_list[0].n
+    p = sp.symbols(f"p1:{n+1}")
+
+    # take last two salcs and build linear combination:
+    s1, s2 = salc_list[-2], salc_list[-1]
+    new_prefactors = [s1.prefactors_of_AOs[i] + s2.prefactors_of_AOs[i] for i in range(n)]
+    new_salc = SALC(
+        n=n,
+        p_orbital_prefactors={p[i]: new_prefactors[i] for i in range(n)},
+        irred=s1.irred,
+        orbital_symbol=s1.orbital_symbol
+    )
+
+    # replace old two salcs by new one:
+    new_list = salc_list[:-2] + [new_salc]
+    return get_linear_independent_SALCs(new_list, expected_no)
+
+
 
 if __name__ == "__main__":
     p1, p2, p3, p4, = sp.symbols(f"p1 p2 p3 p4")

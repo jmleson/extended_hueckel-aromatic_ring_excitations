@@ -1,10 +1,13 @@
 import itertools
+from collections import defaultdict
 from fractions import Fraction
 import sympy as sp
 
 from PointGroups.D4h import D4h
-from SALC import SALC, norm_and_group_SALCs
+from PointGroups.D6h import D6h
+from SALC import SALC, norm_and_group_SALCs, linear_independent
 from is_multiple import is_multiple
+from tst.ortho import get_linear_independent_SALCs
 from tst.solve_saekular_equation import calculate_hueckel_secular_equation
 
 
@@ -20,7 +23,7 @@ class MoleculeRepresentation():
         if self.n == 4 and self.circular:# D4h, cyclopentadiene
             self.pointgroup = D4h()
         elif self.n == 6:
-            pass
+            self.pointgroup = D6h()
         else:
             raise Exception("Not implemented")
 
@@ -86,6 +89,7 @@ class MoleculeRepresentation():
             p_symbols = sp.symbols(f"p1:{self.n + 1}")
         SALCs = []
         for irred_name, value in irreducible_representation.items():
+            # print("IRRED", irred_name)
             eq_expr = 0
             collected_p_orbitals_in_expression = {}
             if value != 0:
@@ -93,16 +97,17 @@ class MoleculeRepresentation():
                 for op in self.pointgroup.operations:
                     op_name = op.name
                     op_value = irred.characters[op_name] if op_name in irred.characters.keys() else 0
-                # for op_name, op_value in irred.characters.items():
                     if op_value != 0:
-                        # op = self.get_symmetry_operation_by_name(op_name)
+                        if op.amount != 1:
+                            raise Exception("Cannot handle this anymore")
                         transformed_p = op.transform_p(p_orbital_index)
-                        # print(p_orbital_index, "->", transformed_p)
+                        # print("\t", p_orbital_index, "->", transformed_p)
                         coeff = op_value if transformed_p > 0 else -op_value
                         transformed_p = p_symbols[abs(transformed_p) - 1]
-                        eq_expr += op.amount * coeff * transformed_p
-                        collected_p_orbitals_in_expression[transformed_p] = collected_p_orbitals_in_expression.get(transformed_p, 0) + op.amount * coeff
-                        # print("adding", op.name, "=",coeff , f"{transformed_p}")
+                        eq_expr += coeff * transformed_p  #* irred.dimension
+                        collected_p_orbitals_in_expression[transformed_p] = collected_p_orbitals_in_expression.get(transformed_p, 0) + coeff
+                        # print("\tadding", op.name, "=", coeff, f"{transformed_p}")
+
                 eq_expr /= self.pointgroup.group_order()
                 collected_p_orbitals_in_expression = {k: Fraction(v, self.pointgroup.group_order()) for k, v in collected_p_orbitals_in_expression.items()}
                 s = SALC(n=self.n, irred=irred_name, p_orbital_prefactors=collected_p_orbitals_in_expression,
@@ -112,6 +117,27 @@ class MoleculeRepresentation():
         return SALCs
 
 
+    def get_linear_independent_SALCs(self, salc_list:list, irreducible_representation):
+        if linear_independent(salc_list):
+            return salc_list
+        # linear dependent -> orthogonalization:#TODO
+        dict_of_salcs_grouped_by_irred = defaultdict(list)
+        for salc in salc_list:
+            dict_of_salcs_grouped_by_irred[salc.irred].append(salc)
+        expected_numbers = self.get_expected_number_of_SALC_per_irreducible_representation(irreducible_representation)
+        new_salc_list = []
+        for key, items in dict_of_salcs_grouped_by_irred.items():
+            if expected_numbers[key] == len(items):
+                for i in items:
+                    new_salc_list.append(i)
+            elif expected_numbers[key] > len(items):
+                raise Exception(f"Zu wenig SALCs für {key}")
+            else:
+                new_set = get_linear_independent_SALCs(items, expected_no=expected_numbers[key])
+                # print(key, len(new_set))
+                for s in new_set:
+                    new_salc_list.append(s)
+        return new_salc_list
 
     def get_all_SALCs(self):
         reducible_representation = self.get_reducible_representation_for_ring_p_orbitals()
@@ -126,14 +152,14 @@ class MoleculeRepresentation():
             for s in SALCs:
                 # s.print()
                 checking_list = [is_multiple(x.equation, s.equation) for x in all_SALCs]# negative version of LC is still the same linear combination
-                # old_list = [old_s.prefactors_of_AOs for old_s in all_SALCs]
                 if not True in checking_list:
-                    # print("not in", s.prefactors_of_AOs, s.irred)
                     all_SALCs.append(s)
 
         # print(len(all_SALCs), irreducible_representation, sum(irreducible_representation.values()))
+        all_SALCs = self.get_linear_independent_SALCs(all_SALCs, irreducible_representation)
 
         # expectation:
+        # print( len(all_SALCs) , sum(self.get_expected_number_of_SALC_per_irreducible_representation(irreducible_representation).values()))#TODO
         assert len(all_SALCs) == sum(self.get_expected_number_of_SALC_per_irreducible_representation(irreducible_representation).values())
         return all_SALCs
 

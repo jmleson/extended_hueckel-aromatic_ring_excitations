@@ -27,7 +27,7 @@ class C2v(PointGroup):
     def set_up_irreducible_representations(self):
         if self.n == 4:
             self.irreducible_representations = []
-            symmetry_names = [op.name for op in self.operations]
+            symmetry_names = list(dict.fromkeys(op.name for op in self.operations))
             i = IrreducibleRepresentation({j: 1 for j in symmetry_names}, name="A1")
             self.irreducible_representations.append(i)
             A2_chars = [1, 1, -1, -1]
@@ -39,3 +39,6 @@ class C2v(PointGroup):
             B2_chars = [1, -1, -1, 1]
             i = IrreducibleRepresentation(dict(zip(symmetry_names, B2_chars)), name="B2")
             self.irreducible_representations.append(i)
+
+    def multiply(self, irred_1: str, irred_2: str) -> list[str]:
+        pass#TODO

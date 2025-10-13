@@ -11,7 +11,6 @@ class PointGroup:
         self.total_symmetric_representation = "A1"
         self.dipole_operator_symmetry = None
 
-
     def group_order(self):
         return sum([op.amount for op in self.operations])
 
@@ -29,6 +28,42 @@ class PointGroup:
                     result_str = "–"
                 row.append(result_str)
             table.append(row)
+        self.print_table(table)
+
+    def print_character_table(self):
+        # Zählen, wie oft jede Symmetrieoperation vorkommt
+        amounts_of_operations = {}
+        for o in self.operations:
+            amounts_of_operations[o.name] = amounts_of_operations.get(o.name, 0) + 1
+
+        # Spaltenüberschriften = eindeutige Symmetrieoperationen
+        symmetry_names = list(amounts_of_operations.keys())
+
+        # Kopfzeile: Operationen (mit Anzahl, falls > 1)
+        header = [""]
+        for name in symmetry_names:
+            count = amounts_of_operations[name]
+            if count > 1:
+                header.append(f"{count}{name}")
+            else:
+                header.append(name)
+
+        # Charaktere jeder irreduziblen Darstellung sammeln
+        table = [header]
+        for irred in self.irreducible_representations:
+            row = [irred.name]
+            for name in symmetry_names:
+                row.append(str(irred.characters[name]))
+            table.append(row)
+
+        # Optional: ganz unten die Symmetrie der Dipoloperatoren
+        if self.dipole_operator_symmetry:
+            table.append(["Dipol"] + [
+                "✓" if name in self.dipole_operator_symmetry else "–"
+                for name in symmetry_names
+            ])
+
+        # Tabelle ausgeben
         self.print_table(table)
 
     def set_up_irreducible_representations(self):
@@ -64,6 +99,16 @@ class PointGroup:
             if r == 0:
                 total_len = sum(col_widths) + 3 * (n_cols - 1)  # 3 = Länge " │ "
                 print("─" * total_len)
+
+
+    def replace_symbol(self, irred:str):
+        return irred.replace("A", "z").replace("B","A").replace("z", "B")
+
+    def replace_gu(self, irred:str):
+        return irred.replace("g", "z").replace("u", "g").replace("z", "u")
+
+    def replace_number(self, irred:str):
+        return irred.replace("1", "z").replace("2", "1").replace("z", "2")
 
 
 

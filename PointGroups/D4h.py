@@ -28,9 +28,9 @@ class D4h(PointGroup):
         o = SymmetryOperation(n=self.n, name="C\'2", transform_p=lambda i: [-3, -2, -1, -4][i - 1], amount=1)
         self.operations.append(o)
 
-        o = SymmetryOperation(n=self.n, name="2C\'\'2", transform_p=lambda i: [-2, -1, -4, -3][i - 1], amount=1)
+        o = SymmetryOperation(n=self.n, name="C\'\'2", transform_p=lambda i: [-2, -1, -4, -3][i - 1], amount=1)
         self.operations.append(o)
-        o = SymmetryOperation(n=self.n, name="2C\'\'2", transform_p=lambda i: [-4, -3, -2, -1][i - 1], amount=1)
+        o = SymmetryOperation(n=self.n, name="C\'\'2", transform_p=lambda i: [-4, -3, -2, -1][i - 1], amount=1)
         self.operations.append(o)
 
         o = SymmetryOperation(n=self.n, name="i", transform_p=lambda i: [-3, -4, -1, -2][i - 1], amount=1)
