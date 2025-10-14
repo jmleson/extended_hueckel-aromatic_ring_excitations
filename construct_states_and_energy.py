@@ -20,6 +20,21 @@ import itertools
 #         # print("=", total_energy_of_state)
 
 
+def get_ground_state(norb,nel):
+    if nel > 2*norb:
+        raise Exception("too many electrons")
+    state = []
+    for i in range(norb):
+        if nel >=2:
+            state.append(2)
+            nel -= 2
+        elif nel == 0:
+            state.append(0)
+        else:
+            state.append(1)
+            nel -= 1
+    return state
+
 
 
 def construct_occupied_triplett_states(norb, nel):
@@ -30,7 +45,7 @@ def construct_occupied_triplett_states(norb, nel):
     """
     all_combinations = itertools.product([0, 1, 2], repeat=norb-1)
 
-    valid_states = []
+    valid_states = [get_ground_state(norb=norb, nel=nel)]
     for state in all_combinations:
         total_electrons = sum(state)
         unpaired_electrons = state.count(1)
@@ -42,8 +57,13 @@ def construct_occupied_triplett_states(norb, nel):
         ):
             # Optional: Auffüllen auf feste Länge, falls benötigt
             # padded_state = state + (0,)*(3-len(state))
-            valid_states.append(state+ (0,))
-    return valid_states
+            valid_states.append( state+ (0,) )
+
+
+    return [{"occupation": state,
+             "unpaired electrons": state.count(1),
+             "multiplicity": state.count(1)*(1/2)*2 + 1 # assumes alpha-spin for all unpaired electrons
+            } for state in valid_states]
 
 
 if __name__ == "__main__":

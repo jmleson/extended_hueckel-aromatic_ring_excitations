@@ -8,6 +8,7 @@ class MoleculeState:
     def __init__(self, n:int):
         self.n = n
         self.p = MoleculeRepresentation(n=n)
+
         self.s = MoleculeRepresentation(n=n)
         self.set_up()
 
@@ -80,6 +81,8 @@ class MoleculeState:
                 changed_orbital_index = transition.get_changed_orbital_index()
                 transition.set_up(orbital_to_excite_of = self.bonding_p[changed_orbital_index],
                                   orbital_to_excite_to = self.antibonding_s[changed_orbital_index],
+                                  energy_zero_p = self.calculate_mean_energy_for_state(state=self.bonding_p),
+                                  energy_zero_s = self.calculate_mean_energy_for_state(state=self.antibonding_s),
                                   energy_of_state_before_excitation = e_state_before,
                                   energy_of_state_after_excitation = E_state_after)
 
@@ -88,6 +91,12 @@ class MoleculeState:
 
                 s_occupations.append(transition)
         return s_occupations
+
+    def calculate_mean_energy_for_state(self, state):
+        # calculate "zero" energy of orbital set, as defined in state (p_bonding / s_antibonding)
+        energy_of_single_total_occupation = self.calculate_energy_for_state_and_occupation(state=state,
+                                                    occupation=[1 for i in range(len(state))])
+        return energy_of_single_total_occupation / len(state)
 
     def symmetry_allowed_transition(self, transition:Transition):
 
@@ -100,12 +109,19 @@ class MoleculeState:
         # print(dipole_operator, "x", sym_s, "x", sym_p,  "=", part_II)
         return self.p.pointgroup.total_symmetric_representation in [x for row in part_II for x in row]
 
-    def calculate_result_for_all_transitions_of_set_occupation(self):
+    def calculate_result_for_all_transitions_of_set_occupation(self, print_active:bool=True):
         transitions = self.get_thinkable_transitions()
 
+        allowed_transitions = []
         for transition in transitions:
             if self.symmetry_allowed_transition(transition):
-                transition.print()
+                if print_active:
+                    transition.print()
+                allowed_transitions.append(transition)
             else:
-                print("FORBIDDEN\n")
+                if print_active:
+                    print("\tFORBIDDEN\n")
             #     transition.print()
+        return allowed_transitions
+
+
