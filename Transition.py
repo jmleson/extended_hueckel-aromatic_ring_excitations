@@ -53,10 +53,10 @@ class Transition:
                 lc = 0
                 for i in range(len(self.orbital_to_excite_to.salcs)):
                     lc += (self.orbital_to_excite_to.salcs[0]["factor"] * (self.orbital_to_excite_to.salcs[0]["salc"].equation))
-                print(f"\t- sigma_{changed_orbital_index + 1}:\t linear combination =", lc,
+                print(f"\t- xi_{changed_orbital_index + 1}:\t linear combination =", lc,
                       f"\t, energy = {self.orbital_to_excite_to.eigenvalue}"
                       )
-        print("\t- Delta Energy:\t", self.get_transitioning_energy())
+        print("\t- Δ Energy:\t", self.get_transitioning_energy())
         print("\t- Energy of State before Excitation:\t", self.energy_of_state_before_excitation)
         print("\t- Energy of State after Excitation:\t", self.energy_of_state_after_excitation)
         if self.transition_integral is not None:

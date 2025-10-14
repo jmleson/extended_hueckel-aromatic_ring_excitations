@@ -49,7 +49,7 @@ class TestCyclobutadiene(unittest.TestCase):
         assert reducible_representation['C4(z)'] == 0
         assert reducible_representation['C2'] == 0
         assert reducible_representation["C'2"] == -2
-        assert reducible_representation["2C''2"] == 0
+        assert reducible_representation["C''2"] == 0
         assert reducible_representation['i'] == 0
         assert reducible_representation['S4'] == 0
         assert reducible_representation['σh'] == -4
@@ -186,7 +186,7 @@ class TestCyclobutadiene(unittest.TestCase):
         assert reducible_representation['C4(z)'] == 0
         assert reducible_representation['C2'] == 0
         assert reducible_representation["C'2"] == 2
-        assert reducible_representation["2C''2"] == 0
+        assert reducible_representation["C''2"] == 0
         assert reducible_representation['i'] == 0
         assert reducible_representation['S4'] == 0
         assert reducible_representation['σh'] == 4
@@ -195,7 +195,7 @@ class TestCyclobutadiene(unittest.TestCase):
 
     def test_irreducible_representations(self):
         self.p.set_to_s_orbitals()
-        reducible_representation = {'E': 4, 'C4(z)': 0, 'C2': 0, "C'2": 2, "2C''2": 0, 'i': 0, 'S4': 0, 'σh': 4, 'σv': 2, 'σd': 0}
+        reducible_representation = {'E': 4, 'C4(z)': 0, 'C2': 0, "C'2": 2, "C''2": 0, 'i': 0, 'S4': 0, 'σh': 4, 'σv': 2, 'σd': 0}
         irreducible_representation = self.p.decomposing_into_irreducible_representations(reducible_representation)
         # expected: {'A1g': 1, 'A2g': 0, 'B1g': 1, 'B2g': 0, 'Eg': 0, 'A1u': 0, 'A2u': 0, 'B1u': 0, 'B2u': 0, 'Eu': 1}
         assert len(irreducible_representation.keys()) == 10

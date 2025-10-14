@@ -24,7 +24,7 @@ class TestTransitionIntegral(unittest.TestCase):
         self.alpha, self.beta, self.alpha_s, self.beta_s, self.delta = sp.symbols("alpha beta alpha_s beta_s delta")
 
         self.test_transition = {'s occupation after transition': (0, 1, 0, 0),
-                                'Delta E by transition': -4*self.alpha + self.alpha_s - 4*self.beta}
+                                'Δ E by transition': -4*self.alpha + self.alpha_s - 4*self.beta}
         self.phi_1 = SALC(n=4, irred="A2u",
                           p_orbital_prefactors={self.p1: 1 / sp.sqrt(4), self.p2: 1 / sp.sqrt(4), self.p3: 1 / sp.sqrt(4),
                                                 self.p4: 1 / sp.sqrt(4)},

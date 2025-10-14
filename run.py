@@ -1,7 +1,5 @@
-from MoleculeRepresentation import MoleculeRepresentation
 from MoleculeState import MoleculeState
-
-
+from construct_states_and_energy import construct_occupied_triplett_states
 
 # m = MoleculeState(n=4)
 # m.set_occupation(p_occupation=(2, 1, 1, 0))
@@ -16,10 +14,16 @@ from MoleculeState import MoleculeState
 
 
 m = MoleculeState(n=6)
+
+
 m.set_occupation(p_occupation=(2,1,1,1,1,0))
-# for i in m.s.get_energy_levels():
-#     i.print()
 m.calculate_result_for_all_transitions_of_set_occupation()
+
+
+triplett_states = construct_occupied_triplett_states(nel=6, norb=6)
+for triplett in triplett_states:
+    m.set_occupation(p_occupation=triplett)
+    m.calculate_result_for_all_transitions_of_set_occupation()
 
 
 
