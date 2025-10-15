@@ -39,6 +39,11 @@ class Transition:
     def get_p_after_transition(self):
         return tuple([self.p_before_transition[i] - self.s_occupation_after_transition[i] for i in range(self.n)])
 
+    def get_factor(self):
+        p_after = self.get_p_after_transition()
+        left_over_occupation = p_after[self.get_changed_orbital_index()]
+        return left_over_occupation +1
+
     def get_transitioning_energy(self):
         e1 = self.orbital_to_excite_to.eigenvalue - self.orbital_to_excite_of.eigenvalue# single occupation assumed
         e2 = self.energy_of_state_after_excitation - self.energy_of_state_before_excitation
@@ -75,12 +80,15 @@ class Transition:
 import sympy as sp
 def calculate_dispersion_energy(transitions_a:list[Transition], transitions_b:list[Transition]):
         r = sp.Symbol("r")
-        T_zz = 2 / r ** (3)
+        T_zz = 2 / r ** (3)#TODO is that even true?
 
         E_dispersion = 0
         for ia in transitions_a:
             for jb in transitions_b:
                 zaehler = (ia.transition_integral.multiply_out() * T_zz * jb.transition_integral.multiply_out()) ** 2
+                # print("transition E", ia.get_transitioning_energy(), "\t+\t" , jb.get_transitioning_energy(),
+                #       "\t=\t", ia.get_transitioning_energy() + jb.get_transitioning_energy())
                 nenner = ia.get_transitioning_energy() + jb.get_transitioning_energy() # / (E_i^a-E_0 + E_j^b-E0)
-                E_dispersion += zaehler/nenner
+                factor = ia.get_factor() * jb.get_factor()# count double occupied orbitals twice since sum/loop is over spin orbitals but here space orbitals are used
+                E_dispersion += factor * zaehler/nenner
         return E_dispersion

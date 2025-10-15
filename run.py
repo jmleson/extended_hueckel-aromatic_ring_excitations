@@ -20,10 +20,12 @@ m = MoleculeState(n=6)
 
 
 triplet_states = construct_occupied_triplett_states(nel=6, norb=6)
-# for triplett in triplet_states:
-#     print(f"\033[1mState: {triplett}\033[0m")
-#     m.set_occupation(p_occupation=triplett["occupation"])
-#     m.calculate_result_for_all_transitions_of_set_occupation(print_active=True)
+for triplett in triplet_states:
+    print(f"\033[1mState: {triplett}\033[0m")
+    m.set_occupation(p_occupation=triplett["occupation"])
+    m.calculate_result_for_all_transitions_of_set_occupation(print_active=True)
+
+
 state_no = 0
 for a in triplet_states:
     for b in triplet_states:
