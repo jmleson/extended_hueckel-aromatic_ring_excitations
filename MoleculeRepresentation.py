@@ -29,10 +29,13 @@ class MoleculeRepresentation():
             if self.n == 4 and not self.circular:
                 # bend cyclopentadiene
                 self.point_group = C2v()
+                return
             if self.n == 4 and self.circular:# D4h, cyclopentadiene
                 self.pointgroup = D4h()
+                return
             elif self.n == 6 and self.circular:
                 self.pointgroup = D6h()
+                return
             else:
                 raise Exception("Not implemented (C)")
         # Cl included:

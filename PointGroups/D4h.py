@@ -117,37 +117,38 @@ class D4h(PointGroup):
             return ["Eg"] if "g" in irred_1 else ["Eu"]
 
         if irred_1 == "A2g":
-            return [irred_2.replace("2","z").replace("1","2").replace("z","1")]
+            return [self.replace_number(irred_2)] #[irred_2.replace("2","z").replace("1","2").replace("z","1")]
         if irred_2 == "A2g":
-            return [irred_1.replace("2","z").replace("1","2").replace("z","1")]
+            return [self.replace_number(irred_1)] #[irred_1.replace("2","z").replace("1","2").replace("z","1")]
 
         if irred_1 == "B1g":
-            return [irred_2.replace("A","z").replace("B","A").replace("z","B")]
+            return [self.replace_symbol(irred_2)] #[irred_2.replace("A","z").replace("B","A").replace("z","B")]
         if irred_2 == "B1g":
-            return [irred_1.replace("A","z").replace("B","A").replace("z","B")]
+            return [self.replace_symbol(irred_1)] #[irred_1.replace("A","z").replace("B","A").replace("z","B")]
 
         if irred_1 == "A1u":
-            return [irred_2.replace("g","z").replace("u","g").replace("z","u")]
+            return [self.replace_gu(irred_2)]#[irred_2.replace("g","z").replace("u","g").replace("z","u")]
         if irred_2 == "A1u":
-            return [irred_1.replace("g","z").replace("u","g").replace("z","u")]
+            return [self.replace_gu(irred_1)] #[irred_1.replace("g","z").replace("u","g").replace("z","u")]
 
         if irred_1 == "B2g":
-            version_1 = irred_2.replace("2","z").replace("1","2").replace("z","1")
-            version_2 = version_1.replace("A","z").replace("B","A").replace("z","B")
-            return [version_2]
+            # version_1 = irred_2.replace("2","z").replace("1","2").replace("z","1")
+            # version_2 = version_1.replace("A","z").replace("B","A").replace("z","B")
+            return [self.replace_number(self.replace_symbol(irred_2))]
         if irred_2 == "B2g":
-            version_1 = irred_1.replace("2","z").replace("1","2").replace("z","1")
-            version_2 = version_1.replace("A","z").replace("B","A").replace("z","B")
-            return [version_2]
+            # version_1 = irred_1.replace("2","z").replace("1","2").replace("z","1")
+            # version_2 = version_1.replace("A","z").replace("B","A").replace("z","B")
+            return [self.replace_number(self.replace_symbol(irred_1))]
 
         if irred_1 == "A2u":
-            version_1 = irred_2.replace("2","z").replace("1","2").replace("z","1")
-            version_2 = version_1.replace("g","z").replace("u","g").replace("z","u")
-            return [version_2]
+            # version_1 = irred_2.replace("2","z").replace("1","2").replace("z","1")
+            # version_2 = version_1.replace("g","z").replace("u","g").replace("z","u")
+            return [self.replace_number(self.replace_gu(irred_2))]
         if irred_2 == "A2u":
-            version_1 = irred_1.replace("2","z").replace("1","2").replace("z","1")
-            version_2 = version_1.replace("g","z").replace("u","g").replace("z","u")
-            return [version_2]
+            # version_1 = irred_1.replace("2","z").replace("1","2").replace("z","1")
+            # version_2 = version_1.replace("g","z").replace("u","g").replace("z","u")
+            # return [version_2]
+            return [self.replace_number(self.replace_gu(irred_1))]
         if irred_1 == "B2u" and irred_2 == "B2u":
             return ["A1g"]
         if (irred_1 == "B2u" and irred_2 == "B1u") or (irred_2 == "B2u" and irred_1 == "B1u"):
