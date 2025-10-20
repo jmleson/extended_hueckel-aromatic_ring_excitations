@@ -118,6 +118,7 @@ class TestMoleculeState(unittest.TestCase):
             mo_p.symmetry = combi[0]
             mo_s.symmetry = combi[1]
             t.set_up(energy_of_state_before_excitation=0, energy_of_state_after_excitation=1,
+                     energy_zero_p = 0, energy_zero_s = 0,
                      orbital_to_excite_of=mo_p, orbital_to_excite_to=mo_s)
             assert self.m.symmetry_allowed_transition(transition=t) is combi[2]
 
