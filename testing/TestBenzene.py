@@ -6,7 +6,6 @@ import sympy as sp
 from MoleculeRepresentation import MoleculeRepresentation
 from SALC import SALC
 from is_multiple import is_multiple
-from molecule_orbital import molecule_orbital
 from round_and_collect import round_and_collect
 
 
@@ -14,7 +13,7 @@ class TestBenzene(unittest.TestCase):
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)  # sehr wichtig!
-        self.p = MoleculeRepresentation(n=6)
+        self.p = MoleculeRepresentation(n=6, bound_cl_to_c_positions=[])
         self.p.circular = True
 
         p1, p2, p3, p4, p5, p6 = sp.symbols(f"p1 p2 p3 p4 p5 p6")
@@ -141,7 +140,7 @@ class TestBenzene(unittest.TestCase):
             else:
                 raise Exception(f"not supposed to be here {s.irred}")
 
-    def test_blabla(self):
+    def test_get_all_SALCs(self):
         # get_all_SALCs function:
         salcs = self.p.get_all_SALCs()
         # assert len(salcs) == 6

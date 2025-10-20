@@ -1,4 +1,4 @@
-
+import sympy as sp
 
 class molecule_orbital():
 
@@ -20,7 +20,7 @@ class molecule_orbital():
         return eq
 
 
-    def getEnergy(self):
+    def getEnergy(self) -> sp.Expr:
         if self.eigenvalue is not None and self.occupation is not None:
             return self.eigenvalue * self.occupation
         return "unknown"

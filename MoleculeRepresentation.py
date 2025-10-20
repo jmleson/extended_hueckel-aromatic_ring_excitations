@@ -3,6 +3,7 @@ from collections import defaultdict
 from fractions import Fraction
 import sympy as sp
 
+from PointGroups.C2v import C2v
 from PointGroups.D4h import D4h
 from PointGroups.D6h import D6h
 from SALC import SALC, norm_and_group_SALCs, linear_independent
@@ -12,20 +13,33 @@ from tst.solve_saekular_equation import calculate_hueckel_secular_equation
 
 
 class MoleculeRepresentation():
-    def __init__(self, n:int):
+    def __init__(self, n:int, bound_cl_to_c_positions:list[int]):
+        if not (len(bound_cl_to_c_positions) == 0 or
+                (len(bound_cl_to_c_positions) == 1 and bound_cl_to_c_positions[0] == 1)):
+            raise Exception("possibility not yet implemented")
         self.n = n
         self.circular = True
+        self.bound_cl_to_c_positions = bound_cl_to_c_positions
         self.s_orbital_active = False
         self.set_up_point_group()
 
 
     def set_up_point_group(self):
-        if self.n == 4 and self.circular:# D4h, cyclopentadiene
-            self.pointgroup = D4h()
-        elif self.n == 6:
-            self.pointgroup = D6h()
+        if len(self.bound_cl_to_c_positions) == 0:
+            if self.n == 4 and not self.circular:
+                # bend cyclopentadiene
+                self.point_group = C2v()
+            if self.n == 4 and self.circular:# D4h, cyclopentadiene
+                self.pointgroup = D4h()
+            elif self.n == 6 and self.circular:
+                self.pointgroup = D6h()
+            else:
+                raise Exception("Not implemented (C)")
+        # Cl included:
+        if self.n == 6 and self.circular:
+            self.pointgroup = C2v(n=self.n + len(self.bound_cl_to_c_positions))
         else:
-            raise Exception("Not implemented")
+            raise Exception("Not implemented (C-Cl)")
 
     def set_to_s_orbitals(self):
         # can't be undone!!!
@@ -39,7 +53,7 @@ class MoleculeRepresentation():
         reducible_representation = {}
         for op in self.pointgroup.operations:
             sum = 0
-            for orbital in range(1, self.n+1):
+            for orbital in range(1, self.n+len(self.bound_cl_to_c_positions)+1):
                 transformed_orbital_at_place_orbital = op.transform_p(orbital)
                 if transformed_orbital_at_place_orbital == orbital:
                     sum += 1
@@ -84,9 +98,9 @@ class MoleculeRepresentation():
     def project(self, irreducible_representation:dict, p_orbital_index:int):
         # Symbolische Basisfunktionen
         if self.s_orbital_active:
-            p_symbols = sp.symbols(f"s1:{self.n + 1}")
+            p_symbols = sp.symbols(f"s1:{self.n +len(self.bound_cl_to_c_positions) + 1}")
         else:
-            p_symbols = sp.symbols(f"p1:{self.n + 1}")
+            p_symbols = sp.symbols(f"p1:{self.n +len(self.bound_cl_to_c_positions) + 1}")
         SALCs = []
         for irred_name, value in irreducible_representation.items():
             # print("IRRED", irred_name)
@@ -110,10 +124,12 @@ class MoleculeRepresentation():
 
                 eq_expr /= self.pointgroup.group_order()
                 collected_p_orbitals_in_expression = {k: Fraction(v, self.pointgroup.group_order()) for k, v in collected_p_orbitals_in_expression.items()}
-                s = SALC(n=self.n, irred=irred_name, p_orbital_prefactors=collected_p_orbitals_in_expression,
+                if eq_expr != 0:
+                    s = SALC(n=self.n+len(self.bound_cl_to_c_positions),
+                         irred=irred_name, p_orbital_prefactors=collected_p_orbitals_in_expression,
                          equation=eq_expr, orbital_symbol="s" if self.s_orbital_active else "p")
-                # s.print()
-                SALCs.append(s)
+                    # s.print()
+                    SALCs.append(s)
         return SALCs
 
 
@@ -147,7 +163,7 @@ class MoleculeRepresentation():
         # print(irreducible_representation)
 
         all_SALCs = []
-        for n in range(1, self.n + 1):
+        for n in range(1, self.n +len(self.bound_cl_to_c_positions) + 1):
             SALCs = self.project(irreducible_representation, p_orbital_index=n)
             for s in SALCs:
                 # s.print()
@@ -170,15 +186,21 @@ class MoleculeRepresentation():
         alpha, beta = sp.symbols("alpha_s beta_s") if self.s_orbital_active else sp.symbols("alpha beta")
         if p1 == p2:
             return alpha
-        if p1 + 1 == p2 or p1 -1 == p2 :
+        if (p1 + 1 == p2 or p1 -1 == p2 ) and (p1 <= self.n and p2 <= self.n):
             return beta
         if self.circular and (
                             (p1-1 == 0 and p2 == self.n) or
                             (p2-1 == 0 and p1 == self.n)  ):
             return beta
+        if len(self.bound_cl_to_c_positions) != 0 :
+            if p1 in self.bound_cl_to_c_positions and p2 not in range(1,self.n+1):
+                return beta
+            if p2 in self.bound_cl_to_c_positions and p1 not in range(1,self.n+1):
+                return beta
         return 0
 
     def h_eff(self, salc_1: SALC, salc_2: SALC):
+        # print("h_eff:\t(", salc_1.equation, ") * (", salc_2.equation, end=")\t")
         if not salc_1.normalized or not salc_2.normalized:
             raise Exception("not normalized salcs!")
         h_eff_integral = 0
@@ -195,6 +217,7 @@ class MoleculeRepresentation():
                         #     print("p", p_orbital, "|", "p", combi, "=")
                         # print("+", self.orbitals_adjoint(p_orbital, combi) ,"*", factor)
                 h_eff_integral += part
+        # print("=", h_eff_integral)
         return h_eff_integral
 
     def get_effective_hamilton_matrix(self, SALCs: list[SALC], irred:str):

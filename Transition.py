@@ -1,12 +1,13 @@
 from TransitionIntegral import TransitionIntegral
-
+from molecule_orbital import molecule_orbital
+import sympy as sp
 
 class Transition:
 
     def __init__(self, n:int, s_after_transition:tuple[int,...], p_before_transition:tuple[int,...]):
         self.n = n
         if len(s_after_transition) != n or len(p_before_transition) != n:
-            raise Exception("kjewrh")
+            raise Exception("wrong length for orbital occupations")
         self.s_occupation_after_transition = s_after_transition
         self.p_before_transition = p_before_transition
 
@@ -14,9 +15,11 @@ class Transition:
         self.orbital_to_excite_to = None
         self.transition_integral = None
 
-    def set_up(self, energy_of_state_before_excitation, energy_of_state_after_excitation,
-               energy_zero_p, energy_zero_s,
-               orbital_to_excite_of, orbital_to_excite_to):
+    def set_up(self, energy_of_state_before_excitation: sp.Expr, energy_of_state_after_excitation: sp.Expr,
+               energy_zero_p: sp.Expr, energy_zero_s: sp.Expr,
+               orbital_to_excite_of:molecule_orbital, orbital_to_excite_to:molecule_orbital):
+        # if len(orbital_to_excite_of) != self.n:
+        #     raise Exception("wrong orbital_length")
         self.energy_of_state_before_excitation = energy_of_state_before_excitation
         self.energy_of_state_after_excitation = energy_of_state_after_excitation
         self.orbital_to_excite_to = orbital_to_excite_to
@@ -47,6 +50,7 @@ class Transition:
     def get_transitioning_energy(self):
         e1 = self.orbital_to_excite_to.eigenvalue - self.orbital_to_excite_of.eigenvalue# single occupation assumed
         e2 = self.energy_of_state_after_excitation - self.energy_of_state_before_excitation
+        # print(e1, "\t<->\t", e2,flush=True)
         assert e1 == e2
         return e2
 

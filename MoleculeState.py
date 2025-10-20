@@ -5,11 +5,15 @@ import sympy as sp
 
 
 class MoleculeState:
-    def __init__(self, n:int):
+    def __init__(self, n:int, bound_cl_to_c_positions:list[int]):
+        for i in bound_cl_to_c_positions:
+            if i not in range(1,n+1):
+                raise Exception("no valid C atom to bind Cl to")
         self.n = n
-        self.p = MoleculeRepresentation(n=n)
+        self.bound_cl_to_c_positions = bound_cl_to_c_positions
+        self.p = MoleculeRepresentation(n=n, bound_cl_to_c_positions=bound_cl_to_c_positions)
 
-        self.s = MoleculeRepresentation(n=n)
+        self.s = MoleculeRepresentation(n=n, bound_cl_to_c_positions=bound_cl_to_c_positions)
         self.set_up()
 
         self.p_occupation = None
@@ -34,7 +38,7 @@ class MoleculeState:
             self.antibonding_s.append(s_mo_orbitals[s])
 
     def set_occupation(self, p_occupation):
-        if len(p_occupation) != self.n:
+        if len(p_occupation) != self.n + len(self.bound_cl_to_c_positions):
             raise Exception("wrong number of orbitals")
         for n in p_occupation:
             if n not in [0,1,2]:
@@ -46,8 +50,8 @@ class MoleculeState:
             raise Exception("perform set_occupation() before")
         return self.calculate_energy_for_state_and_occupation(state=self.bonding_p, occupation=self.p_occupation)
 
-    def calculate_energy_for_state_and_occupation(self, state:list[molecule_orbital], occupation:tuple[int,...]):
-        if len(state) != self.n or len(occupation) != self.n:
+    def calculate_energy_for_state_and_occupation(self, state:list[molecule_orbital], occupation:tuple[int,...]) -> sp.Expr:
+        if len(state) != self.n +len(self.bound_cl_to_c_positions) or len(occupation) != self.n+ len(self.bound_cl_to_c_positions):
             raise Exception("state and occupation must have same length")
         e = 0
         for i in range(self.n):
@@ -62,15 +66,16 @@ class MoleculeState:
     def get_thinkable_transitions(self) -> list[Transition]:
         if self.p_occupation is None:
             raise Exception("perform set_occupation() before")
-        if len(self.p_occupation) != self.n:
+        if len(self.p_occupation) != self.n+ len(self.bound_cl_to_c_positions):
             raise Exception(f"unfitting occupation sequence for {self.n} orbitals")
         e_state_before = self.calculate_energy_before_transition()
         # 1st orbital (lowest energy) unchanged
         s_occupations = []
         for i in range(1, len(self.p_occupation)):
-            if self.p_occupation[i] > 0:
+            if self.p_occupation[i] > 0 and i in range(self.n):
                 s_after_transition = tuple([ 1 if p == i else 0 for p in range(len(self.p_occupation)) ])
-                transition = Transition(n=self.n, s_after_transition=s_after_transition,
+                transition = Transition(n=self.n+len(self.bound_cl_to_c_positions),
+                                        s_after_transition=s_after_transition,
                                         p_before_transition=self.p_occupation)
 
                 E_s_state = self.calculate_energy_for_state_and_occupation(state=self.antibonding_s,
@@ -92,14 +97,13 @@ class MoleculeState:
                 s_occupations.append(transition)
         return s_occupations
 
-    def calculate_mean_energy_for_state(self, state):
+    def calculate_mean_energy_for_state(self, state) -> sp.Expr:
         # calculate "zero" energy of orbital set, as defined in state (p_bonding / s_antibonding)
         energy_of_single_total_occupation = self.calculate_energy_for_state_and_occupation(state=state,
                                                     occupation=[1 for i in range(len(state))])
         return energy_of_single_total_occupation / len(state)
 
     def symmetry_allowed_transition(self, transition:Transition):
-
         sym_p = transition.orbital_to_excite_of.symmetry
         sym_s = transition.orbital_to_excite_to.symmetry
         dipole_operator = self.p.pointgroup.dipole_operator_symmetry
