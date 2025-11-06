@@ -34,6 +34,16 @@ class C2v(PointGroup):
             self.operations.append(o)
 
             self.dipole_operator_symmetry = "B2"  #1 -1 -1 1
+        elif self.n == 6: # Pyridin
+            # last item == Cl
+            o = SymmetryOperation(n=self.n, name="C2", transform_p=lambda i: [-1, -6, -5, -4, -3, -2][i - 1], amount=1)
+            self.operations.append(o)
+            o = SymmetryOperation(n=self.n, name="σv(xz)", transform_p=lambda i: [-1, -2, -3, -4, -5, -6][i - 1], amount=1)
+            self.operations.append(o)
+            o = SymmetryOperation(n=self.n, name="σv(yz)", transform_p=lambda i: [1, 6, 5, 4, 3, 2][i - 1], amount=1)
+            self.operations.append(o)
+
+            self.dipole_operator_symmetry = "B2"  # 1 -1 -1 1
         else:
             raise Exception("point group case not yet implemented")
 
