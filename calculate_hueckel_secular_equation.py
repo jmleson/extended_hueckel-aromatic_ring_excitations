@@ -18,6 +18,8 @@ def calculate_hueckel_secular_equation(H, info: str, sorting_dict_values: dict):
     # sp.pprint(det)
 
     # Eigenwerte und Eigenvektoren bestimmen
+    # H=H.subs(sp.Symbol('alpha_Cl'), sp.Symbol('alpha')*sp.Symbol('x'))
+    # H=H.subs(sp.Symbol('beta_Cl'), sp.Symbol('beta') * sp.Symbol('x'))
     eigen_data = H.eigenvects()
     eigen_pairs = []
 

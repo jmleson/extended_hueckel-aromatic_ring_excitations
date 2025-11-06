@@ -13,19 +13,22 @@ from tst.solve_saekular_equation import calculate_hueckel_secular_equation
 
 
 class MoleculeRepresentation():
-    def __init__(self, n:int, bound_cl_to_c_positions:list[int]):
+    def __init__(self, n:int, bound_cl_to_c_positions:list[int], n_instead_of_c:list[int]):
         if not (len(bound_cl_to_c_positions) == 0 or
                 (len(bound_cl_to_c_positions) == 1 and bound_cl_to_c_positions[0] == 1)):
             raise Exception("possibility not yet implemented")
+        if len(bound_cl_to_c_positions) != 0 and len(n_instead_of_c) != 0:
+            raise Exception("Code can handle either Cl or N, not both")
         self.n = n
         self.circular = True
         self.bound_cl_to_c_positions = bound_cl_to_c_positions
+        self.n_instead_of_c = n_instead_of_c
         self.s_orbital_active = False
         self.set_up_point_group()
 
 
     def set_up_point_group(self):
-        if len(self.bound_cl_to_c_positions) == 0:
+        if len(self.bound_cl_to_c_positions) == 0 and len(self.n_instead_of_c) == 0:
             if self.n == 4 and not self.circular:
                 # bend cyclopentadiene
                 self.point_group = C2v()
@@ -38,11 +41,24 @@ class MoleculeRepresentation():
                 return
             else:
                 raise Exception("Not implemented (C)")
+        # N in ring:
+        if self.n == 6:
+            if self.n_instead_of_c == [1]:
+                self.pointgroup = C2v(n=self.n)
+                return
+            elif self.n_instead_of_c == [1, 3]:
+                self.pointgroup = D2h(n=self.n)
+                return
+            else:
+                raise Exception("unknown setting for N in C-Ring")
         # Cl included:
-        if self.n == 6 and self.circular:
-            self.pointgroup = C2v(n=self.n + len(self.bound_cl_to_c_positions))
-        else:
-            raise Exception("Not implemented (C-Cl)")
+            if self.circular:
+                self.pointgroup = C2v(n=self.n + len(self.bound_cl_to_c_positions))
+                return
+        if len(self.n_instead_of_c) == self.n:
+            self.pointgroup = D6h()
+            return #TODO replace alpha by alpha_n later on
+        raise Exception("Not implemented")
 
     def set_to_s_orbitals(self):
         # can't be undone!!!
@@ -187,19 +203,22 @@ class MoleculeRepresentation():
 
     def orbitals_adjoint(self, p1, p2):
         alpha, beta = sp.symbols("alpha_s beta_s") if self.s_orbital_active else sp.symbols("alpha beta")
+        alpha_cl, beta_cl = sp.symbols("alpha_s_Cl beta_s_Cl") if self.s_orbital_active else sp.symbols("alpha_Cl beta_Cl")
         if p1 == p2:
+            if p1 not in range(1,self.n+1):
+                return alpha_cl
             return alpha
-        if (p1 + 1 == p2 or p1 -1 == p2 ) and (p1 <= self.n and p2 <= self.n):
+        if (p1 + 1 == p2 or p1 - 1 == p2 ) and (p1 <= self.n and p2 <= self.n):# C
             return beta
         if self.circular and (
                             (p1-1 == 0 and p2 == self.n) or
-                            (p2-1 == 0 and p1 == self.n)  ):
+                            (p2-1 == 0 and p1 == self.n)  ):#C
             return beta
-        if len(self.bound_cl_to_c_positions) != 0 :
+        if len(self.bound_cl_to_c_positions) != 0:
             if p1 in self.bound_cl_to_c_positions and p2 not in range(1,self.n+1):
-                return beta
+                return beta_cl
             if p2 in self.bound_cl_to_c_positions and p1 not in range(1,self.n+1):
-                return beta
+                return beta_cl
         return 0
 
     def h_eff(self, salc_1: SALC, salc_2: SALC):
@@ -251,8 +270,11 @@ class MoleculeRepresentation():
         SALCs_by_irred = norm_and_group_SALCs(SALCs)
 
         result = []
-        alpha, beta, alpha_s, beta_s = sp.symbols(f"alpha beta alpha_s beta_s")
-        sorting_dict_values = {alpha: 0, beta: -1, alpha_s: 0, beta_s: -1}
+        alpha, beta, alpha_s, beta_s, alpha_Cl, beta_Cl, alpha_s_Cl, beta_s_Cl = sp.symbols(f"alpha beta alpha_s beta_s alpha_Cl beta_Cl alpha_s_Cl beta_s_Cl")
+        sorting_dict_values = {alpha: 0, beta: -1,
+                               alpha_s: 0, beta_s: -1,
+                               alpha_Cl: 0, beta_Cl: -1,
+                               alpha_s_Cl: 0, beta_s_Cl: -1}
         for irred, salcs in SALCs_by_irred.items():
             H = self.get_effective_hamilton_matrix(SALCs=salcs, irred=irred)
             result_irred = calculate_hueckel_secular_equation(H, info=irred, sorting_dict_values=sorting_dict_values)
@@ -273,7 +295,7 @@ class MoleculeRepresentation():
 
 
 if __name__ == "__main__":
-    p = MoleculeRepresentation(n=4)
+    p = MoleculeRepresentation(n=6, n_instead_of_c=[1], bound_cl_to_c_positions=[])
     p.set_to_s_orbitals()
 
     reducible_representation = p.get_reducible_representation_for_ring_p_orbitals()

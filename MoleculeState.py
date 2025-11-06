@@ -5,15 +5,15 @@ import sympy as sp
 
 
 class MoleculeState:
-    def __init__(self, n:int, bound_cl_to_c_positions:list[int]):
+    def __init__(self, n:int, bound_cl_to_c_positions:list[int], n_instead_of_c:list[int]):
         for i in bound_cl_to_c_positions:
             if i not in range(1,n+1):
                 raise Exception("no valid C atom to bind Cl to")
         self.n = n
         self.bound_cl_to_c_positions = bound_cl_to_c_positions
-        self.p = MoleculeRepresentation(n=n, bound_cl_to_c_positions=bound_cl_to_c_positions)
+        self.p = MoleculeRepresentation(n=n, bound_cl_to_c_positions=bound_cl_to_c_positions, n_instead_of_c=n_instead_of_c)
 
-        self.s = MoleculeRepresentation(n=n, bound_cl_to_c_positions=bound_cl_to_c_positions)
+        self.s = MoleculeRepresentation(n=n, bound_cl_to_c_positions=bound_cl_to_c_positions, n_instead_of_c=n_instead_of_c)
         self.set_up()
 
         self.p_occupation = None

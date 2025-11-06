@@ -142,7 +142,7 @@ class TestChlorobenzene(unittest.TestCase):
         self.phi_5.norm()
         self.phi_6.norm()
         self.phi_7.norm()
-        alpha, beta = sp.symbols(f"alpha beta")
+        alpha, beta, alpha_Cl, beta_Cl = sp.symbols(f"alpha beta alpha_Cl beta_Cl")
         round_to = 6
 
         # A2:
@@ -154,7 +154,7 @@ class TestChlorobenzene(unittest.TestCase):
         assert sp.simplify(result - (alpha)) == 0
         h = self.p.h_eff(salc_1=self.phi_3, salc_2=self.phi_3)
         result = round_and_collect(h, [alpha, beta], round_to)
-        assert sp.simplify(result - (alpha)) == 0
+        assert sp.simplify(result - (alpha_Cl)) == 0
         # B2:
         h = self.p.h_eff(salc_1=self.phi_4, salc_2=self.phi_4)
         result = round_and_collect(h, [alpha, beta], round_to)
@@ -172,19 +172,21 @@ class TestChlorobenzene(unittest.TestCase):
         #mixed terms:
         h = self.p.h_eff(salc_1=self.phi_1, salc_2=self.phi_3)
         result = round_and_collect(h, [alpha, beta], round_to)
-        assert sp.simplify(result - (beta)) == 0
+        assert sp.simplify(result - (beta_Cl)) == 0
 
 
     def test_adjoint(self):
-        alpha, beta = sp.symbols(f"alpha beta")
+        alpha, beta, alpha_Cl, beta_Cl = sp.symbols(f"alpha beta alpha_Cl beta_Cl")
         # Cl:
-        assert self.p.orbitals_adjoint(1,7) == beta
+        assert self.p.orbitals_adjoint(7,1) == beta_Cl
+        assert self.p.orbitals_adjoint(7, 7) == alpha_Cl
         for i in range(1,6):
             assert self.p.orbitals_adjoint(i+1,7) == 0
 
         # C1:
         assert self.p.orbitals_adjoint(1, 1) == alpha
-        for neighbor in [2, 6, 7]:
+        assert self.p.orbitals_adjoint(1, 7) == beta_Cl
+        for neighbor in [2, 6]:
             assert self.p.orbitals_adjoint(1,neighbor) == beta
         for others in [3,4,5]:
             assert self.p.orbitals_adjoint(1,others) == 0
@@ -197,7 +199,7 @@ class TestChlorobenzene(unittest.TestCase):
             assert self.p.orbitals_adjoint(2, others) == 0
 
     def test_get_effective_hamilton_matrix(self):
-        alpha, beta = sp.symbols(f"alpha beta")
+        alpha, beta, alpha_Cl, beta_Cl = sp.symbols(f"alpha beta alpha_Cl beta_Cl")
 
         SALCs = self.p.get_all_SALCs()
         SALCs_by_irred = norm_and_group_SALCs(SALCs)
@@ -215,11 +217,11 @@ class TestChlorobenzene(unittest.TestCase):
         h_matrix = self.p.get_effective_hamilton_matrix(SALCs=SALCs_by_irred["B2"], irred="B2")
         # sp.pprint(h_matrix)
         expected = sp.Matrix([
-            [alpha,             sp.sqrt(2) * beta,  0,                  0,                  beta],
+            [alpha,             sp.sqrt(2) * beta,  0,                  0,                  beta_Cl],
             [sp.sqrt(2) * beta, alpha,              beta,               0,                  0],
             [0,                 beta,               alpha,              sp.sqrt(2) * beta,  0],
             [0,                 0,                  sp.sqrt(2) * beta,  alpha,              0],#
-            [beta,              0,                  0,                  0,                  alpha]
+            [beta_Cl,              0,                  0,                  0,                  alpha_Cl]
         ])
         assert h_matrix.shape == expected.shape
         assert h_matrix.equals(expected)
