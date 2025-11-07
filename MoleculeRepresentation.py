@@ -30,69 +30,6 @@ class MoleculeRepresentation():
         self.set_up_point_group()
 
 
-    def get_latex_symmetry_behavior(self):
-        content = ""
-        latex_plus = r"\oplus{}"
-        try:
-            content += f"\nSymmetry behavior of the {'s' if self.s_orbital_active else 'p'}-orbitals:\n"
-            reducible_representation = self.get_reducible_representation_for_ring_p_orbitals()
-            irreducible_representation = self.decomposing_into_irreducible_representations(reducible_representation)
-            for (representation, name) in [
-                (reducible_representation, "red"),
-                (irreducible_representation, "irred")
-            ]:
-                gamma_parts = []
-                for sym, coeff in representation.items():
-                    if coeff != 0:
-                        gamma_parts.append(fr"\,{coeff} {sym}\;")
-                gamma_red_str = latex_plus.join(gamma_parts)
-                gamma_red_str = gamma_red_str.replace("σ", r"\sigma ")
-                content += fr"""$$\Gamma_{{{name}}} = {gamma_red_str}$$""".strip() + "\n"
-            return content
-        except Exception as e:
-            return r"\textcolor{red}{"+f"Error generating reducible representation: {e}"+"}"
-
-    def get_latex_salcs(self, print_active:bool=True):
-        content = ""
-        try:
-            SALCs = self.get_all_SALCs()
-            content += r"\begin{itemize}"+"\n"
-            for s in SALCs:
-                s.norm()
-                if print_active:
-                    s.print()
-                content += fr"""
-                \item SALC of {s.irred}: \quad ${sympy.latex(s.equation)}$
-                """.strip() + "\n"
-            content += r"\end{itemize}"+"\n"
-        except Exception as e:
-            content += r"\textcolor{red}{"+ f"Error generating SALC: {e}\n" +"}"
-
-        content += "Put together these SALCs form the following Hamilton matrices:\n"
-        SALCs_by_irred = norm_and_group_SALCs(SALCs)
-        for irred, salcs in SALCs_by_irred.items():
-            H = self.get_effective_hamilton_matrix(SALCs=salcs, irred=irred)
-            content += f"     $$ H_{{{irred}}}= " + sympy.latex(H).replace("matrix","bmatrix") + "$$ \n"
-
-        content += "\n\nSolving Hückels secular equations, that follow from these H, leads to:\n"
-        try:
-            molecule_orbitals = self.get_energy_levels()
-            if len(molecule_orbitals) == 0:
-                raise Exception("no orbitals available")
-            content += r"\begin{itemize}" + "\n"
-            for s in molecule_orbitals:
-                content += fr"""
-                \item orbital of {s.symmetry} with energy = ${sympy.latex(s.eigenvalue)}$
-                """.strip() + "\n"
-            content += r"\end{itemize}" + "\n"
-        except Exception as e:
-            content += r"\textcolor{red}{"+ f"Error generating molecule orbitals: {e}\n" +r"}"
-
-        return content + "\n"
-
-
-
-
     def set_up_point_group(self):
         if len(self.bound_cl_to_c_positions) == 0 and len(self.n_instead_of_c) == 0:
             if self.n == 4 and not self.circular:
@@ -112,7 +49,7 @@ class MoleculeRepresentation():
             if self.n_instead_of_c == [1]:
                 self.pointgroup = C2v(n=self.n)
                 return
-            elif self.n_instead_of_c == [1, 3]:
+            elif self.n_instead_of_c == [1, 4]:
                 self.pointgroup = D2h(n=self.n)
                 return
             else:
@@ -132,6 +69,7 @@ class MoleculeRepresentation():
         for s in range(len(self.pointgroup.operations)):
             old_transform = self.pointgroup.operations[s].transform_p
             self.pointgroup.operations[s].transform_p = lambda x, f=old_transform: abs(f(x))
+
 
 
     def get_reducible_representation_for_ring_p_orbitals(self):
@@ -354,23 +292,90 @@ class MoleculeRepresentation():
             H = self.get_effective_hamilton_matrix(SALCs=salcs, irred=irred)
             try:
                 result_irred = calculate_hueckel_secular_equation(H, info=irred, sorting_dict_values=sorting_dict_values)
+                for i in result_irred:
+                    i.symmetry = irred
+                    # print(i.symmetry)
+                    # sp.pprint(i.eigenvector)
+                    for row in range(len(i.eigenvector)):
+                        if i.eigenvector[row] != 0:
+                            i.salcs.append({"factor": i.eigenvector[row], "salc": salcs[row]})
+                    result.append(i)
             except Exception as e:
                 print(e)
-                return []
-            for i in result_irred:
-                i.symmetry = irred
-                # print(i.symmetry)
-                # sp.pprint(i.eigenvector)
-                for row in range(len(i.eigenvector)):
-                    if i.eigenvector[row] != 0:
-                        i.salcs.append({"factor": i.eigenvector[row], "salc": salcs[row]})
-                result.append(i)
+                #return []
+
         # sorting:
         molecule_orbitals = sorted(
             result,
             key=lambda m: m.eigenvalue.subs(sorting_dict_values)
         )
         return molecule_orbitals
+
+
+
+
+
+    def get_latex_symmetry_behavior(self):
+        content = ""
+        latex_plus = r"\oplus{}"
+        try:
+            content += f"\nSymmetry behavior of the {'s' if self.s_orbital_active else 'p'}-orbitals:\n"
+            reducible_representation = self.get_reducible_representation_for_ring_p_orbitals()
+            irreducible_representation = self.decomposing_into_irreducible_representations(reducible_representation)
+            for (representation, name) in [
+                (reducible_representation, "red"),
+                (irreducible_representation, "irred")
+            ]:
+                gamma_parts = []
+                for sym, coeff in representation.items():
+                    if coeff != 0:
+                        gamma_parts.append(fr"\,{coeff} {sym}\;")
+                gamma_red_str = latex_plus.join(gamma_parts)
+                gamma_red_str = gamma_red_str.replace("σ", r"\sigma ")
+                content += fr"""$$\Gamma_{{{name}}} = {gamma_red_str}$$""".strip() + "\n"
+            return content
+        except Exception as e:
+            return r"\textcolor{red}{"+f"Error generating reducible representation: {e}"+"}"
+
+    def get_latex_salcs(self, print_active:bool=True):
+        content = ""
+        try:
+            SALCs = self.get_all_SALCs()
+            content += r"\begin{itemize}"+"\n"
+            for s in SALCs:
+                s.norm()
+                if print_active:
+                    s.print()
+                content += fr"""
+                \item SALC of {s.irred}: \quad ${sympy.latex(s.equation)}$
+                """.strip() + "\n"
+            content += r"\end{itemize}"+"\n"
+        except Exception as e:
+            content += r"\textcolor{red}{"+ f"Error generating SALC: {e}\n" +"}"
+
+        content += "Put together these SALCs form the following Hamilton matrices:\n"
+        SALCs_by_irred = norm_and_group_SALCs(SALCs)
+        for irred, salcs in SALCs_by_irred.items():
+            H = self.get_effective_hamilton_matrix(SALCs=salcs, irred=irred)
+            content += f"     $$ H_{{{irred}}}= " + sympy.latex(H).replace("matrix","bmatrix") + "$$ \n"
+
+        content += "\n\nSolving Hückels secular equations, that follow from these H, leads to:\n"
+        try:
+            molecule_orbitals = self.get_energy_levels()
+            if len(molecule_orbitals) == 0:
+                raise Exception("no orbitals available")
+            content += r"\begin{itemize}" + "\n"
+            for s in molecule_orbitals:
+                content += fr"""
+                \item orbital of {s.symmetry} with energy = ${sympy.latex(s.eigenvalue)}$
+                """.strip() + "\n"
+            content += r"\end{itemize}" + "\n"
+        except Exception as e:
+            content += r"\textcolor{red}{"+ f"Error generating molecule orbitals: {e}\n" +r"}"
+
+        return content + "\n"
+
+
 
 
 if __name__ == "__main__":

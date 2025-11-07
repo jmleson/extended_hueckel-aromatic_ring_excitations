@@ -15,25 +15,24 @@ class D2h(PointGroup):
         o = SymmetryOperation(n=self.n, name="E", transform_p=lambda i: i, amount = 1)
         self.operations.append(o)
 
-        o = SymmetryOperation(n=self.n, name="C2(z)", transform_p=lambda i: [][i - 1], amount=1)
+        o = SymmetryOperation(n=self.n, name="C2(z)", transform_p=lambda i: [4, 5, 6, 1, 2, 3][i - 1], amount=1)
         self.operations.append(o)
-        o = SymmetryOperation(n=self.n, name="C2(y)", transform_p=lambda i: [][i - 1], amount=1)
+        o = SymmetryOperation(n=self.n, name="C2(y)", transform_p=lambda i: [-1, -6, -5, -4, -3, -2][i - 1], amount=1)
         self.operations.append(o)
-        o = SymmetryOperation(n=self.n, name="C2(x)", transform_p=lambda i: [][i - 1], amount=1)
-        self.operations.append(o)
-
-        o = SymmetryOperation(n=self.n, name="i", transform_p=lambda i: [][i - 1], amount=1)
+        o = SymmetryOperation(n=self.n, name="C2(x)", transform_p=lambda i: [-4, -3, -2, -1, -6, -5][i - 1], amount=1)
         self.operations.append(o)
 
-        o = SymmetryOperation(n=self.n, name="σ(xy)", transform_p=lambda i: [][i - 1], amount=1)
-        self.operations.append(o)
-        o = SymmetryOperation(n=self.n, name="σ(xz)", transform_p=lambda i: [][i - 1], amount=1)
-        self.operations.append(o)
-        o = SymmetryOperation(n=self.n, name="σ(yz)", transform_p=lambda i: [][i - 1], amount=1)
+        o = SymmetryOperation(n=self.n, name="i", transform_p=lambda i: [-4, -5, -6, -1, -2, -3][i - 1], amount=1)
         self.operations.append(o)
 
+        o = SymmetryOperation(n=self.n, name="σ(xy)", transform_p=lambda i: [-1, -2, -3, -4, -5, -6][i - 1], amount=1)
+        self.operations.append(o)
+        o = SymmetryOperation(n=self.n, name="σ(xz)", transform_p=lambda i: [4, 3, 2, 1, 6, 5][i - 1], amount=1)
+        self.operations.append(o)
+        o = SymmetryOperation(n=self.n, name="σ(yz)", transform_p=lambda i: [1, 6, 5, 4, 3, 2][i - 1], amount=1)
+        self.operations.append(o)
 
-        self.dipole_operator_symmetry = ""
+        self.dipole_operator_symmetry = "B1u"
 
 
     def set_up_irreducible_representations(self):

@@ -1,0 +1,76 @@
+\documentclass[12pt,a4paper]{article}
+        \usepackage{graphicx}
+        \usepackage{geometry}
+        \geometry{margin=2cm}
+        \usepackage{helvet}
+        \usepackage{xcolor}
+        \usepackage{amsmath} % for bmatrix
+        \setlength{\parindent}{0pt}  % No indentation globally
+        \renewcommand{\familydefault}{\sfdefault}
+
+        \begin{document}\begin{center}
+                \Huge \textbf{Pyrazine} \\[1cm]
+                \includegraphics[width=0.5\textwidth]{pyrazine} \\[0.5cm]
+                \Large Point Group: \textbf{D2h}
+            \end{center}\newpage\section*{p orbitals}
+Symmetry behavior of the p-orbitals:
+$$\Gamma_{red} = \,6 E\;\oplus{}\,-2 C2(y)\;\oplus{}\,-6 \sigma (xy)\;\oplus{}\,2 \sigma (yz)\;$$
+$$\Gamma_{irred} = \,1 B2g\;\oplus{}\,2 B3g\;\oplus{}\,1 Au\;\oplus{}\,2 B1u\;$$
+
+
+\begin{itemize}
+\item SALC of B3g: \quad $\frac{\sqrt{2} p_{1}}{2} - \frac{\sqrt{2} p_{4}}{2}$
+\item SALC of B1u: \quad $\frac{\sqrt{2} p_{1}}{2} + \frac{\sqrt{2} p_{4}}{2}$
+\item SALC of B2g: \quad $\frac{p_{2}}{2} + \frac{p_{3}}{2} - \frac{p_{5}}{2} - \frac{p_{6}}{2}$
+\item SALC of B3g: \quad $\frac{p_{2}}{2} - \frac{p_{3}}{2} - \frac{p_{5}}{2} + \frac{p_{6}}{2}$
+\item SALC of Au: \quad $\frac{p_{2}}{2} - \frac{p_{3}}{2} + \frac{p_{5}}{2} - \frac{p_{6}}{2}$
+\item SALC of B1u: \quad $\frac{p_{2}}{2} + \frac{p_{3}}{2} + \frac{p_{5}}{2} + \frac{p_{6}}{2}$
+\end{itemize}
+Put together these SALCs form the following Hamilton matrices:
+     $$ H_{B3g}= \left[\begin{bmatrix}\alpha_{N} & \sqrt{2} \beta_{N}\\\sqrt{2} \beta_{N} & \alpha - \beta\end{bmatrix}\right]$$ 
+     $$ H_{B1u}= \left[\begin{bmatrix}\alpha_{N} & \sqrt{2} \beta_{N}\\\sqrt{2} \beta_{N} & \alpha + \beta\end{bmatrix}\right]$$ 
+     $$ H_{B2g}= \left[\begin{bmatrix}\alpha + \beta\end{bmatrix}\right]$$ 
+     $$ H_{Au}= \left[\begin{bmatrix}\alpha - \beta\end{bmatrix}\right]$$ 
+
+
+Solving Hückels secular equations, that follow from these H, leads to:
+\begin{itemize}
+\item orbital of B2g with energy = $\alpha + \beta$
+\item orbital of Au with energy = $\alpha - \beta$
+\end{itemize}
+
+
+
+\newpage \section*{s orbitals}
+Symmetry behavior of the s-orbitals:
+$$\Gamma_{red} = \,6 E\;\oplus{}\,2 C2(y)\;\oplus{}\,6 \sigma (xy)\;\oplus{}\,2 \sigma (yz)\;$$
+$$\Gamma_{irred} = \,2 Ag\;\oplus{}\,1 B1g\;\oplus{}\,2 B2u\;\oplus{}\,1 B3u\;$$
+
+
+\begin{itemize}
+\item SALC of Ag: \quad $\frac{\sqrt{2} s_{1}}{2} + \frac{\sqrt{2} s_{4}}{2}$
+\item SALC of B2u: \quad $\frac{\sqrt{2} s_{1}}{2} - \frac{\sqrt{2} s_{4}}{2}$
+\item SALC of Ag: \quad $\frac{s_{2}}{2} + \frac{s_{3}}{2} + \frac{s_{5}}{2} + \frac{s_{6}}{2}$
+\item SALC of B1g: \quad $\frac{s_{2}}{2} - \frac{s_{3}}{2} + \frac{s_{5}}{2} - \frac{s_{6}}{2}$
+\item SALC of B2u: \quad $\frac{s_{2}}{2} - \frac{s_{3}}{2} - \frac{s_{5}}{2} + \frac{s_{6}}{2}$
+\item SALC of B3u: \quad $\frac{s_{2}}{2} + \frac{s_{3}}{2} - \frac{s_{5}}{2} - \frac{s_{6}}{2}$
+\end{itemize}
+Put together these SALCs form the following Hamilton matrices:
+     $$ H_{Ag}= \left[\begin{bmatrix}\alpha_{s N} & \sqrt{2} \beta_{s N}\\\sqrt{2} \beta_{s N} & \alpha_{s} + \beta_{s}\end{bmatrix}\right]$$ 
+     $$ H_{B2u}= \left[\begin{bmatrix}\alpha_{s N} & \sqrt{2} \beta_{s N}\\\sqrt{2} \beta_{s N} & \alpha_{s} - \beta_{s}\end{bmatrix}\right]$$ 
+     $$ H_{B1g}= \left[\begin{bmatrix}\alpha_{s} - \beta_{s}\end{bmatrix}\right]$$ 
+     $$ H_{B3u}= \left[\begin{bmatrix}\alpha_{s} + \beta_{s}\end{bmatrix}\right]$$ 
+
+
+Solving Hückels secular equations, that follow from these H, leads to:
+\begin{itemize}
+\item orbital of B3u with energy = $\alpha_{s} + \beta_{s}$
+\item orbital of B1g with energy = $\alpha_{s} - \beta_{s}$
+\end{itemize}
+
+
+
+\newpage \section*{Transitions from p orbitals into s orbitals}\textcolor{red}{unable to calculate transitions due to: state and occupation must have same length}\newpage \section*{Dispersion energies following from the transitions}
+\textcolor{red}{Error in Calculations Dispersion state and occupation must have same length}
+
+\end{document}

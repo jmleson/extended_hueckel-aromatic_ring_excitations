@@ -36,7 +36,7 @@ def pyridine(print_active:bool=True):
         m.compare_ground_state_assumption(print_active=print_active)
 
 def pyrazine(print_active:bool=True):
-    m = MoleculeState(n=6, bound_cl_to_c_positions=[], n_instead_of_c=[1, 3] )
+    m = MoleculeState(n=6, bound_cl_to_c_positions=[], n_instead_of_c=[1, 4] )
     if not print_active:
         m.latex_datei_erstellen("Pyrazine")
     else:
@@ -58,8 +58,8 @@ def chlorobenzene(print_active:bool=True):
 if __name__ == "__main__":
     print_active = False
 
-    # cyclopentadiene(print_active)
-    # benzene(print_active)
-    # chlorobenzene(print_active)
+    # cyclopentadiene()
+    benzene(print_active)
+    chlorobenzene(print_active)
     pyridine(print_active)
-    # pyrazine(print_active)
+    pyrazine(print_active)

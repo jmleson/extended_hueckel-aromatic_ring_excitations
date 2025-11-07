@@ -22,13 +22,44 @@ class MoleculeState:
         self.s = MoleculeRepresentation(n=n, bound_cl_to_c_positions=bound_cl_to_c_positions, n_instead_of_c=n_instead_of_c)
         try:
             self.set_up()
-        except:
-            print("!!! set up failed")
+        except Exception as e:
+            print(f"!!! set up failed due to {e}")
 
         self.p_occupation = None
 
+
+    def set_up(self):
+        # print("P ORBITALS")
+        p_mo_orbitals = self.p.get_energy_levels()
+        # for x in p_mo_orbitals:
+        #     print("\t", x.symmetry, ":\t", x.eigenvalue)
+        self.bonding_p = p_mo_orbitals
+
+        # print("\nS ORBITALS")
+        self.s.set_to_s_orbitals()
+        s_mo_orbitals = self.s.get_energy_levels()
+        # for s in s_mo_orbitals:
+        #     print("\t", s.symmetry, ":\t", s.eigenvalue)
+        self.antibonding_s = []
+        alpha, alpha_s, beta, beta_s = sp.symbols("alpha alpha_s beta beta_s")
+        for s in range(len(s_mo_orbitals)):
+            s_mo_orbitals[s].eigenvalue = s_mo_orbitals[s].eigenvalue.subs(alpha, alpha_s).subs(beta, beta_s)
+            s_mo_orbitals[s].eigenvector = s_mo_orbitals[s].eigenvector.subs(alpha, alpha_s).subs(beta, beta_s)
+            self.antibonding_s.append(s_mo_orbitals[s])
+
+
     def get_ground_state(self):
         return get_ground_state(nel=self.n, norb=self.n) + [2]*len(self.bound_cl_to_c_positions)
+
+    def set_occupation(self, p_occupation):
+        if len(p_occupation) != self.n + len(self.bound_cl_to_c_positions):
+            raise Exception("wrong number of orbitals")
+        for n in p_occupation:
+            if n not in [0,1,2]:
+                raise Exception("wrong occupation")
+        self.p_occupation = p_occupation
+
+
 
     def compare_ground_state_assumption(self, print_active:bool = True):
         ground_state_occupation = self.get_ground_state()
@@ -46,7 +77,7 @@ class MoleculeState:
             return result
 
     def calculate_result_for_all_transitions_results(self, print_active:bool=True):
-        triplet_states = self.construct_occupied_triplett_states()
+        triplet_states = self.construct_occupied_triplet_states()
         result = "\n"+ r"\begin{enumerate}"+"\n"
         state_no = 0
         for a in triplet_states:
@@ -73,7 +104,7 @@ class MoleculeState:
         result += r"\end{enumerate}"+"\n"
         return result
 
-    def construct_occupied_triplett_states(self):
+    def construct_occupied_triplet_states(self):
         triplet_states = construct_occupied_triplett_states(nel=self.n, norb=self.n)
         if len(self.bound_cl_to_c_positions) != 0:
             to_add = (2,) * len(self.bound_cl_to_c_positions)
@@ -82,72 +113,8 @@ class MoleculeState:
                 triplet["occupation"] += to_add
         return triplet_states
 
-    def latex_datei_erstellen(self, molekuel_name):
-        """Erstellt eine einfache LaTeX-Datei mit Molekülname, Bild und Punktgruppe."""
-        tex_datei = molekuel_name.replace(" ","").lower()+".tex"
-        header = (fr"""
-        \documentclass[12pt,a4paper]{{article}}
-        \usepackage{{graphicx}}
-        \usepackage{{geometry}}
-        \geometry{{margin=2cm}}
-        \usepackage{{helvet}}
-        \usepackage{{xcolor}}
-        \usepackage{{amsmath}} % for bmatrix
-        \setlength{{\parindent}}{{0pt}}  % No indentation globally
-        \renewcommand{{\familydefault}}{{\sfdefault}}
-
-        \begin{{document}}
-        """.strip())
-        content = "" #INFO added later on
-        footer = "\n\n"+fr"""
-        \end{{document}}
-        """.strip()
-
-        try:
-            bild_datei = self.sketch_chemical_ring(filename = molekuel_name.replace(" ","").lower())
-            punktgruppe = self.p.pointgroup.__class__.__name__
-            content += fr"""
-            \begin{{center}}
-                \Huge \textbf{{{molekuel_name}}} \\[1cm]
-                \includegraphics[width=0.5\textwidth]{{{bild_datei}}} \\[0.5cm]
-                \Large Point Group: \textbf{{{punktgruppe}}}
-            \end{{center}}
-            """.strip()
-        except:
-            pass
-        content += r"\newpage"
-
-        try:
-            content += r"\section*{p orbitals}"
-            content += self.p.get_latex_symmetry_behavior()+"\n\n"
-            content += self.p.get_latex_salcs(print_active=False)+"\n\n"
-
-            content += r"\newpage \section*{s orbitals}"
-            content += self.s.get_latex_symmetry_behavior() + "\n\n"
-            content += self.s.get_latex_salcs(print_active=False) + "\n\n"
-        except Exception as e:
-            content += r"\textcolor{red}{"+f"Error in solving salc-hueckel-matrix {e}\n"+"}"
-
-        content += r"\newpage \section*{Transitions from p orbitals into s orbitals}"
-        try:
-            content += self.calculate_result_for_all_transitions(print_active=False)
-        except Exception as e:
-            content += r"\textcolor{red}{"+f"unable to calculate transitions due to: {e}"+"}"
-
-        content += r"\newpage \section*{Dispersion energies following from the transitions}"+ "\n"
-        try:
-            content += self.calculate_result_for_all_transitions_results(print_active=False)
-            content += self.compare_ground_state_assumption(print_active=False)
-        except Exception as e:
-            content += r"\textcolor{red}{"+f"Error in Calculations Dispersion {e}"+"}"
-
-        with open(tex_datei, "w") as f:
-            f.write(header + content + footer)
-        print(f"LaTeX-Datei gespeichert als: {tex_datei}")
-        return
-
     def calculate_result_for_all_transitions(self, print_active:bool = True):
-        triplet_states = self.construct_occupied_triplett_states()
+        triplet_states = self.construct_occupied_triplet_states()
         transitions = ""
         for triplet in triplet_states:
             if print_active:
@@ -161,46 +128,6 @@ class MoleculeState:
             for i in allowed_transitions:
                 transitions += i.to_latex() + "\n"
         return transitions
-
-
-    def set_up(self):
-        # print("P ORBITALS")
-        p_mo_orbitals = self.p.get_energy_levels()
-        # for x in p_mo_orbitals:
-        #     print("\t", x.symmetry, ":\t", x.eigenvalue)
-        self.bonding_p = p_mo_orbitals
-
-        # print("\nS ORBITALS")
-        self.s.set_to_s_orbitals()
-        s_mo_orbitals = self.s.get_energy_levels()
-        # for s in s_mo_orbitals:
-        #     print("\t", s.symmetry, ":\t", s.eigenvalue)
-        self.antibonding_s = []
-        alpha, alpha_s, beta, beta_s = sp.symbols("alpha alpha_s beta beta_s")
-        for s in range(len(s_mo_orbitals)):
-            s_mo_orbitals[s].eigenvalue = s_mo_orbitals[s].eigenvalue.subs(alpha, alpha_s).subs(beta, beta_s)
-            s_mo_orbitals[s].eigenvector = s_mo_orbitals[s].eigenvector.subs(alpha, alpha_s).subs(beta, beta_s)
-            self.antibonding_s.append(s_mo_orbitals[s])
-
-    def set_occupation(self, p_occupation):
-        if len(p_occupation) != self.n + len(self.bound_cl_to_c_positions):
-            raise Exception("wrong number of orbitals")
-        for n in p_occupation:
-            if n not in [0,1,2]:
-                raise Exception("wrong occupation")
-        self.p_occupation = p_occupation
-
-    def sketch_chemical_ring(self, filename = None):
-        atom_symbols = [
-            "N" if i in self.n_instead_of_c else "C"
-            for i in range(self.n)
-        ]
-        if filename is None:
-            filename = f"molecule_{self.n}.png"
-        return sketch_chemical_ring(speichername=filename,
-                             atom_symbols=atom_symbols,
-                             bound_Cl_to_C=self.bound_cl_to_c_positions)
-
 
     def calculate_energy_before_transition(self):
         if self.p_occupation is None:
@@ -286,3 +213,78 @@ class MoleculeState:
         return allowed_transitions
 
 
+
+    def sketch_chemical_ring(self, filename = None):
+        atom_symbols = [
+            "N" if i in self.n_instead_of_c else "C"
+            for i in range(self.n)
+        ]
+        if filename is None:
+            filename = f"molecule_{self.n}.png"
+        return sketch_chemical_ring(speichername=filename,
+                             atom_symbols=atom_symbols,
+                             bound_Cl_to_C=self.bound_cl_to_c_positions)
+
+    def latex_datei_erstellen(self, molekuel_name):
+        """Erstellt eine einfache LaTeX-Datei mit Molekülname, Bild und Punktgruppe."""
+        tex_datei = molekuel_name.replace(" ","").lower()+".tex"
+        header = (fr"""
+        \documentclass[12pt,a4paper]{{article}}
+        \usepackage{{graphicx}}
+        \usepackage{{geometry}}
+        \geometry{{margin=2cm}}
+        \usepackage{{helvet}}
+        \usepackage{{xcolor}}
+        \usepackage{{amsmath}} % for bmatrix
+        \setlength{{\parindent}}{{0pt}}  % No indentation globally
+        \renewcommand{{\familydefault}}{{\sfdefault}}
+
+        \begin{{document}}
+        """.strip())
+        content = "" #INFO added later on
+        footer = "\n\n"+fr"""
+        \end{{document}}
+        """.strip()
+
+        try:
+            bild_datei = self.sketch_chemical_ring(filename = molekuel_name.replace(" ","").lower())
+            punktgruppe = self.p.pointgroup.__class__.__name__
+            content += fr"""
+            \begin{{center}}
+                \Huge \textbf{{{molekuel_name}}} \\[1cm]
+                \includegraphics[width=0.5\textwidth]{{{bild_datei}}} \\[0.5cm]
+                \Large Point Group: \textbf{{{punktgruppe}}}
+            \end{{center}}
+            """.strip()
+        except:
+            pass
+        content += r"\newpage"
+
+        try:
+            content += r"\section*{p orbitals}"
+            content += self.p.get_latex_symmetry_behavior()+"\n\n"
+            content += self.p.get_latex_salcs(print_active=False)+"\n\n"
+
+            content += r"\newpage \section*{s orbitals}"
+            content += self.s.get_latex_symmetry_behavior() + "\n\n"
+            content += self.s.get_latex_salcs(print_active=False) + "\n\n"
+        except Exception as e:
+            content += r"\textcolor{red}{"+f"Error in solving salc-hueckel-matrix {e}\n"+"}"
+
+        content += r"\newpage \section*{Transitions from p orbitals into s orbitals}"
+        try:
+            content += self.calculate_result_for_all_transitions(print_active=False)
+        except Exception as e:
+            content += r"\textcolor{red}{"+f"unable to calculate transitions due to: {e}"+"}"
+
+        content += r"\newpage \section*{Dispersion energies following from the transitions}"+ "\n"
+        try:
+            content += self.calculate_result_for_all_transitions_results(print_active=False)
+            content += self.compare_ground_state_assumption(print_active=False)
+        except Exception as e:
+            content += r"\textcolor{red}{"+f"Error in Calculations Dispersion {e}"+"}"
+
+        with open(tex_datei, "w") as f:
+            f.write(header + content + footer)
+        print(f"LaTeX-Datei gespeichert als: {tex_datei}")
+        return

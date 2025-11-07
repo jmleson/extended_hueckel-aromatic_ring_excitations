@@ -3,6 +3,7 @@
         \usepackage{geometry}
         \geometry{margin=2cm}
         \usepackage{helvet}
+        \usepackage{xcolor}
         \usepackage{amsmath} % for bmatrix
         \setlength{\parindent}{0pt}  % No indentation globally
         \renewcommand{\familydefault}{\sfdefault}
@@ -18,12 +19,12 @@ $$\Gamma_{irred} = \,1 B2g\;\oplus{}\,1 E1g\;\oplus{}\,1 A2u\;\oplus{}\,1 E2u\;$
 
 
 \begin{itemize}
-\item SALC of B2g: \quad $\frac{p_{1}}{6} - \frac{p_{2}}{6} + \frac{p_{3}}{6} - \frac{p_{4}}{6} + \frac{p_{5}}{6} - \frac{p_{6}}{6}$
-\item SALC of E1g: \quad $\frac{p_{1}}{6} + \frac{p_{2}}{12} - \frac{p_{3}}{12} - \frac{p_{4}}{6} - \frac{p_{5}}{12} + \frac{p_{6}}{12}$
-\item SALC of E1g: \quad $\frac{p_{2}}{4} + \frac{p_{3}}{4} - \frac{p_{5}}{4} - \frac{p_{6}}{4}$
-\item SALC of A2u: \quad $\frac{p_{1}}{6} + \frac{p_{2}}{6} + \frac{p_{3}}{6} + \frac{p_{4}}{6} + \frac{p_{5}}{6} + \frac{p_{6}}{6}$
-\item SALC of E2u: \quad $\frac{p_{1}}{6} - \frac{p_{2}}{12} - \frac{p_{3}}{12} + \frac{p_{4}}{6} - \frac{p_{5}}{12} - \frac{p_{6}}{12}$
-\item SALC of E2u: \quad $\frac{p_{2}}{4} - \frac{p_{3}}{4} + \frac{p_{5}}{4} - \frac{p_{6}}{4}$
+\item SALC of B2g: \quad $\frac{\sqrt{6} p_{1}}{6} - \frac{\sqrt{6} p_{2}}{6} + \frac{\sqrt{6} p_{3}}{6} - \frac{\sqrt{6} p_{4}}{6} + \frac{\sqrt{6} p_{5}}{6} - \frac{\sqrt{6} p_{6}}{6}$
+\item SALC of E1g: \quad $\frac{\sqrt{3} p_{1}}{3} + \frac{\sqrt{3} p_{2}}{6} - \frac{\sqrt{3} p_{3}}{6} - \frac{\sqrt{3} p_{4}}{3} - \frac{\sqrt{3} p_{5}}{6} + \frac{\sqrt{3} p_{6}}{6}$
+\item SALC of E1g: \quad $\frac{p_{2}}{2} + \frac{p_{3}}{2} - \frac{p_{5}}{2} - \frac{p_{6}}{2}$
+\item SALC of A2u: \quad $\frac{\sqrt{6} p_{1}}{6} + \frac{\sqrt{6} p_{2}}{6} + \frac{\sqrt{6} p_{3}}{6} + \frac{\sqrt{6} p_{4}}{6} + \frac{\sqrt{6} p_{5}}{6} + \frac{\sqrt{6} p_{6}}{6}$
+\item SALC of E2u: \quad $\frac{\sqrt{3} p_{1}}{3} - \frac{\sqrt{3} p_{2}}{6} - \frac{\sqrt{3} p_{3}}{6} + \frac{\sqrt{3} p_{4}}{3} - \frac{\sqrt{3} p_{5}}{6} - \frac{\sqrt{3} p_{6}}{6}$
+\item SALC of E2u: \quad $\frac{p_{2}}{2} - \frac{p_{3}}{2} + \frac{p_{5}}{2} - \frac{p_{6}}{2}$
 \end{itemize}
 Put together these SALCs form the following Hamilton matrices:
      $$ H_{B2g}= \left[\begin{bmatrix}\alpha - 2 \beta\end{bmatrix}\right]$$ 
@@ -44,19 +45,19 @@ Solving Hückels secular equations, that follow from these H, leads to:
 
 
 
-\newpage\section*{s orbitals}
+\newpage \section*{s orbitals}
 Symmetry behavior of the s-orbitals:
 $$\Gamma_{red} = \,6 E\;\oplus{}\,2 C'2\;\oplus{}\,6 \sigma h\;\oplus{}\,2 \sigma v\;$$
 $$\Gamma_{irred} = \,1 A1g\;\oplus{}\,1 E2g\;\oplus{}\,1 B1u\;\oplus{}\,1 E1u\;$$
 
 
 \begin{itemize}
-\item SALC of A1g: \quad $\frac{s_{1}}{6} + \frac{s_{2}}{6} + \frac{s_{3}}{6} + \frac{s_{4}}{6} + \frac{s_{5}}{6} + \frac{s_{6}}{6}$
-\item SALC of E2g: \quad $\frac{s_{1}}{6} - \frac{s_{2}}{12} - \frac{s_{3}}{12} + \frac{s_{4}}{6} - \frac{s_{5}}{12} - \frac{s_{6}}{12}$
-\item SALC of E2g: \quad $\frac{s_{2}}{4} - \frac{s_{3}}{4} + \frac{s_{5}}{4} - \frac{s_{6}}{4}$
-\item SALC of B1u: \quad $\frac{s_{1}}{6} - \frac{s_{2}}{6} + \frac{s_{3}}{6} - \frac{s_{4}}{6} + \frac{s_{5}}{6} - \frac{s_{6}}{6}$
-\item SALC of E1u: \quad $\frac{s_{1}}{6} + \frac{s_{2}}{12} - \frac{s_{3}}{12} - \frac{s_{4}}{6} - \frac{s_{5}}{12} + \frac{s_{6}}{12}$
-\item SALC of E1u: \quad $\frac{s_{2}}{4} + \frac{s_{3}}{4} - \frac{s_{5}}{4} - \frac{s_{6}}{4}$
+\item SALC of A1g: \quad $\frac{\sqrt{6} s_{1}}{6} + \frac{\sqrt{6} s_{2}}{6} + \frac{\sqrt{6} s_{3}}{6} + \frac{\sqrt{6} s_{4}}{6} + \frac{\sqrt{6} s_{5}}{6} + \frac{\sqrt{6} s_{6}}{6}$
+\item SALC of E2g: \quad $\frac{\sqrt{3} s_{1}}{3} - \frac{\sqrt{3} s_{2}}{6} - \frac{\sqrt{3} s_{3}}{6} + \frac{\sqrt{3} s_{4}}{3} - \frac{\sqrt{3} s_{5}}{6} - \frac{\sqrt{3} s_{6}}{6}$
+\item SALC of E2g: \quad $\frac{s_{2}}{2} - \frac{s_{3}}{2} + \frac{s_{5}}{2} - \frac{s_{6}}{2}$
+\item SALC of B1u: \quad $\frac{\sqrt{6} s_{1}}{6} - \frac{\sqrt{6} s_{2}}{6} + \frac{\sqrt{6} s_{3}}{6} - \frac{\sqrt{6} s_{4}}{6} + \frac{\sqrt{6} s_{5}}{6} - \frac{\sqrt{6} s_{6}}{6}$
+\item SALC of E1u: \quad $\frac{\sqrt{3} s_{1}}{3} + \frac{\sqrt{3} s_{2}}{6} - \frac{\sqrt{3} s_{3}}{6} - \frac{\sqrt{3} s_{4}}{3} - \frac{\sqrt{3} s_{5}}{6} + \frac{\sqrt{3} s_{6}}{6}$
+\item SALC of E1u: \quad $\frac{s_{2}}{2} + \frac{s_{3}}{2} - \frac{s_{5}}{2} - \frac{s_{6}}{2}$
 \end{itemize}
 Put together these SALCs form the following Hamilton matrices:
      $$ H_{A1g}= \left[\begin{bmatrix}\alpha_{s} + 2 \beta_{s}\end{bmatrix}\right]$$ 
@@ -495,6 +496,6 @@ $$E_{dispersion} =\frac{2 \delta^{4} \left(- 9 \left(\alpha - \alpha_{s}\right) 
  \item State: A = (2, 2, 1, 1, 0, 0) $\leftrightarrow$ B = (2, 2, 1, 1, 0, 0) 
 $$E_{dispersion} =\frac{2 \delta^{4} \left(- 9 \left(\alpha - \alpha_{s}\right) \left(\alpha - \alpha_{s} - \beta + \beta_{s}\right) - \left(\alpha - \alpha_{s}\right) \left(\alpha - \alpha_{s} + \beta - \beta_{s}\right) - 6 \left(\alpha - \alpha_{s} - \beta + \beta_{s}\right) \left(\alpha - \alpha_{s} + \beta - \beta_{s}\right)\right)}{r^{6} \left(\alpha - \alpha_{s}\right) \left(\alpha - \alpha_{s} - \beta + \beta_{s}\right) \left(\alpha - \alpha_{s} + \beta - \beta_{s}\right)}$$
 \end{enumerate}
-Error in Calculations Dispersion can only concatenate list (not "str") to list
+\textcolor{red}{Error in Calculations Dispersion can only concatenate list (not "str") to list}
 
 \end{document}
