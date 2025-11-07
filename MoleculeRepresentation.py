@@ -50,7 +50,7 @@ class MoleculeRepresentation():
                 content += fr"""$$\Gamma_{{{name}}} = {gamma_red_str}$$""".strip() + "\n"
             return content
         except Exception as e:
-            return f"Error generating reducible representation: {e}"
+            return r"\textcolor{red}{"+f"Error generating reducible representation: {e}"+"}"
 
     def get_latex_salcs(self, print_active:bool=True):
         content = ""
@@ -58,6 +58,7 @@ class MoleculeRepresentation():
             SALCs = self.get_all_SALCs()
             content += r"\begin{itemize}"+"\n"
             for s in SALCs:
+                s.norm()
                 if print_active:
                     s.print()
                 content += fr"""
@@ -65,7 +66,7 @@ class MoleculeRepresentation():
                 """.strip() + "\n"
             content += r"\end{itemize}"+"\n"
         except Exception as e:
-            return f"Error generating SALC: {e}\n"
+            content += r"\textcolor{red}{"+ f"Error generating SALC: {e}\n" +"}"
 
         content += "Put together these SALCs form the following Hamilton matrices:\n"
         SALCs_by_irred = norm_and_group_SALCs(SALCs)
@@ -76,6 +77,8 @@ class MoleculeRepresentation():
         content += "\n\nSolving Hückels secular equations, that follow from these H, leads to:\n"
         try:
             molecule_orbitals = self.get_energy_levels()
+            if len(molecule_orbitals) == 0:
+                raise Exception("no orbitals available")
             content += r"\begin{itemize}" + "\n"
             for s in molecule_orbitals:
                 content += fr"""
@@ -83,7 +86,7 @@ class MoleculeRepresentation():
                 """.strip() + "\n"
             content += r"\end{itemize}" + "\n"
         except Exception as e:
-            return f"Error generating molecule orbitals: {e}\n"
+            content += r"\textcolor{red}{"+ f"Error generating molecule orbitals: {e}\n" +r"}"
 
         return content + "\n"
 
@@ -105,7 +108,7 @@ class MoleculeRepresentation():
             else:
                 raise Exception("Not implemented (C)")
         # N in ring:
-        if self.n == 6:
+        if self.n == 6 and len(self.n_instead_of_c) > 0:
             if self.n_instead_of_c == [1]:
                 self.pointgroup = C2v(n=self.n)
                 return
@@ -115,9 +118,9 @@ class MoleculeRepresentation():
             else:
                 raise Exception("unknown setting for N in C-Ring")
         # Cl included:
-            if self.circular:
-                self.pointgroup = C2v(n=self.n + len(self.bound_cl_to_c_positions))
-                return
+        if self.circular:
+            self.pointgroup = C2v(n=self.n + len(self.bound_cl_to_c_positions))
+            return
         if len(self.n_instead_of_c) == self.n:
             self.pointgroup = D6h()
             return #TODO replace alpha by alpha_n later on
@@ -265,6 +268,7 @@ class MoleculeRepresentation():
 
 
     def orbitals_adjoint(self, p1, p2):
+        # print("orbitals_adjoint:", p1, "*", p2)
         alpha, beta = sp.symbols("alpha_s beta_s") if self.s_orbital_active else sp.symbols("alpha beta")
         alpha_cl, beta_cl = sp.symbols("alpha_s_Cl beta_s_Cl") if self.s_orbital_active else sp.symbols("alpha_Cl beta_Cl")
         alpha_n, beta_n = sp.symbols("alpha_s_N beta_s_N") if self.s_orbital_active else sp.symbols("alpha_N beta_N")
@@ -279,13 +283,15 @@ class MoleculeRepresentation():
                 return beta_cl
             if p2 in self.bound_cl_to_c_positions and p1 not in range(1,self.n+1):
                 return beta_cl
-        if len(self.n_instead_of_c) != 0 and (p1 in self.n_instead_of_c or p2 in self.n_instead_of_c):
-            return beta_n
-        if (p1 + 1 == p2 or p1 - 1 == p2 ) and (p1 <= self.n and p2 <= self.n):# C
+        if (p1 + 1 == p2 or p1 - 1 == p2 ) and (p1 <= self.n and p2 <= self.n):# benachbarte C
+            if len(self.n_instead_of_c) != 0 and (p1 in self.n_instead_of_c or p2 in self.n_instead_of_c):
+                return beta_n
             return beta
         if self.circular and (
                             (p1-1 == 0 and p2 == self.n) or
                             (p2-1 == 0 and p1 == self.n)  ):#C
+            if len(self.n_instead_of_c) != 0 and (p1 in self.n_instead_of_c or p2 in self.n_instead_of_c):
+                return beta_n
             return beta
 
         return 0
@@ -346,7 +352,11 @@ class MoleculeRepresentation():
                                alpha_s_Cl: 0, beta_s_Cl: -1}
         for irred, salcs in SALCs_by_irred.items():
             H = self.get_effective_hamilton_matrix(SALCs=salcs, irred=irred)
-            result_irred = calculate_hueckel_secular_equation(H, info=irred, sorting_dict_values=sorting_dict_values)
+            try:
+                result_irred = calculate_hueckel_secular_equation(H, info=irred, sorting_dict_values=sorting_dict_values)
+            except Exception as e:
+                print(e)
+                return []
             for i in result_irred:
                 i.symmetry = irred
                 # print(i.symmetry)

@@ -25,45 +25,41 @@ def benzene(print_active:bool=True):
         m.compare_ground_state_assumption(print_active=print_active)
 
 
-#
-# def pyridine():
-#     m = MoleculeState(n=6, bound_cl_to_c_positions=[], n_instead_of_c=[1] )
-#     triplet_states = construct_occupied_triplett_states(nel=6, norb=6)
-#     calculate_result_for_all_transitions_print(triplet_states=triplet_states, m=m)
-#     calculate_result_for_all_transitions_results(m=m, triplet_states=triplet_states)
-#
-#     ground_state_occupation = get_ground_state(nel=6, norb=6)
-#     compare_ground_state_assumption(m=m, ground_state_occupation=ground_state_occupation)
-#
-# def pyrazine():
-#     m = MoleculeState(n=6, bound_cl_to_c_positions=[], n_instead_of_c=[1, 3] )
-#     triplet_states = construct_occupied_triplett_states(nel=6, norb=6)
-#     calculate_result_for_all_transitions_print(triplet_states=triplet_states, m=m)
-#     calculate_result_for_all_transitions_results(m=m, triplet_states=triplet_states)
-#
-#     ground_state_occupation = get_ground_state(nel=6, norb=6)
-#     compare_ground_state_assumption(m=m, ground_state_occupation=ground_state_occupation)
-#
-#
-# def chlorobenzene():
-#     m = MoleculeState(n=6, bound_cl_to_c_positions=[1], n_instead_of_c=[])
-#     triplet_states = construct_occupied_triplett_states(nel=6, norb=6)
-#     # adjust to full Cl orbital:
-#     for triplett in triplet_states:
-#         triplett["occupation"] += (2,)
-#
-#     calculate_result_for_all_transitions_print(triplet_states=triplet_states, m=m)
-#     calculate_result_for_all_transitions_results(m=m, triplet_states=triplet_states)
-#     ground_state_occupation = get_ground_state(nel=6, norb=6)+[2]
-#     compare_ground_state_assumption(m=m, ground_state_occupation=ground_state_occupation)
 
+def pyridine(print_active:bool=True):
+    m = MoleculeState(n=6, bound_cl_to_c_positions=[], n_instead_of_c=[1] )
+    if not print_active:
+        m.latex_datei_erstellen("Pyridine")
+    else:
+        m.calculate_result_for_all_transitions(print_active=print_active)
+        m.calculate_result_for_all_transitions_results(print_active=print_active)
+        m.compare_ground_state_assumption(print_active=print_active)
+
+def pyrazine(print_active:bool=True):
+    m = MoleculeState(n=6, bound_cl_to_c_positions=[], n_instead_of_c=[1, 3] )
+    if not print_active:
+        m.latex_datei_erstellen("Pyrazine")
+    else:
+        m.calculate_result_for_all_transitions(print_active=print_active)
+        m.calculate_result_for_all_transitions_results(print_active=print_active)
+        m.compare_ground_state_assumption(print_active=print_active)
+
+
+def chlorobenzene(print_active:bool=True):
+    m = MoleculeState(n=6, bound_cl_to_c_positions=[1], n_instead_of_c=[])
+    if not print_active:
+        m.latex_datei_erstellen("Chlorobenzene")
+    else:
+        m.calculate_result_for_all_transitions(print_active=print_active)
+        m.calculate_result_for_all_transitions_results(print_active=print_active)
+        m.compare_ground_state_assumption(print_active=print_active)
 
 
 if __name__ == "__main__":
     print_active = False
 
     # cyclopentadiene(print_active)
-    benzene(print_active)
+    # benzene(print_active)
     # chlorobenzene(print_active)
-    # pyridine(print_active)
+    pyridine(print_active)
     # pyrazine(print_active)

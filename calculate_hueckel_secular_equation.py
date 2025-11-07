@@ -1,26 +1,43 @@
 
 import sympy as sp
 
+from info_document.calculate_with_timeout import calculate_with_timeout
 from molecule_orbital import molecule_orbital
+
+
+def alternative_solver(H, info:str):
+    S = sp.eye(H.rows)
+    E = sp.symbols("E")
+    secular_matrix = H - E * S
+
+    det = sp.simplify(secular_matrix.det())
+    # print("\n", info, ":")
+    # sp.pprint(secular_matrix)
+    # print("secular determinant:")
+    # sp.pprint(det)
+
+    # Solve the characteristic polynomial
+    eigenvalues = sp.solve(det, E)
+
+    # print("Eigenvalues:", len(eigenvalues))
+
+    results = []
+    for eigval in eigenvalues:
+        results.append((eigval, None, []))
+
+    return results
 
 
 def calculate_hueckel_secular_equation(H, info: str, sorting_dict_values: dict):
     if H.rows != H.cols:
         raise Exception("Hamilton matrix has wrong dimensions")
 
-    # S = sp.eye(H.rows)
-    # E = sp.symbols("E")
-    # secular_matrix = H - E * S
-
-    # det = sp.simplify(secular_matrix.det())
-    # print("\n", info, ":")
-    # print("secular determinant:")
-    # sp.pprint(det)
-
     # Eigenwerte und Eigenvektoren bestimmen
     # H=H.subs(sp.Symbol('alpha_Cl'), sp.Symbol('alpha')*sp.Symbol('x'))
     # H=H.subs(sp.Symbol('beta_Cl'), sp.Symbol('beta') * sp.Symbol('x'))
-    eigen_data = H.eigenvects()
+    eigen_data = calculate_with_timeout(H.eigenvects, (), 60)
+    if eigen_data is None:
+        eigen_data = alternative_solver(H=H, info=info)
     eigen_pairs = []
 
     for val, mult, vecs in eigen_data:

@@ -20,7 +20,10 @@ class MoleculeState:
         self.p = MoleculeRepresentation(n=n, bound_cl_to_c_positions=bound_cl_to_c_positions, n_instead_of_c=n_instead_of_c)
 
         self.s = MoleculeRepresentation(n=n, bound_cl_to_c_positions=bound_cl_to_c_positions, n_instead_of_c=n_instead_of_c)
-        self.set_up()
+        try:
+            self.set_up()
+        except:
+            print("!!! set up failed")
 
         self.p_occupation = None
 
@@ -88,6 +91,7 @@ class MoleculeState:
         \usepackage{{geometry}}
         \geometry{{margin=2cm}}
         \usepackage{{helvet}}
+        \usepackage{{xcolor}}
         \usepackage{{amsmath}} % for bmatrix
         \setlength{{\parindent}}{{0pt}}  % No indentation globally
         \renewcommand{{\familydefault}}{{\sfdefault}}
@@ -98,8 +102,6 @@ class MoleculeState:
         footer = "\n\n"+fr"""
         \end{{document}}
         """.strip()
-
-
 
         try:
             bild_datei = self.sketch_chemical_ring(filename = molekuel_name.replace(" ","").lower())
@@ -120,24 +122,24 @@ class MoleculeState:
             content += self.p.get_latex_symmetry_behavior()+"\n\n"
             content += self.p.get_latex_salcs(print_active=False)+"\n\n"
 
-            content += r"\newpage\section*{s orbitals}"
+            content += r"\newpage \section*{s orbitals}"
             content += self.s.get_latex_symmetry_behavior() + "\n\n"
             content += self.s.get_latex_salcs(print_active=False) + "\n\n"
         except Exception as e:
-            content += f"Error in solving salc-hueckel-matrix {e}\n"
+            content += r"\textcolor{red}{"+f"Error in solving salc-hueckel-matrix {e}\n"+"}"
 
         content += r"\newpage \section*{Transitions from p orbitals into s orbitals}"
         try:
             content += self.calculate_result_for_all_transitions(print_active=False)
         except Exception as e:
-            content += f"unable to calculate transitions due to: {e}"
+            content += r"\textcolor{red}{"+f"unable to calculate transitions due to: {e}"+"}"
 
         content += r"\newpage \section*{Dispersion energies following from the transitions}"+ "\n"
         try:
             content += self.calculate_result_for_all_transitions_results(print_active=False)
             content += self.compare_ground_state_assumption(print_active=False)
         except Exception as e:
-            content += f"Error in Calculations Dispersion {e}"
+            content += r"\textcolor{red}{"+f"Error in Calculations Dispersion {e}"+"}"
 
         with open(tex_datei, "w") as f:
             f.write(header + content + footer)
@@ -151,7 +153,8 @@ class MoleculeState:
             if print_active:
                 print(f"\033[1mState: {triplet}\033[0m")
             transitions += (r"\subsection*{State with Occupation "
-                            + f"{triplet['occupation']} ({triplet['unpaired electrons']} unpaired electrons, mult {triplet['multiplicity']})"
+                            + f"{triplet['occupation']} ({triplet['unpaired electrons']} "
+                            +  f"unpaired electrons, mult {triplet['multiplicity']})"
                             + r"}")
             self.set_occupation(p_occupation=triplet["occupation"])
             allowed_transitions = self.calculate_result_for_all_transitions_of_set_occupation(print_active=print_active)
