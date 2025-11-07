@@ -1,3 +1,5 @@
+import sympy
+
 from TransitionIntegral import TransitionIntegral
 from molecule_orbital import molecule_orbital
 import sympy as sp
@@ -53,6 +55,53 @@ class Transition:
         # print(e1, "\t<->\t", e2,flush=True)
         assert e1 == e2
         return e2
+
+    def to_latex(self):
+        changed_orbital_index = self.get_changed_orbital_index()
+        latex_str = fr"""
+        \noindent\textbf{{Transition from $\phi_{{{changed_orbital_index + 1}}}$ into $\phi_{{s_{{{changed_orbital_index + 1}}}}}$:}}
+        \begin{{itemize}}
+            \item $- {self.p_before_transition}, {self.get_s_before_transition()} \rightarrow {self.get_p_after_transition()}, {self.s_occupation_after_transition}$
+        """
+
+        if self.orbital_to_excite_of is not None:
+            lc = 0
+            for i in range(len(self.orbital_to_excite_of.salcs)):
+                lc += (self.orbital_to_excite_of.salcs[0]["factor"] * (
+                    self.orbital_to_excite_of.salcs[0]["salc"].equation))
+            latex_str += fr"""
+            \item $\phi_{{{changed_orbital_index + 1}}}:$ linear combination = ${sympy.latex(lc)}$, \
+            energy = ${sympy.latex(self.orbital_to_excite_of.eigenvalue)}$
+            """
+
+        if self.orbital_to_excite_to is not None:
+            lc = 0
+            for i in range(len(self.orbital_to_excite_to.salcs)):
+                lc += (self.orbital_to_excite_to.salcs[0]["factor"] * (
+                    self.orbital_to_excite_to.salcs[0]["salc"].equation))
+            latex_str += fr"""
+            \item $\xi_{{{changed_orbital_index + 1}}}:$ linear combination = ${sympy.latex(lc)}$, \
+            energy = ${sympy.latex(self.orbital_to_excite_to.eigenvalue)}$
+            """
+
+        latex_str += fr"""
+            \item $\Delta$ Energy: ${sympy.latex(self.get_transitioning_energy())}$
+            \item Energy of State before Excitation: ${sympy.latex(self.energy_of_state_before_excitation)}$
+            \item Energy of State after Excitation: ${sympy.latex(self.energy_of_state_after_excitation)}$
+            \item Energy between Average Energies of $\phi$-/$\xi$-orbitals: \
+            ${sympy.latex(self.get_difference_between_mean_orbital_energies())}$
+        """
+
+        if self.transition_integral is not None:
+            latex_str += fr"""
+            \item dipole transition moment: ${sympy.latex(self.transition_integral.multiply_out())}$
+        """
+
+        latex_str += r"""
+        \end{itemize}
+        """
+
+        return latex_str
 
     def print(self):
         changed_orbital_index = self.get_changed_orbital_index()

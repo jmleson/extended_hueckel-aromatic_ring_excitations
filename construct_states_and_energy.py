@@ -1,7 +1,6 @@
 import itertools
 
 from MoleculeState import MoleculeState
-from Transition import calculate_dispersion_energy
 
 
 # import sympy as sp
@@ -24,95 +23,18 @@ from Transition import calculate_dispersion_energy
 #         # print("=", total_energy_of_state)
 
 
-def get_ground_state(norb,nel):
-    if nel > 2*norb:
-        raise Exception("too many electrons")
-    state = []
-    for i in range(norb):
-        if nel >=2:
-            state.append(2)
-            nel -= 2
-        elif nel == 0:
-            state.append(0)
-        else:
-            state.append(1)
-            nel -= 1
-    return state
 
 
 
-def construct_occupied_triplett_states(norb, nel):
-    """
-    Generate all possible occupation states for `norb` orbitals and `nel` electrons.
-    Each orbital can have 0, 1, or 2 electrons.
-    Only states with at least 2 unpaired electrons (two 1s) are included.
-    """
-    all_combinations = itertools.product([0, 1, 2], repeat=norb-1)
 
-    valid_states = [get_ground_state(norb=norb, nel=nel)]
-    for state in all_combinations:
-        total_electrons = sum(state)
-        unpaired_electrons = state.count(1)
-        excited = sum(state[3:])
-
-        if total_electrons == nel and unpaired_electrons >= 2 and (
-                    (excited <= 1 or (excited == 2 and state[3] == 1 and state[4] == 1 and state[2] == 1 and state[1] == 1))
-                    and state[0] == 2
-        ):
-            # Optional: Auffüllen auf feste Länge, falls benötigt
-            # padded_state = state + (0,)*(3-len(state))
-            valid_states.append( state+ (0,) )
+# def calculate_result_for_all_transitions_print(triplet_states:list[dict], m:MoleculeState):
+#     for triplett in triplet_states:
+#         print(f"\033[1mState: {triplett}\033[0m")
+#         m.set_occupation(p_occupation=triplett["occupation"])
+#         allowed_transitions = m.calculate_result_for_all_transitions_of_set_occupation(print_active=True)
+#
 
 
-    return [{"occupation": state,
-             "unpaired electrons": state.count(1),
-             "multiplicity": state.count(1)*(1/2)*2 + 1 # assumes alpha-spin for all unpaired electrons
-            } for state in valid_states]
-
-
-
-def calculate_result_for_all_transitions_print(triplet_states:list[dict], m:MoleculeState):
-    for triplett in triplet_states:
-        print(f"\033[1mState: {triplett}\033[0m")
-        m.set_occupation(p_occupation=triplett["occupation"])
-        m.calculate_result_for_all_transitions_of_set_occupation(print_active=True)
-
-
-def calculate_result_for_all_transitions_results(m:MoleculeState, triplet_states:list[dict]):
-    state_no = 0
-    for a in triplet_states:
-        for b in triplet_states:
-            if a["multiplicity"] + b["multiplicity"] == 5 + 1:
-                state_no += 1
-                print(f"{state_no}) A =", a["occupation"], "<-> B =", b["occupation"])
-                m.set_occupation(p_occupation=a["occupation"])
-                triplett_states_A = m.calculate_result_for_all_transitions_of_set_occupation(print_active=False)
-                m.set_occupation(p_occupation=b["occupation"])
-                triplett_states_B = m.calculate_result_for_all_transitions_of_set_occupation(print_active=False)
-                e_disp = calculate_dispersion_energy(triplett_states_A, triplett_states_B)
-                print("\tE_dispersion =", e_disp)
-            else:
-                # skip triplet quintet combinations
-                pass
-                # print("Multiplicity",a["multiplicity"] + b["multiplicity"], ", A =", a["occupation"], "<-> B=", b["occupation"] )
-
-
-def compare_ground_state_assumption(m:MoleculeState, ground_state_occupation:list[int]):
-    # compare ground-state <-> ground-state assumption:
-    m.set_occupation(ground_state_occupation)
-    ground_state = m.calculate_result_for_all_transitions_of_set_occupation(print_active=False)
-    e_disp = calculate_dispersion_energy(ground_state, ground_state)
-    print(f"X) A =", ground_state_occupation, "<-> B =", ground_state_occupation)
-
-    # import sympy as sp
-    # alpha, beta, alpha_s, beta_s, alpha_Cl, beta_Cl, alpha_s_Cl, beta_s_Cl = sp.symbols(
-    #     f"alpha beta alpha_s beta_s alpha_Cl beta_Cl alpha_s_Cl beta_s_Cl")
-    #
-    # e_disp = e_disp.subs(-2 * alpha + 2 * alpha_s, sp.Symbol(f"B"))
-    # e_disp = e_disp.subs(- alpha + alpha_s - beta + beta_s, sp.Symbol(f"A"))
-    print("\tE_dispersion =", e_disp.simplify())
-
-
-if __name__ == "__main__":
-    x = construct_occupied_triplett_states(6,6)
-    print(x)
+# if __name__ == "__main__":
+#     x = construct_occupied_triplett_states(6,6)
+#     print(x)

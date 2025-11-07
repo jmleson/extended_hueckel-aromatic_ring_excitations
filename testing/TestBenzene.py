@@ -13,7 +13,7 @@ class TestBenzene(unittest.TestCase):
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)  # sehr wichtig!
-        self.p = MoleculeRepresentation(n=6, bound_cl_to_c_positions=[])
+        self.p = MoleculeRepresentation(n=6, bound_cl_to_c_positions=[], n_instead_of_c=[])
         self.p.circular = True
 
         p1, p2, p3, p4, p5, p6 = sp.symbols(f"p1 p2 p3 p4 p5 p6")

@@ -1,5 +1,10 @@
+import sympy
+
 from MoleculeRepresentation import MoleculeRepresentation
-from Transition import Transition
+from Transition import Transition, calculate_dispersion_energy
+from construct_occupied_triplett_states import construct_occupied_triplett_states
+from get_ground_state import get_ground_state
+from info_document.sketch_chemical_ring import sketch_chemical_ring
 from molecule_orbital import molecule_orbital
 import sympy as sp
 
@@ -11,12 +16,149 @@ class MoleculeState:
                 raise Exception("no valid C atom to bind Cl to")
         self.n = n
         self.bound_cl_to_c_positions = bound_cl_to_c_positions
+        self.n_instead_of_c = n_instead_of_c
         self.p = MoleculeRepresentation(n=n, bound_cl_to_c_positions=bound_cl_to_c_positions, n_instead_of_c=n_instead_of_c)
 
         self.s = MoleculeRepresentation(n=n, bound_cl_to_c_positions=bound_cl_to_c_positions, n_instead_of_c=n_instead_of_c)
         self.set_up()
 
         self.p_occupation = None
+
+    def get_ground_state(self):
+        return get_ground_state(nel=self.n, norb=self.n) + [2]*len(self.bound_cl_to_c_positions)
+
+    def compare_ground_state_assumption(self, print_active:bool = True):
+        ground_state_occupation = self.get_ground_state()
+        # compare ground-state <-> ground-state assumption:
+        self.set_occupation(ground_state_occupation)
+        ground_state = self.calculate_result_for_all_transitions_of_set_occupation(print_active=False)
+        e_disp = calculate_dispersion_energy(ground_state, ground_state)
+        if print_active:
+            print(f"X) A =", ground_state_occupation, "<-> B =", ground_state_occupation)
+            print("\tE_dispersion =", e_disp.simplify())
+        else:
+            result = "Ground-State:\n"
+            result += "A =", ground_state_occupation, "<-> B =", ground_state_occupation +"\n"
+            result +=  r"$$E_{dispersion} =" + sympy.latex(e_disp.simplify()) + "$$\n"
+            return result
+
+    def calculate_result_for_all_transitions_results(self, print_active:bool=True):
+        triplet_states = self.construct_occupied_triplett_states()
+        result = "\n"+ r"\begin{enumerate}"+"\n"
+        state_no = 0
+        for a in triplet_states:
+            for b in triplet_states:
+                if a["multiplicity"] + b["multiplicity"] == 5 + 1:
+                    state_no += 1
+                    if print_active:
+                        print(f"{state_no}) A =", a["occupation"], "<-> B =", b["occupation"])
+                    else:
+                        result += fr""" \item State: A = {a["occupation"]} $\leftrightarrow$ B = {b["occupation"]} """+"\n"
+                    self.set_occupation(p_occupation=a["occupation"])
+                    triplett_states_A = self.calculate_result_for_all_transitions_of_set_occupation(print_active=False)
+                    self.set_occupation(p_occupation=b["occupation"])
+                    triplett_states_B = self.calculate_result_for_all_transitions_of_set_occupation(print_active=False)
+                    e_disp = calculate_dispersion_energy(triplett_states_A, triplett_states_B)
+                    if print_active:
+                        print("\tE_dispersion =", e_disp)
+                    else:
+                        result += r"$$E_{dispersion} =" + sympy.latex(e_disp.simplify()) + "$$\n"
+                else:
+                    # skip triplet quintet combinations
+                    pass
+                    # print("Multiplicity",a["multiplicity"] + b["multiplicity"], ", A =", a["occupation"], "<-> B=", b["occupation"] )
+        result += r"\end{enumerate}"+"\n"
+        return result
+
+    def construct_occupied_triplett_states(self):
+        triplet_states = construct_occupied_triplett_states(nel=self.n, norb=self.n)
+        if len(self.bound_cl_to_c_positions) != 0:
+            to_add = (2,) * len(self.bound_cl_to_c_positions)
+            # adjust to full Cl orbital:
+            for triplet in triplet_states:
+                triplet["occupation"] += to_add
+        return triplet_states
+
+    def latex_datei_erstellen(self, molekuel_name):
+        """Erstellt eine einfache LaTeX-Datei mit Molekülname, Bild und Punktgruppe."""
+        tex_datei = molekuel_name.replace(" ","").lower()+".tex"
+        header = (fr"""
+        \documentclass[12pt,a4paper]{{article}}
+        \usepackage{{graphicx}}
+        \usepackage{{geometry}}
+        \geometry{{margin=2cm}}
+        \usepackage{{helvet}}
+        \usepackage{{amsmath}} % for bmatrix
+        \setlength{{\parindent}}{{0pt}}  % No indentation globally
+        \renewcommand{{\familydefault}}{{\sfdefault}}
+
+        \begin{{document}}
+        """.strip())
+        content = "" #INFO added later on
+        footer = "\n\n"+fr"""
+        \end{{document}}
+        """.strip()
+
+
+
+        try:
+            bild_datei = self.sketch_chemical_ring(filename = molekuel_name.replace(" ","").lower())
+            punktgruppe = self.p.pointgroup.__class__.__name__
+            content += fr"""
+            \begin{{center}}
+                \Huge \textbf{{{molekuel_name}}} \\[1cm]
+                \includegraphics[width=0.5\textwidth]{{{bild_datei}}} \\[0.5cm]
+                \Large Point Group: \textbf{{{punktgruppe}}}
+            \end{{center}}
+            """.strip()
+        except:
+            pass
+        content += r"\newpage"
+
+        try:
+            content += r"\section*{p orbitals}"
+            content += self.p.get_latex_symmetry_behavior()+"\n\n"
+            content += self.p.get_latex_salcs(print_active=False)+"\n\n"
+
+            content += r"\newpage\section*{s orbitals}"
+            content += self.s.get_latex_symmetry_behavior() + "\n\n"
+            content += self.s.get_latex_salcs(print_active=False) + "\n\n"
+        except Exception as e:
+            content += f"Error in solving salc-hueckel-matrix {e}\n"
+
+        content += r"\newpage \section*{Transitions from p orbitals into s orbitals}"
+        try:
+            content += self.calculate_result_for_all_transitions(print_active=False)
+        except Exception as e:
+            content += f"unable to calculate transitions due to: {e}"
+
+        content += r"\newpage \section*{Dispersion energies following from the transitions}"+ "\n"
+        try:
+            content += self.calculate_result_for_all_transitions_results(print_active=False)
+            content += self.compare_ground_state_assumption(print_active=False)
+        except Exception as e:
+            content += f"Error in Calculations Dispersion {e}"
+
+        with open(tex_datei, "w") as f:
+            f.write(header + content + footer)
+        print(f"LaTeX-Datei gespeichert als: {tex_datei}")
+        return
+
+    def calculate_result_for_all_transitions(self, print_active:bool = True):
+        triplet_states = self.construct_occupied_triplett_states()
+        transitions = ""
+        for triplet in triplet_states:
+            if print_active:
+                print(f"\033[1mState: {triplet}\033[0m")
+            transitions += (r"\subsection*{State with Occupation "
+                            + f"{triplet['occupation']} ({triplet['unpaired electrons']} unpaired electrons, mult {triplet['multiplicity']})"
+                            + r"}")
+            self.set_occupation(p_occupation=triplet["occupation"])
+            allowed_transitions = self.calculate_result_for_all_transitions_of_set_occupation(print_active=print_active)
+            for i in allowed_transitions:
+                transitions += i.to_latex() + "\n"
+        return transitions
+
 
     def set_up(self):
         # print("P ORBITALS")
@@ -44,6 +186,18 @@ class MoleculeState:
             if n not in [0,1,2]:
                 raise Exception("wrong occupation")
         self.p_occupation = p_occupation
+
+    def sketch_chemical_ring(self, filename = None):
+        atom_symbols = [
+            "N" if i in self.n_instead_of_c else "C"
+            for i in range(self.n)
+        ]
+        if filename is None:
+            filename = f"molecule_{self.n}.png"
+        return sketch_chemical_ring(speichername=filename,
+                             atom_symbols=atom_symbols,
+                             bound_Cl_to_C=self.bound_cl_to_c_positions)
+
 
     def calculate_energy_before_transition(self):
         if self.p_occupation is None:

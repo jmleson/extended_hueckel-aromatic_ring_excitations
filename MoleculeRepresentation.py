@@ -1,15 +1,18 @@
 import itertools
 from collections import defaultdict
 from fractions import Fraction
+
+import sympy
 import sympy as sp
 
 from PointGroups.C2v import C2v
+from PointGroups.D2h import D2h
 from PointGroups.D4h import D4h
 from PointGroups.D6h import D6h
-from SALC import SALC, norm_and_group_SALCs, linear_independent
+from SALC import SALC, norm_and_group_SALCs, linear_independent, get_linear_independent_SALCs
 from is_multiple import is_multiple
-from tst.ortho import get_linear_independent_SALCs
 from tst.solve_saekular_equation import calculate_hueckel_secular_equation
+
 
 
 class MoleculeRepresentation():
@@ -25,6 +28,66 @@ class MoleculeRepresentation():
         self.n_instead_of_c = n_instead_of_c
         self.s_orbital_active = False
         self.set_up_point_group()
+
+
+    def get_latex_symmetry_behavior(self):
+        content = ""
+        latex_plus = r"\oplus{}"
+        try:
+            content += f"\nSymmetry behavior of the {'s' if self.s_orbital_active else 'p'}-orbitals:\n"
+            reducible_representation = self.get_reducible_representation_for_ring_p_orbitals()
+            irreducible_representation = self.decomposing_into_irreducible_representations(reducible_representation)
+            for (representation, name) in [
+                (reducible_representation, "red"),
+                (irreducible_representation, "irred")
+            ]:
+                gamma_parts = []
+                for sym, coeff in representation.items():
+                    if coeff != 0:
+                        gamma_parts.append(fr"\,{coeff} {sym}\;")
+                gamma_red_str = latex_plus.join(gamma_parts)
+                gamma_red_str = gamma_red_str.replace("σ", r"\sigma ")
+                content += fr"""$$\Gamma_{{{name}}} = {gamma_red_str}$$""".strip() + "\n"
+            return content
+        except Exception as e:
+            return f"Error generating reducible representation: {e}"
+
+    def get_latex_salcs(self, print_active:bool=True):
+        content = ""
+        try:
+            SALCs = self.get_all_SALCs()
+            content += r"\begin{itemize}"+"\n"
+            for s in SALCs:
+                if print_active:
+                    s.print()
+                content += fr"""
+                \item SALC of {s.irred}: \quad ${sympy.latex(s.equation)}$
+                """.strip() + "\n"
+            content += r"\end{itemize}"+"\n"
+        except Exception as e:
+            return f"Error generating SALC: {e}\n"
+
+        content += "Put together these SALCs form the following Hamilton matrices:\n"
+        SALCs_by_irred = norm_and_group_SALCs(SALCs)
+        for irred, salcs in SALCs_by_irred.items():
+            H = self.get_effective_hamilton_matrix(SALCs=salcs, irred=irred)
+            content += f"     $$ H_{{{irred}}}= " + sympy.latex(H).replace("matrix","bmatrix") + "$$ \n"
+
+        content += "\n\nSolving Hückels secular equations, that follow from these H, leads to:\n"
+        try:
+            molecule_orbitals = self.get_energy_levels()
+            content += r"\begin{itemize}" + "\n"
+            for s in molecule_orbitals:
+                content += fr"""
+                \item orbital of {s.symmetry} with energy = ${sympy.latex(s.eigenvalue)}$
+                """.strip() + "\n"
+            content += r"\end{itemize}" + "\n"
+        except Exception as e:
+            return f"Error generating molecule orbitals: {e}\n"
+
+        return content + "\n"
+
+
 
 
     def set_up_point_group(self):
@@ -204,21 +267,27 @@ class MoleculeRepresentation():
     def orbitals_adjoint(self, p1, p2):
         alpha, beta = sp.symbols("alpha_s beta_s") if self.s_orbital_active else sp.symbols("alpha beta")
         alpha_cl, beta_cl = sp.symbols("alpha_s_Cl beta_s_Cl") if self.s_orbital_active else sp.symbols("alpha_Cl beta_Cl")
+        alpha_n, beta_n = sp.symbols("alpha_s_N beta_s_N") if self.s_orbital_active else sp.symbols("alpha_N beta_N")
         if p1 == p2:
             if p1 not in range(1,self.n+1):
                 return alpha_cl
+            if p1 in self.n_instead_of_c:
+                return alpha_n
             return alpha
+        if len(self.bound_cl_to_c_positions) != 0:
+            if p1 in self.bound_cl_to_c_positions and p2 not in range(1,self.n+1):
+                return beta_cl
+            if p2 in self.bound_cl_to_c_positions and p1 not in range(1,self.n+1):
+                return beta_cl
+        if len(self.n_instead_of_c) != 0 and (p1 in self.n_instead_of_c or p2 in self.n_instead_of_c):
+            return beta_n
         if (p1 + 1 == p2 or p1 - 1 == p2 ) and (p1 <= self.n and p2 <= self.n):# C
             return beta
         if self.circular and (
                             (p1-1 == 0 and p2 == self.n) or
                             (p2-1 == 0 and p1 == self.n)  ):#C
             return beta
-        if len(self.bound_cl_to_c_positions) != 0:
-            if p1 in self.bound_cl_to_c_positions and p2 not in range(1,self.n+1):
-                return beta_cl
-            if p2 in self.bound_cl_to_c_positions and p1 not in range(1,self.n+1):
-                return beta_cl
+
         return 0
 
     def h_eff(self, salc_1: SALC, salc_2: SALC):
