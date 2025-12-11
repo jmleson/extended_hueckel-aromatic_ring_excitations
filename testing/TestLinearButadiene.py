@@ -15,7 +15,7 @@ class TestLinearButadiene(unittest.TestCase):
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        self.p = MoleculeRepresentation(n=4)
+        self.p = MoleculeRepresentation(n=4, n_instead_of_c=[], bound_cl_to_c_positions=[])
         ### revert Point group to C2v for 1,3-Butadien:
         self.p.pointgroup = C2v(n=4)
         self.p.circular = False

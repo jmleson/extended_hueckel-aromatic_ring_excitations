@@ -10,13 +10,18 @@ import time
 def worker(func, args):
     return func(*args)
 
-def calculate_with_timeout(func, args, timeout_in_s):
+def calculate_with_timeout(func, args, timeout_in_s, msg:str = "Calculation timed out."):
     with multiprocessing.Pool(processes=1) as pool:
         result = pool.apply_async(worker, (func, args))
         try:
             return result.get(timeout=timeout_in_s)
         except multiprocessing.TimeoutError:
-            print("Calculation timed out.")
+            print(msg)
+            pool.terminate()
+            pool.join()  # Ensure the pool is properly cleaned up
+            return None
+        except AttributeError:# because result is None and thereby has not attribute "get"
+            print(msg)
             pool.terminate()
             pool.join()  # Ensure the pool is properly cleaned up
             return None

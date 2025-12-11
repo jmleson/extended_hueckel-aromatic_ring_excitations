@@ -10,7 +10,7 @@ class TestMoleculeState(unittest.TestCase):
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        self.m = MoleculeState(n=4)
+        self.m = MoleculeState(n=4, bound_cl_to_c_positions=[], n_instead_of_c=[])
 
 
     def get_occupation_expectations(self):
@@ -49,13 +49,15 @@ class TestMoleculeState(unittest.TestCase):
 
     def test_calculate_energy_for_state_and_occupation(self):
         for occupation in self.get_occupation_expectations():
-            assert self.m.calculate_energy_for_state_and_occupation(state=self.m.bonding_p,
-                                                                occupation=occupation["occ"]) == occupation["exp"]
+            part_1, msg = self.m.calculate_energy_for_state_and_occupation(state=self.m.bonding_p,
+                                                                occupation=occupation["occ"])
+            assert part_1 == occupation["exp"]
 
     def test_calculate_energy_before_transition(self):
         for occupation in self.get_occupation_expectations():
             self.m.set_occupation(p_occupation=occupation["occ"])
-            assert self.m.calculate_energy_before_transition() == occupation["exp"]
+            part, msg = self.m.calculate_energy_before_transition()
+            assert part == occupation["exp"]
 
     def test_get_changed_orbital_index(self):
         t = Transition(n=4, s_after_transition=(1,0,0,0), p_before_transition=(0,0,0,0))
@@ -78,7 +80,7 @@ class TestMoleculeState(unittest.TestCase):
         for occupation in self.get_occupation_expectations():
             self.m.set_occupation(p_occupation=occupation["occ"])
 
-            s_occupations = self.m.get_thinkable_transitions()
+            s_occupations, msg = self.m.get_thinkable_transitions()
             assert len(s_occupations) == len(occupation["transitioning energy"])
             for s in range(len(s_occupations)):
                 assert isinstance(s_occupations[s], Transition)

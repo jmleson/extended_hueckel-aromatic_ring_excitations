@@ -5,17 +5,81 @@ from SymmetryOperation import SymmetryOperation
 
 class D6h(PointGroup):
     def __init__(self, n: int = 6):
-        super().__init__(order=24, n=6)
+        super().__init__(order=24, n=n)
         self.set_up_symmetry_operations()
         self.set_up_irreducible_representations()
         self.total_symmetric_representation = "A1g"
 
     def set_up_symmetry_operations(self):
-        if self.n == 6:
-            self.operations = []
-            o = SymmetryOperation(n=self.n, name="E", transform_p=lambda i: i, amount=1)
+        self.operations = []
+        o = SymmetryOperation(n=self.n, name="E", transform_p=lambda i: i, amount=1)
+        self.operations.append(o)
+        if self.n == 12:
+            o = SymmetryOperation(n=self.n, name="C6", transform_p=lambda i: [6, 1, 2, 3, 4, 5, 12, 7, 8, 9, 10, 11][i - 1], amount=1)
+            self.operations.append(o)
+            o = SymmetryOperation(n=self.n, name="C6", transform_p=lambda i: [2, 3, 4, 5, 6, 1, 8, 9, 10, 11, 12, 7][i - 1], amount=1)
             self.operations.append(o)
 
+            o = SymmetryOperation(n=self.n, name="C3", transform_p=lambda i: [5, 6, 1, 2, 3, 4, 11, 12, 7, 8, 9, 10][i - 1], amount=1)
+            self.operations.append(o)
+            o = SymmetryOperation(n=self.n, name="C3", transform_p=lambda i: [3, 4, 5, 6, 1, 2, 9, 10, 11, 12, 7, 8][i - 1], amount=1)
+            self.operations.append(o)
+
+            o = SymmetryOperation(n=self.n, name="C2", transform_p=lambda i: [4, 5, 6, 1, 2, 3, 10, 11, 12, 7, 8, 9][i - 1], amount=1)
+            self.operations.append(o)
+
+            o = SymmetryOperation(n=self.n, name="C\'2", transform_p=lambda i: [-1, -6, -5, -4, -3, -2, -7, -12, -11, -10, -9, -8][i - 1],
+                                  amount=1)
+            self.operations.append(o)
+            o = SymmetryOperation(n=self.n, name="C\'2", transform_p=lambda i: [-3, -2, -1, -6, -5, -4, -9, -8, -7, -12, -11, -10][i - 1],
+                                  amount=1)
+            self.operations.append(o)
+            o = SymmetryOperation(n=self.n, name="C\'2", transform_p=lambda i: [-5, -4, -3, -2, -1, -6, -11, -10, -9, -8, -7, -12][i - 1],
+                                  amount=1)
+            self.operations.append(o)
+
+            o = SymmetryOperation(n=self.n, name="C\'\'2", transform_p=lambda i: [-2, -1, -6, -5, -4, -3, -8, -7, -12, -11, -10, -9][i - 1],
+                                  amount=1)
+            self.operations.append(o)
+            o = SymmetryOperation(n=self.n, name="C\'\'2", transform_p=lambda i: [-4, -3, -2, -1, -6, -5, -10, -9, -8, -7, -12, -11][i - 1],
+                                  amount=1)
+            self.operations.append(o)
+            o = SymmetryOperation(n=self.n, name="C\'\'2", transform_p=lambda i: [-6, -5, -4, -3, -2, -1, -12, -11, -10, -9, -8, -7][i - 1],
+                                  amount=1)
+            self.operations.append(o)
+
+            o = SymmetryOperation(n=self.n, name="i", transform_p=lambda i: [-4, -5, -6, -1, -2, -3, -10, -11, -12, -7, -8, -9][i - 1], amount=1)
+            self.operations.append(o)
+
+            o = SymmetryOperation(n=self.n, name="S3", transform_p=lambda i: [-5, -6, -1, -2, -3, -4, -11, -12, -7, -8, -9, -10][i - 1], amount=1)
+            self.operations.append(o)
+            o = SymmetryOperation(n=self.n, name="S3", transform_p=lambda i: [-3, -4, -5, -6, -1, -2, -9, -10, -11, -12, -7, -8][i - 1], amount=1)
+            self.operations.append(o)
+
+            o = SymmetryOperation(n=self.n, name="S6", transform_p=lambda i: [-6, -1, -2, -3, -4, -5, -12, -7, -8, -9, -10, -11][i - 1], amount=1)
+            self.operations.append(o)
+            o = SymmetryOperation(n=self.n, name="S6", transform_p=lambda i: [-2, -3, -4, -5, -6, -1, -8, -9, -10, -11, -12, -7][i - 1], amount=1)
+            self.operations.append(o)
+
+            o = SymmetryOperation(n=self.n, name="σh", transform_p=lambda i: [-1, -2, -3, -4, -5, -6, -7, -8, -9, -10, -11, -12][i - 1], amount=1)
+            self.operations.append(o)
+
+            o = SymmetryOperation(n=self.n, name="σd", transform_p=lambda i: [2, 1, 6, 5, 4, 3, 8, 7, 12, 11, 10, 9][i - 1], amount=1)
+            self.operations.append(o)
+            o = SymmetryOperation(n=self.n, name="σd", transform_p=lambda i: [4, 3, 2, 1, 6, 5, 10, 9, 8, 7, 12, 11][i - 1], amount=1)
+            self.operations.append(o)
+            o = SymmetryOperation(n=self.n, name="σd", transform_p=lambda i: [6, 5, 4, 3, 2, 1, 12, 11, 10, 9, 8, 7][i - 1], amount=1)
+            self.operations.append(o)
+
+            o = SymmetryOperation(n=self.n, name="σv", transform_p=lambda i: [1, 6, 5, 4, 3, 2, 7, 12, 11, 10, 9, 8][i - 1], amount=1)
+            self.operations.append(o)
+            o = SymmetryOperation(n=self.n, name="σv", transform_p=lambda i: [3, 2, 1, 6, 5, 4, 9, 8, 7, 12, 11, 10][i - 1], amount=1)
+            self.operations.append(o)
+            o = SymmetryOperation(n=self.n, name="σv", transform_p=lambda i: [5, 4, 3, 2, 1, 6, 11, 10, 9, 8, 7, 12][i - 1], amount=1)
+            self.operations.append(o)
+
+            self.dipole_operator_symmetry = "A2u"  # 1 1 1 1 -1 -1 -1 -1 -1 1 1, = z
+        elif self.n == 6:
             o = SymmetryOperation(n=self.n, name="C6", transform_p=lambda i: [6,1,2,3,4,5][i - 1], amount=1)
             self.operations.append(o)
             o = SymmetryOperation(n=self.n, name="C6", transform_p=lambda i: [2,3,4,5,6,1][i - 1], amount=1)
@@ -74,9 +138,11 @@ class D6h(PointGroup):
             self.operations.append(o)
 
             self.dipole_operator_symmetry = "A2u" # 1 1 1 1 -1 -1 -1 -1 -1 1 1, = z
+        else:
+            raise Exception("unknown number of transforming orbitals")
 
     def set_up_irreducible_representations(self):
-        if self.n == 6:
+        # if self.n == 6:
             self.irreducible_representations = []
             symmetry_names = list(dict.fromkeys(op.name for op in self.operations))
 
@@ -125,6 +191,8 @@ class D6h(PointGroup):
             E2u_chars = [2, -1, -1, 2, 0, 0, -2, 1, 1, -2, 0, 0 ]
             i = IrreducibleRepresentation(dict(zip(symmetry_names, E2u_chars)), name="E2u", dimension=2)
             self.irreducible_representations.append(i)
+        # else:
+        #     raise Exception("unknown number of transforming orbitals")
 
 
 

@@ -13,7 +13,7 @@ class TestCyclobutadiene(unittest.TestCase):
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)  # sehr wichtig!
-        self.p = MoleculeRepresentation(n=4, bound_cl_to_c_positions=[])
+        self.p = MoleculeRepresentation(n=4, bound_cl_to_c_positions=[], n_instead_of_c=[])
         self.p.circular = True
 
         ######

@@ -11,7 +11,7 @@ class TestTransitionIntegral(unittest.TestCase):
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        self.p = MoleculeRepresentation(n=4)
+        self.p = MoleculeRepresentation(n=4, bound_cl_to_c_positions=[], n_instead_of_c=[])
 
         # P ORBITALS
         self.p_mo_orbitals = self.p.get_energy_levels()

@@ -13,7 +13,7 @@ class TestChlorobenzene(unittest.TestCase):
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)  # sehr wichtig!
-        self.p = MoleculeRepresentation(n=6, bound_cl_to_c_positions=[1])
+        self.p = MoleculeRepresentation(n=6, bound_cl_to_c_positions=[1], n_instead_of_c=[])
         self.p.circular = True
 
 

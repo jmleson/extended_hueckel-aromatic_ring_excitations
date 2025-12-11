@@ -2,7 +2,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 
 def sketch_chemical_ring(speichername=None,
-                         atom_symbols=None, bound_Cl_to_C=None):
+                         atom_symbols=None, bound_Cl_to_C=None, heterosymbol="Cl"):
     """
     Zeichnet ein n-Eck mit angegebenen Atomsymbolen und optional angehängten Cl-Atomen.
 
@@ -45,12 +45,12 @@ def sketch_chemical_ring(speichername=None,
                 ha='center', va='center')
 
         # Falls Cl an dieses Atom gebunden ist
-        if bound_Cl_to_C and i in bound_Cl_to_C:
+        if bound_Cl_to_C and i+1 in bound_Cl_to_C:
             # Richtung nach außen (vom Mittelpunkt weg)
             richtung = np.array([xi, yi]) / np.linalg.norm([xi, yi])
             Cl_pos = np.array([xi, yi]) + richtung * abstand_Cl
             ax.plot([xi, Cl_pos[0]], [yi, Cl_pos[1]], color=farbe, linewidth=1.5)
-            ax.text(Cl_pos[0], Cl_pos[1], 'Cl', fontsize=12, fontweight='bold',
+            ax.text(Cl_pos[0], Cl_pos[1], s=heterosymbol, fontsize=12, fontweight='bold',
                     ha='center', va='center', color='green')
 
     ax.set_aspect('equal', 'box')
@@ -66,7 +66,7 @@ def sketch_chemical_ring(speichername=None,
 
 if __name__ == '__main__':
     sketch_chemical_ring(
-        atom_symbols=['C'] * 3,
-        bound_Cl_to_C=[1, 4],
+        atom_symbols=['C'] * 6,
+        bound_Cl_to_C=[1, 2,3,4,5,6],
         speichername='hexagon.png'
     )
