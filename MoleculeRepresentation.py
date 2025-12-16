@@ -309,8 +309,8 @@ class MoleculeRepresentation():
                                }
         for irred, salcs in SALCs_by_irred.items():
             H = self.get_effective_hamilton_matrix(SALCs=salcs, irred=irred)
-            # try:
-            if True:
+            try:
+            # if True:
                 result_irred = calculate_hueckel_secular_equation(H, info=irred, sorting_dict_values=sorting_dict_values)
                 for i in result_irred:
                     i.symmetry = irred
@@ -320,8 +320,8 @@ class MoleculeRepresentation():
                         if i.eigenvector[row] != 0:
                             i.salcs.append({"factor": i.eigenvector[row], "salc": salcs[row]})
                     result.append(i)
-            # except Exception as e:
-            #     print(f"\tThis irred ({irred}) failed {e}...trying next one...")
+            except Exception as e:
+                print(f"\tThis irred ({irred}) failed {e}...trying next one...")
 
         # sorting:
         molecule_orbitals = sorted(

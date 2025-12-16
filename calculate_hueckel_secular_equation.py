@@ -37,9 +37,9 @@ def calculate_hueckel_secular_equation(H, info: str, sorting_dict_values: dict):
     # Eigenwerte und Eigenvektoren bestimmen
     # H=H.subs(sp.Symbol('alpha_Cl'), sp.Symbol('alpha')*sp.Symbol('x'))
     # H=H.subs(sp.Symbol('beta_Cl'), sp.Symbol('beta') * sp.Symbol('x'))
-    eigen_data = calculate_with_timeout(H.eigenvects, (), 60, msg="Calculation of H.eigenvects() timed out.")
+    eigen_data = calculate_with_timeout(H.eigenvects, (), 600, msg="Calculation of H.eigenvects() timed out.")
     if eigen_data is None:
-        eigen_data = calculate_with_timeout(solve_for_eigenvalues_first, (H,), timeout_in_s=60,
+        eigen_data = calculate_with_timeout(solve_for_eigenvalues_first, (H,), timeout_in_s=43200,
                                             msg="Calculation of solve_for_eigenvalues_only() timed out.")
         if eigen_data is None:
             if H.rows == H.cols and H.rows == 2:

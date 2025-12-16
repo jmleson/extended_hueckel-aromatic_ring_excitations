@@ -90,7 +90,7 @@ class MoleculeState:
             #     result += str([g[1] for g in ground_state_with_warning]) +"\n\n"
             result += "A =" + str(ground_state_occupation) + r"$\leftrightarrow$ B =" + str(ground_state_occupation) +"\n"
             simplified_expression = calculate_with_timeout(safe_simplify, (e_disp,),
-                                                           timeout_in_s=5, msg="simplifying")
+                                                           timeout_in_s=50, msg="simplifying")
             if simplified_expression is None:
                 result +=  r"$$E_{dispersion} =" + sympy.latex(e_disp) + "$$\n"
             else:
@@ -332,8 +332,7 @@ class MoleculeState:
             raise Exception(e)
         content += r"\newpage"
 
-        # try:
-        if True:
+        try:
             content += r"\section*{p orbitals}"
             content += self.p.get_latex_symmetry_behavior()+"\n\n"
             content += self.p.get_latex_salcs(print_active=False)+"\n\n"
@@ -341,9 +340,9 @@ class MoleculeState:
             content += r"\newpage \section*{s orbitals}"
             content += self.s.get_latex_symmetry_behavior() + "\n\n"
             content += self.s.get_latex_salcs(print_active=False) + "\n\n"
-        # except Exception as e:
-        #     msg = str(e).replace("_", r"\_")
-        #     content += r"\textcolor{red}{"+f"Error in solving salc-hueckel-matrix {msg}\n"+"}"
+        except Exception as e:
+            msg = str(e).replace("_", r"\_")
+            content += r"\textcolor{red}{"+f"Error in solving salc-hueckel-matrix {msg}\n"+"}"
 
         content += r"\newpage \section*{Transitions from p orbitals into s orbitals}"
         try:
@@ -357,13 +356,12 @@ class MoleculeState:
         except Exception as e:
             msg = str(e).replace("_", r"\_")
             content += r"\textcolor{red}{"+f"Error in Calculations Dispersion {msg}"+"}"
-        # try:
-        if True:
+        try:
             x = self.compare_ground_state_assumption(print_active=False)
             content += x
-        # except Exception as e:
-        #     msg = str(e).replace("_", r"\_")
-        #     content += r"\textcolor{red}{"+f"Error for Ground State {msg}"+"}"
+        except Exception as e:
+            msg = str(e).replace("_", r"\_")
+            content += r"\textcolor{red}{"+f"Error for Ground State {msg}"+"}"
 
         with open(tex_datei, "w") as f:
             f.write(header + content + footer)
