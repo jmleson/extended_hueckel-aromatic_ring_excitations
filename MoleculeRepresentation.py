@@ -309,8 +309,8 @@ class MoleculeRepresentation():
                                }
         for irred, salcs in SALCs_by_irred.items():
             H = self.get_effective_hamilton_matrix(SALCs=salcs, irred=irred)
-            try:
-            # if True:
+            # try:
+            if True:
                 result_irred = calculate_hueckel_secular_equation(H, info=irred, sorting_dict_values=sorting_dict_values)
                 for i in result_irred:
                     i.symmetry = irred
@@ -320,8 +320,8 @@ class MoleculeRepresentation():
                         if i.eigenvector[row] != 0:
                             i.salcs.append({"factor": i.eigenvector[row], "salc": salcs[row]})
                     result.append(i)
-            except Exception as e:
-                print(f"\tThis irred ({irred}) failed {e}...trying next one...")
+            # except Exception as e:
+            #     print(f"\tThis irred ({irred}) failed {e}...trying next one...")
 
         # sorting:
         molecule_orbitals = sorted(
@@ -379,18 +379,23 @@ class MoleculeRepresentation():
             content += f"     $$ H_{{{irred}}}= " + sympy.latex(H).replace("matrix","bmatrix") + "$$ \n"
 
         content += "\n\nSolving Hückels secular equations, that follow from these H, leads to:\n"
-        try:
+        # try:
+        if True:
             molecule_orbitals = self.get_energy_levels()
             if len(molecule_orbitals) == 0:
                 raise Exception("no orbitals available")
             content += r"\begin{itemize}" + "\n"
             for s in molecule_orbitals:
-                content += fr"""
-                \item orbital of {s.symmetry} with energy = ${sympy.latex(s.eigenvalue)}$
-                """.strip() + "\n"
+                salc_vector = sp.Matrix([[sa["salc"].equation] for sa in s.salcs])
+                latex_labels = [r"\text{%d. SALC in %s}" % (i+1, s.symmetry) for i in range(len(s.eigenvector))]
+                latex_labels_str = r"\left[\begin{array}{c}" + r" \\ ".join(latex_labels) + r"\end{array}\right]"
+                content += (fr"""
+                            \item orbital of {s.symmetry} with energy = ${sympy.latex(s.eigenvalue)}$ \\
+                            ( ${sympy.latex(s.eigenvector)} * { latex_labels_str } = {sympy.latex(salc_vector)} $ )
+                            """.strip() + "\n")
             content += r"\end{itemize}" + "\n"
-        except Exception as e:
-            content += r"\textcolor{red}{"+ f"Error generating molecule orbitals: {e}\n" +r"}"
+        # except Exception as e:
+        #     content += r"\textcolor{red}{"+ f"Error generating molecule orbitals: {e}\n" +r"}"
 
         return content + "\n"
 

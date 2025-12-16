@@ -29,10 +29,11 @@ class MoleculeState:
 
         self.s = MoleculeRepresentation(n=n, bound_cl_to_c_positions=bound_cl_to_c_positions, n_instead_of_c=n_instead_of_c, heterosymbol=heterosymbol)
         self.bonding_s = None
-        try:
-            self.set_up()
-        except Exception as e:
-            print(f"!!! set up failed due to {e}")
+        self.set_up()
+        # try:
+        #     self.set_up()
+        # except Exception as e:
+        #     print(f"!!! set up failed due to {e}")
 
         self.p_occupation = None
 
@@ -53,7 +54,8 @@ class MoleculeState:
         alpha, alpha_s, beta, beta_s = sp.symbols("alpha alpha_s beta beta_s")
         for s in range(len(s_mo_orbitals)):
             s_mo_orbitals[s].eigenvalue = s_mo_orbitals[s].eigenvalue.subs(alpha, alpha_s).subs(beta, beta_s)
-            s_mo_orbitals[s].eigenvector = s_mo_orbitals[s].eigenvector.subs(alpha, alpha_s).subs(beta, beta_s)
+            if s_mo_orbitals[s].eigenvector is not None:
+                s_mo_orbitals[s].eigenvector = s_mo_orbitals[s].eigenvector.subs(alpha, alpha_s).subs(beta, beta_s)
             self.antibonding_s.append(s_mo_orbitals[s])
 
 
@@ -330,7 +332,8 @@ class MoleculeState:
             raise Exception(e)
         content += r"\newpage"
 
-        try:
+        # try:
+        if True:
             content += r"\section*{p orbitals}"
             content += self.p.get_latex_symmetry_behavior()+"\n\n"
             content += self.p.get_latex_salcs(print_active=False)+"\n\n"
@@ -338,9 +341,9 @@ class MoleculeState:
             content += r"\newpage \section*{s orbitals}"
             content += self.s.get_latex_symmetry_behavior() + "\n\n"
             content += self.s.get_latex_salcs(print_active=False) + "\n\n"
-        except Exception as e:
-            msg = str(e).replace("_", r"\_")
-            content += r"\textcolor{red}{"+f"Error in solving salc-hueckel-matrix {msg}\n"+"}"
+        # except Exception as e:
+        #     msg = str(e).replace("_", r"\_")
+        #     content += r"\textcolor{red}{"+f"Error in solving salc-hueckel-matrix {msg}\n"+"}"
 
         content += r"\newpage \section*{Transitions from p orbitals into s orbitals}"
         try:

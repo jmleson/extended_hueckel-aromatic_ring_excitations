@@ -87,11 +87,11 @@ if __name__ == "__main__":
     print_active = False
 
     # cyclopentadiene()
-    benzene(print_active)
-    chlorobenzene(print_active)
-    pyridine(print_active)
+    # benzene(print_active)
+    # chlorobenzene(print_active)
+    # pyridine(print_active)
     # pyrazine(print_active)
 
     dichlorobenzene(print_active)
-    hexachlorobenzene(print_active)
-    hexafluorobenzene(print_active)
+    # hexachlorobenzene(print_active)
+    # hexafluorobenzene(print_active)

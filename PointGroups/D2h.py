@@ -33,7 +33,28 @@ class D2h(PointGroup):
             o = SymmetryOperation(n=self.n, name="σ(yz)", transform_p=lambda i: [1, 6, 5, 4, 3, 2][i - 1], amount=1)
             self.operations.append(o)
         elif self.n == 8:
-            raise Exception("to be implememted")
+            # case 1,4-Di-chlorobenzene
+            o = SymmetryOperation(n=self.n, name="C2(z)", transform_p=lambda i: [4, 5, 6, 1, 2, 3, 8, 7][i - 1], amount=1)
+            self.operations.append(o)
+            o = SymmetryOperation(n=self.n, name="C2(y)", transform_p=lambda i: [-1, -6, -5, -4, -3, -2, -7, -8][i - 1],
+                                  amount=1)
+            self.operations.append(o)
+            o = SymmetryOperation(n=self.n, name="C2(x)", transform_p=lambda i: [-4, -3, -2, -1, -6, -5, -8, -7][i - 1],
+                                  amount=1)
+            self.operations.append(o)
+
+            o = SymmetryOperation(n=self.n, name="i", transform_p=lambda i: [-4, -5, -6, -1, -2, -3, -8, -7][i - 1], amount=1)
+            self.operations.append(o)
+
+            o = SymmetryOperation(n=self.n, name="σ(xy)", transform_p=lambda i: [-1, -2, -3, -4, -5, -6, -7, -8][i - 1],
+                                  amount=1)
+            self.operations.append(o)
+            o = SymmetryOperation(n=self.n, name="σ(xz)", transform_p=lambda i: [4, 3, 2, 1, 6, 5, 8, 7][i - 1], amount=1)
+            self.operations.append(o)
+            o = SymmetryOperation(n=self.n, name="σ(yz)", transform_p=lambda i: [1, 6, 5, 4, 3, 2, 7, 8][i - 1], amount=1)
+            self.operations.append(o)
+        else:
+            raise Exception("not yet implemented")
 
         self.dipole_operator_symmetry = "B1u"
 

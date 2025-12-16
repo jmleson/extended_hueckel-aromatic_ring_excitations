@@ -1,0 +1,1292 @@
+\documentclass[12pt,a4paper]{article}
+        \usepackage{graphicx}
+        \usepackage{geometry}
+        \geometry{margin=2cm}
+        \usepackage{helvet}
+        \usepackage{xcolor}
+        \usepackage{amsmath} % for bmatrix
+        \setlength{\parindent}{0pt}  % No indentation globally
+        \renewcommand{\familydefault}{\sfdefault}
+        \usepackage[german]{babel}% for glqq / grqq
+
+        \begin{document}\begin{center}
+                \Huge \textbf{Dichlorobenzene} \\[1cm]
+                \includegraphics[width=0.5\textwidth]{dichlorobenzene} \\[0.5cm]
+                \Large Point Group: \textbf{D2h}
+            \end{center}\newpage\section*{p orbitals}
+Symmetry behavior of the p-orbitals:
+$$\Gamma_{red} = \,8 E\;\oplus{}\,-4 C2(y)\;\oplus{}\,-8 \sigma (xy)\;\oplus{}\,4 \sigma (yz)\;$$
+$$\Gamma_{irred} = \,1 B2g\;\oplus{}\,3 B3g\;\oplus{}\,1 Au\;\oplus{}\,3 B1u\;$$
+
+
+\begin{itemize}
+\item SALC of B3g: \quad $\frac{\sqrt{2} p_{1}}{2} - \frac{\sqrt{2} p_{4}}{2}$
+\item SALC of B1u: \quad $\frac{\sqrt{2} p_{1}}{2} + \frac{\sqrt{2} p_{4}}{2}$
+\item SALC of B2g: \quad $\frac{p_{2}}{2} + \frac{p_{3}}{2} - \frac{p_{5}}{2} - \frac{p_{6}}{2}$
+\item SALC of B3g: \quad $\frac{p_{2}}{2} - \frac{p_{3}}{2} - \frac{p_{5}}{2} + \frac{p_{6}}{2}$
+\item SALC of Au: \quad $\frac{p_{2}}{2} - \frac{p_{3}}{2} + \frac{p_{5}}{2} - \frac{p_{6}}{2}$
+\item SALC of B1u: \quad $\frac{p_{2}}{2} + \frac{p_{3}}{2} + \frac{p_{5}}{2} + \frac{p_{6}}{2}$
+\item SALC of B3g: \quad $\frac{\sqrt{2} p_{7}}{2} - \frac{\sqrt{2} p_{8}}{2}$
+\item SALC of B1u: \quad $\frac{\sqrt{2} p_{7}}{2} + \frac{\sqrt{2} p_{8}}{2}$
+\end{itemize}
+Put together these SALCs form the following Hamilton matrices:
+     $$ H_{B3g}= \left[\begin{bmatrix}\alpha & \sqrt{2} \beta & 0\\\sqrt{2} \beta & \alpha - \beta & 0\\0 & 0 & \alpha_{Cl}\end{bmatrix}\right]$$ 
+     $$ H_{B1u}= \left[\begin{bmatrix}\alpha & \sqrt{2} \beta & 2 \beta_{Cl}\\\sqrt{2} \beta & \alpha + \beta & 0\\2 \beta_{Cl} & 0 & \alpha_{Cl}\end{bmatrix}\right]$$ 
+     $$ H_{B2g}= \left[\begin{bmatrix}\alpha + \beta\end{bmatrix}\right]$$ 
+     $$ H_{Au}= \left[\begin{bmatrix}\alpha - \beta\end{bmatrix}\right]$$ 
+
+
+Solving Hückels secular equations, that follow from these H, leads to:
+\begin{itemize}
+\item orbital of B3g with energy = $\alpha + \beta$ \\
+                            ( $\left[\begin{matrix}\frac{\sqrt{6}}{3}\\\frac{\sqrt{3}}{3}\\0\end{matrix}\right] * \left[\begin{array}{c}\text{1. SALC in B3g} \\ \text{2. SALC in B3g} \\ \text{3. SALC in B3g}\end{array}\right] = \left[\begin{matrix}\frac{\sqrt{2} p_{1}}{2} - \frac{\sqrt{2} p_{4}}{2}\\\frac{p_{2}}{2} - \frac{p_{3}}{2} - \frac{p_{5}}{2} + \frac{p_{6}}{2}\end{matrix}\right] $ )
+\item orbital of B2g with energy = $\alpha + \beta$ \\
+                            ( $\left[\begin{matrix}1\end{matrix}\right] * \left[\begin{array}{c}\text{1. SALC in B2g}\end{array}\right] = \left[\begin{matrix}\frac{p_{2}}{2} + \frac{p_{3}}{2} - \frac{p_{5}}{2} - \frac{p_{6}}{2}\end{matrix}\right] $ )
+\item orbital of B3g with energy = $\alpha_{Cl}$ \\
+                            ( $\left[\begin{matrix}0\\0\\1\end{matrix}\right] * \left[\begin{array}{c}\text{1. SALC in B3g} \\ \text{2. SALC in B3g} \\ \text{3. SALC in B3g}\end{array}\right] = \left[\begin{matrix}\frac{\sqrt{2} p_{7}}{2} - \frac{\sqrt{2} p_{8}}{2}\end{matrix}\right] $ )
+\item orbital of Au with energy = $\alpha - \beta$ \\
+                            ( $\left[\begin{matrix}1\end{matrix}\right] * \left[\begin{array}{c}\text{1. SALC in Au}\end{array}\right] = \left[\begin{matrix}\frac{p_{2}}{2} - \frac{p_{3}}{2} + \frac{p_{5}}{2} - \frac{p_{6}}{2}\end{matrix}\right] $ )
+\item orbital of B3g with energy = $\alpha - 2 \beta$ \\
+                            ( $\left[\begin{matrix}- \frac{\sqrt{3}}{3}\\\frac{\sqrt{6}}{3}\\0\end{matrix}\right] * \left[\begin{array}{c}\text{1. SALC in B3g} \\ \text{2. SALC in B3g} \\ \text{3. SALC in B3g}\end{array}\right] = \left[\begin{matrix}\frac{\sqrt{2} p_{1}}{2} - \frac{\sqrt{2} p_{4}}{2}\\\frac{p_{2}}{2} - \frac{p_{3}}{2} - \frac{p_{5}}{2} + \frac{p_{6}}{2}\end{matrix}\right] $ )
+\end{itemize}
+
+
+
+\newpage \section*{s orbitals}
+Symmetry behavior of the s-orbitals:
+$$\Gamma_{red} = \,8 E\;\oplus{}\,4 C2(y)\;\oplus{}\,8 \sigma (xy)\;\oplus{}\,4 \sigma (yz)\;$$
+$$\Gamma_{irred} = \,3 Ag\;\oplus{}\,1 B1g\;\oplus{}\,3 B2u\;\oplus{}\,1 B3u\;$$
+
+
+\begin{itemize}
+\item SALC of Ag: \quad $\frac{\sqrt{2} s_{1}}{2} + \frac{\sqrt{2} s_{4}}{2}$
+\item SALC of B2u: \quad $\frac{\sqrt{2} s_{1}}{2} - \frac{\sqrt{2} s_{4}}{2}$
+\item SALC of Ag: \quad $\frac{s_{2}}{2} + \frac{s_{3}}{2} + \frac{s_{5}}{2} + \frac{s_{6}}{2}$
+\item SALC of B1g: \quad $\frac{s_{2}}{2} - \frac{s_{3}}{2} + \frac{s_{5}}{2} - \frac{s_{6}}{2}$
+\item SALC of B2u: \quad $\frac{s_{2}}{2} - \frac{s_{3}}{2} - \frac{s_{5}}{2} + \frac{s_{6}}{2}$
+\item SALC of B3u: \quad $\frac{s_{2}}{2} + \frac{s_{3}}{2} - \frac{s_{5}}{2} - \frac{s_{6}}{2}$
+\item SALC of Ag: \quad $\frac{\sqrt{2} s_{7}}{2} + \frac{\sqrt{2} s_{8}}{2}$
+\item SALC of B2u: \quad $\frac{\sqrt{2} s_{7}}{2} - \frac{\sqrt{2} s_{8}}{2}$
+\end{itemize}
+Put together these SALCs form the following Hamilton matrices:
+     $$ H_{Ag}= \left[\begin{bmatrix}\alpha_{s} & \sqrt{2} \beta_{s} & 2 \beta_{s Cl}\\\sqrt{2} \beta_{s} & \alpha_{s} + \beta_{s} & 0\\2 \beta_{s Cl} & 0 & \alpha_{s Cl}\end{bmatrix}\right]$$ 
+     $$ H_{B2u}= \left[\begin{bmatrix}\alpha_{s} & \sqrt{2} \beta_{s} & 0\\\sqrt{2} \beta_{s} & \alpha_{s} - \beta_{s} & 0\\0 & 0 & \alpha_{s Cl}\end{bmatrix}\right]$$ 
+     $$ H_{B1g}= \left[\begin{bmatrix}\alpha_{s} - \beta_{s}\end{bmatrix}\right]$$ 
+     $$ H_{B3u}= \left[\begin{bmatrix}\alpha_{s} + \beta_{s}\end{bmatrix}\right]$$ 
+
+
+Solving Hückels secular equations, that follow from these H, leads to:
+\begin{itemize}
+\item orbital of B2u with energy = $\alpha_{s} + \beta_{s}$ \\
+                            ( $\left[\begin{matrix}\frac{\sqrt{6}}{3}\\\frac{\sqrt{3}}{3}\\0\end{matrix}\right] * \left[\begin{array}{c}\text{1. SALC in B2u} \\ \text{2. SALC in B2u} \\ \text{3. SALC in B2u}\end{array}\right] = \left[\begin{matrix}\frac{\sqrt{2} s_{1}}{2} - \frac{\sqrt{2} s_{4}}{2}\\\frac{s_{2}}{2} - \frac{s_{3}}{2} - \frac{s_{5}}{2} + \frac{s_{6}}{2}\end{matrix}\right] $ )
+\item orbital of B3u with energy = $\alpha_{s} + \beta_{s}$ \\
+                            ( $\left[\begin{matrix}1\end{matrix}\right] * \left[\begin{array}{c}\text{1. SALC in B3u}\end{array}\right] = \left[\begin{matrix}\frac{s_{2}}{2} + \frac{s_{3}}{2} - \frac{s_{5}}{2} - \frac{s_{6}}{2}\end{matrix}\right] $ )
+\item orbital of B2u with energy = $\alpha_{s Cl}$ \\
+                            ( $\left[\begin{matrix}0\\0\\1\end{matrix}\right] * \left[\begin{array}{c}\text{1. SALC in B2u} \\ \text{2. SALC in B2u} \\ \text{3. SALC in B2u}\end{array}\right] = \left[\begin{matrix}\frac{\sqrt{2} s_{7}}{2} - \frac{\sqrt{2} s_{8}}{2}\end{matrix}\right] $ )
+\item orbital of B1g with energy = $\alpha_{s} - \beta_{s}$ \\
+                            ( $\left[\begin{matrix}1\end{matrix}\right] * \left[\begin{array}{c}\text{1. SALC in B1g}\end{array}\right] = \left[\begin{matrix}\frac{s_{2}}{2} - \frac{s_{3}}{2} + \frac{s_{5}}{2} - \frac{s_{6}}{2}\end{matrix}\right] $ )
+\item orbital of B2u with energy = $\alpha_{s} - 2 \beta_{s}$ \\
+                            ( $\left[\begin{matrix}- \frac{\sqrt{3}}{3}\\\frac{\sqrt{6}}{3}\\0\end{matrix}\right] * \left[\begin{array}{c}\text{1. SALC in B2u} \\ \text{2. SALC in B2u} \\ \text{3. SALC in B2u}\end{array}\right] = \left[\begin{matrix}\frac{\sqrt{2} s_{1}}{2} - \frac{\sqrt{2} s_{4}}{2}\\\frac{s_{2}}{2} - \frac{s_{3}}{2} - \frac{s_{5}}{2} + \frac{s_{6}}{2}\end{matrix}\right] $ )
+\end{itemize}
+
+
+
+\newpage \section*{Transitions from p orbitals into s orbitals}\subsection*{State with Occupation [2, 2, 2, 0, 0, 0, 2, 2] (0 unpaired electrons, mult 1.0)}
+        \noindent\textbf{Transition from $\phi_{2}$ into $\phi_{s_{2}}$:}
+        \begin{itemize}
+            \item $- [2, 2, 2, 0, 0, 0, 2, 2], (0, 0, 0, 0, 0, 0, 0, 0) \rightarrow (2, 1, 2, 0, 0, 0, 2, 2), (0, 1, 0, 0, 0, 0, 0, 0)$
+        
+            \item $\phi_{2}:$ linear combination = $\frac{p_{2}}{2} + \frac{p_{3}}{2} - \frac{p_{5}}{2} - \frac{p_{6}}{2}$, \
+            energy = $\alpha + \beta$
+            
+            \item $\xi_{2}:$ linear combination = $\frac{s_{2}}{2} + \frac{s_{3}}{2} - \frac{s_{5}}{2} - \frac{s_{6}}{2}$, \
+            energy = $\alpha_{s} + \beta_{s}$
+            
+            \item $\Delta$ Energy: $- \alpha + \alpha_{s} - \beta + \beta_{s}$
+            \item Energy of State before Excitation: $4 \alpha + 2 \alpha_{Cl} + 4 \beta$
+            \item Energy of State after Excitation: $3 \alpha + 2 \alpha_{Cl} + \alpha_{s} + 3 \beta + \beta_{s}$
+            \item Energy between Average Energies of $\phi$-/$\xi$-orbitals: \
+            $- \frac{4 \alpha}{5} - \frac{\alpha_{Cl}}{5} + \frac{4 \alpha_{s}}{5} + \frac{\alpha_{s Cl}}{5} + \frac{\beta}{5} - \frac{\beta_{s}}{5}$
+        
+            \item dipole transition moment: $\delta$
+        
+        \end{itemize}
+        
+	\textcolor{red}{CAUTION:} state should have same length as occupation $\rightarrow$ missing results?
+	DONT TRUST \glqq{}Energy of State before Excitation\grqq{}, only relative values are correct
+
+
+        \noindent\textbf{Transition from $\phi_{3}$ into $\phi_{s_{3}}$:}
+        \begin{itemize}
+            \item $- [2, 2, 2, 0, 0, 0, 2, 2], (0, 0, 0, 0, 0, 0, 0, 0) \rightarrow (2, 2, 1, 0, 0, 0, 2, 2), (0, 0, 1, 0, 0, 0, 0, 0)$
+        
+            \item $\phi_{3}:$ linear combination = $\frac{\sqrt{2} p_{7}}{2} - \frac{\sqrt{2} p_{8}}{2}$, \
+            energy = $\alpha_{Cl}$
+            
+            \item $\xi_{3}:$ linear combination = $\frac{\sqrt{2} s_{7}}{2} - \frac{\sqrt{2} s_{8}}{2}$, \
+            energy = $\alpha_{s Cl}$
+            
+            \item $\Delta$ Energy: $- \alpha_{Cl} + \alpha_{s Cl}$
+            \item Energy of State before Excitation: $4 \alpha + 2 \alpha_{Cl} + 4 \beta$
+            \item Energy of State after Excitation: $4 \alpha + \alpha_{Cl} + \alpha_{s Cl} + 4 \beta$
+            \item Energy between Average Energies of $\phi$-/$\xi$-orbitals: \
+            $- \frac{4 \alpha}{5} - \frac{\alpha_{Cl}}{5} + \frac{4 \alpha_{s}}{5} + \frac{\alpha_{s Cl}}{5} + \frac{\beta}{5} - \frac{\beta_{s}}{5}$
+        
+            \item dipole transition moment: $\delta$
+        
+        \end{itemize}
+        
+	\textcolor{red}{CAUTION:} state should have same length as occupation $\rightarrow$ missing results?
+	DONT TRUST \glqq{}Energy of State before Excitation\grqq{}, only relative values are correct
+
+ - 	\textcolor{red}{CAUTION:} state should have same length as occupation $\rightarrow$ missing results?
+	DONT TRUST \glqq{}Energy of State before Excitation\grqq{}, only relative values are correct
+
+	\textcolor{red}{CAUTION:} state should have same length as occupation $\rightarrow$ missing results?
+	DONT TRUST \glqq{}Energy of State before Excitation\grqq{}, only relative values are correct
+
+less orbital occupations set than relevant for this SALC $\rightarrow$ 
+5 zu 6 + 2 
+2 zu 5, (1, 1, 1, 1, 1) 
+\textcolor{red}{DONT TRUST \glqq{}Energy of State before Excitation\grqq{}, only relative values are correct}
+
+less orbital occupations set than relevant for this SALC $\rightarrow$ 
+5 zu 6 + 2 
+1 zu 5, (1, 1, 1, 1, 1) 
+\textcolor{red}{DONT TRUST \glqq{}Energy of State before Excitation\grqq{}, only relative values are correct}
+
+less orbital occupations set than relevant for this SALC $\rightarrow$ 
+5 zu 6 + 2 
+1 zu 5, (1, 1, 1, 1, 1) 
+\textcolor{red}{DONT TRUST \glqq{}Energy of State before Excitation\grqq{}, only relative values are correct}
+
+less orbital occupations set than relevant for this SALC $\rightarrow$ 
+5 zu 6 + 2 
+1 zu 5, (1, 1, 1, 1, 1) 
+\textcolor{red}{DONT TRUST \glqq{}Energy of State before Excitation\grqq{}, only relative values are correct}
+
+less orbital occupations set than relevant for this SALC $\rightarrow$ 
+5 zu 6 + 2 
+2 zu 5, (1, 1, 1, 1, 1) 
+\textcolor{red}{DONT TRUST \glqq{}Energy of State before Excitation\grqq{}, only relative values are correct}
+
+ AND 	\textcolor{red}{CAUTION:} state should have same length as occupation $\rightarrow$ missing results?
+	DONT TRUST \glqq{}Energy of State before Excitation\grqq{}, only relative values are correct
+
+less orbital occupations set than relevant for this SALC $\rightarrow$ 
+5 zu 6 + 2 
+2 zu 5, (1, 1, 1, 1, 1) 
+\textcolor{red}{DONT TRUST \glqq{}Energy of State before Excitation\grqq{}, only relative values are correct}
+
+less orbital occupations set than relevant for this SALC $\rightarrow$ 
+5 zu 6 + 2 
+1 zu 5, (1, 1, 1, 1, 1) 
+\textcolor{red}{DONT TRUST \glqq{}Energy of State before Excitation\grqq{}, only relative values are correct}
+
+less orbital occupations set than relevant for this SALC $\rightarrow$ 
+5 zu 6 + 2 
+1 zu 5, (1, 1, 1, 1, 1) 
+\textcolor{red}{DONT TRUST \glqq{}Energy of State before Excitation\grqq{}, only relative values are correct}
+
+less orbital occupations set than relevant for this SALC $\rightarrow$ 
+5 zu 6 + 2 
+1 zu 5, (1, 1, 1, 1, 1) 
+\textcolor{red}{DONT TRUST \glqq{}Energy of State before Excitation\grqq{}, only relative values are correct}
+
+less orbital occupations set than relevant for this SALC $\rightarrow$ 
+5 zu 6 + 2 
+2 zu 5, (1, 1, 1, 1, 1) 
+\textcolor{red}{DONT TRUST \glqq{}Energy of State before Excitation\grqq{}, only relative values are correct}
+
+
+\subsection*{State with Occupation (2, 1, 1, 1, 1, 0, 2, 2) (4 unpaired electrons, mult 5.0)}
+        \noindent\textbf{Transition from $\phi_{2}$ into $\phi_{s_{2}}$:}
+        \begin{itemize}
+            \item $- (2, 1, 1, 1, 1, 0, 2, 2), (0, 0, 0, 0, 0, 0, 0, 0) \rightarrow (2, 0, 1, 1, 1, 0, 2, 2), (0, 1, 0, 0, 0, 0, 0, 0)$
+        
+            \item $\phi_{2}:$ linear combination = $\frac{p_{2}}{2} + \frac{p_{3}}{2} - \frac{p_{5}}{2} - \frac{p_{6}}{2}$, \
+            energy = $\alpha + \beta$
+            
+            \item $\xi_{2}:$ linear combination = $\frac{s_{2}}{2} + \frac{s_{3}}{2} - \frac{s_{5}}{2} - \frac{s_{6}}{2}$, \
+            energy = $\alpha_{s} + \beta_{s}$
+            
+            \item $\Delta$ Energy: $- \alpha + \alpha_{s} - \beta + \beta_{s}$
+            \item Energy of State before Excitation: $5 \alpha + \alpha_{Cl}$
+            \item Energy of State after Excitation: $4 \alpha + \alpha_{Cl} + \alpha_{s} - \beta + \beta_{s}$
+            \item Energy between Average Energies of $\phi$-/$\xi$-orbitals: \
+            $- \frac{4 \alpha}{5} - \frac{\alpha_{Cl}}{5} + \frac{4 \alpha_{s}}{5} + \frac{\alpha_{s Cl}}{5} + \frac{\beta}{5} - \frac{\beta_{s}}{5}$
+        
+            \item dipole transition moment: $\delta$
+        
+        \end{itemize}
+        
+	\textcolor{red}{CAUTION:} state should have same length as occupation $\rightarrow$ missing results?
+	DONT TRUST \glqq{}Energy of State before Excitation\grqq{}, only relative values are correct
+
+
+        \noindent\textbf{Transition from $\phi_{3}$ into $\phi_{s_{3}}$:}
+        \begin{itemize}
+            \item $- (2, 1, 1, 1, 1, 0, 2, 2), (0, 0, 0, 0, 0, 0, 0, 0) \rightarrow (2, 1, 0, 1, 1, 0, 2, 2), (0, 0, 1, 0, 0, 0, 0, 0)$
+        
+            \item $\phi_{3}:$ linear combination = $\frac{\sqrt{2} p_{7}}{2} - \frac{\sqrt{2} p_{8}}{2}$, \
+            energy = $\alpha_{Cl}$
+            
+            \item $\xi_{3}:$ linear combination = $\frac{\sqrt{2} s_{7}}{2} - \frac{\sqrt{2} s_{8}}{2}$, \
+            energy = $\alpha_{s Cl}$
+            
+            \item $\Delta$ Energy: $- \alpha_{Cl} + \alpha_{s Cl}$
+            \item Energy of State before Excitation: $5 \alpha + \alpha_{Cl}$
+            \item Energy of State after Excitation: $5 \alpha + \alpha_{s Cl}$
+            \item Energy between Average Energies of $\phi$-/$\xi$-orbitals: \
+            $- \frac{4 \alpha}{5} - \frac{\alpha_{Cl}}{5} + \frac{4 \alpha_{s}}{5} + \frac{\alpha_{s Cl}}{5} + \frac{\beta}{5} - \frac{\beta_{s}}{5}$
+        
+            \item dipole transition moment: $\delta$
+        
+        \end{itemize}
+        
+	\textcolor{red}{CAUTION:} state should have same length as occupation $\rightarrow$ missing results?
+	DONT TRUST \glqq{}Energy of State before Excitation\grqq{}, only relative values are correct
+
+ - 	\textcolor{red}{CAUTION:} state should have same length as occupation $\rightarrow$ missing results?
+	DONT TRUST \glqq{}Energy of State before Excitation\grqq{}, only relative values are correct
+
+	\textcolor{red}{CAUTION:} state should have same length as occupation $\rightarrow$ missing results?
+	DONT TRUST \glqq{}Energy of State before Excitation\grqq{}, only relative values are correct
+
+less orbital occupations set than relevant for this SALC $\rightarrow$ 
+5 zu 6 + 2 
+2 zu 5, (1, 1, 1, 1, 1) 
+\textcolor{red}{DONT TRUST \glqq{}Energy of State before Excitation\grqq{}, only relative values are correct}
+
+less orbital occupations set than relevant for this SALC $\rightarrow$ 
+5 zu 6 + 2 
+1 zu 5, (1, 1, 1, 1, 1) 
+\textcolor{red}{DONT TRUST \glqq{}Energy of State before Excitation\grqq{}, only relative values are correct}
+
+less orbital occupations set than relevant for this SALC $\rightarrow$ 
+5 zu 6 + 2 
+1 zu 5, (1, 1, 1, 1, 1) 
+\textcolor{red}{DONT TRUST \glqq{}Energy of State before Excitation\grqq{}, only relative values are correct}
+
+less orbital occupations set than relevant for this SALC $\rightarrow$ 
+5 zu 6 + 2 
+1 zu 5, (1, 1, 1, 1, 1) 
+\textcolor{red}{DONT TRUST \glqq{}Energy of State before Excitation\grqq{}, only relative values are correct}
+
+less orbital occupations set than relevant for this SALC $\rightarrow$ 
+5 zu 6 + 2 
+2 zu 5, (1, 1, 1, 1, 1) 
+\textcolor{red}{DONT TRUST \glqq{}Energy of State before Excitation\grqq{}, only relative values are correct}
+
+ AND 	\textcolor{red}{CAUTION:} state should have same length as occupation $\rightarrow$ missing results?
+	DONT TRUST \glqq{}Energy of State before Excitation\grqq{}, only relative values are correct
+
+less orbital occupations set than relevant for this SALC $\rightarrow$ 
+5 zu 6 + 2 
+2 zu 5, (1, 1, 1, 1, 1) 
+\textcolor{red}{DONT TRUST \glqq{}Energy of State before Excitation\grqq{}, only relative values are correct}
+
+less orbital occupations set than relevant for this SALC $\rightarrow$ 
+5 zu 6 + 2 
+1 zu 5, (1, 1, 1, 1, 1) 
+\textcolor{red}{DONT TRUST \glqq{}Energy of State before Excitation\grqq{}, only relative values are correct}
+
+less orbital occupations set than relevant for this SALC $\rightarrow$ 
+5 zu 6 + 2 
+1 zu 5, (1, 1, 1, 1, 1) 
+\textcolor{red}{DONT TRUST \glqq{}Energy of State before Excitation\grqq{}, only relative values are correct}
+
+less orbital occupations set than relevant for this SALC $\rightarrow$ 
+5 zu 6 + 2 
+1 zu 5, (1, 1, 1, 1, 1) 
+\textcolor{red}{DONT TRUST \glqq{}Energy of State before Excitation\grqq{}, only relative values are correct}
+
+less orbital occupations set than relevant for this SALC $\rightarrow$ 
+5 zu 6 + 2 
+2 zu 5, (1, 1, 1, 1, 1) 
+\textcolor{red}{DONT TRUST \glqq{}Energy of State before Excitation\grqq{}, only relative values are correct}
+
+
+
+        \noindent\textbf{Transition from $\phi_{4}$ into $\phi_{s_{4}}$:}
+        \begin{itemize}
+            \item $- (2, 1, 1, 1, 1, 0, 2, 2), (0, 0, 0, 0, 0, 0, 0, 0) \rightarrow (2, 1, 1, 0, 1, 0, 2, 2), (0, 0, 0, 1, 0, 0, 0, 0)$
+        
+            \item $\phi_{4}:$ linear combination = $\frac{p_{2}}{2} - \frac{p_{3}}{2} + \frac{p_{5}}{2} - \frac{p_{6}}{2}$, \
+            energy = $\alpha - \beta$
+            
+            \item $\xi_{4}:$ linear combination = $\frac{s_{2}}{2} - \frac{s_{3}}{2} + \frac{s_{5}}{2} - \frac{s_{6}}{2}$, \
+            energy = $\alpha_{s} - \beta_{s}$
+            
+            \item $\Delta$ Energy: $- \alpha + \alpha_{s} + \beta - \beta_{s}$
+            \item Energy of State before Excitation: $5 \alpha + \alpha_{Cl}$
+            \item Energy of State after Excitation: $4 \alpha + \alpha_{Cl} + \alpha_{s} + \beta - \beta_{s}$
+            \item Energy between Average Energies of $\phi$-/$\xi$-orbitals: \
+            $- \frac{4 \alpha}{5} - \frac{\alpha_{Cl}}{5} + \frac{4 \alpha_{s}}{5} + \frac{\alpha_{s Cl}}{5} + \frac{\beta}{5} - \frac{\beta_{s}}{5}$
+        
+            \item dipole transition moment: $\delta$
+        
+        \end{itemize}
+        
+	\textcolor{red}{CAUTION:} state should have same length as occupation $\rightarrow$ missing results?
+	DONT TRUST \glqq{}Energy of State before Excitation\grqq{}, only relative values are correct
+
+ - 	\textcolor{red}{CAUTION:} state should have same length as occupation $\rightarrow$ missing results?
+	DONT TRUST \glqq{}Energy of State before Excitation\grqq{}, only relative values are correct
+
+	\textcolor{red}{CAUTION:} state should have same length as occupation $\rightarrow$ missing results?
+	DONT TRUST \glqq{}Energy of State before Excitation\grqq{}, only relative values are correct
+
+less orbital occupations set than relevant for this SALC $\rightarrow$ 
+5 zu 6 + 2 
+2 zu 5, (1, 1, 1, 1, 1) 
+\textcolor{red}{DONT TRUST \glqq{}Energy of State before Excitation\grqq{}, only relative values are correct}
+
+less orbital occupations set than relevant for this SALC $\rightarrow$ 
+5 zu 6 + 2 
+1 zu 5, (1, 1, 1, 1, 1) 
+\textcolor{red}{DONT TRUST \glqq{}Energy of State before Excitation\grqq{}, only relative values are correct}
+
+less orbital occupations set than relevant for this SALC $\rightarrow$ 
+5 zu 6 + 2 
+1 zu 5, (1, 1, 1, 1, 1) 
+\textcolor{red}{DONT TRUST \glqq{}Energy of State before Excitation\grqq{}, only relative values are correct}
+
+less orbital occupations set than relevant for this SALC $\rightarrow$ 
+5 zu 6 + 2 
+1 zu 5, (1, 1, 1, 1, 1) 
+\textcolor{red}{DONT TRUST \glqq{}Energy of State before Excitation\grqq{}, only relative values are correct}
+
+less orbital occupations set than relevant for this SALC $\rightarrow$ 
+5 zu 6 + 2 
+2 zu 5, (1, 1, 1, 1, 1) 
+\textcolor{red}{DONT TRUST \glqq{}Energy of State before Excitation\grqq{}, only relative values are correct}
+
+ AND 	\textcolor{red}{CAUTION:} state should have same length as occupation $\rightarrow$ missing results?
+	DONT TRUST \glqq{}Energy of State before Excitation\grqq{}, only relative values are correct
+
+less orbital occupations set than relevant for this SALC $\rightarrow$ 
+5 zu 6 + 2 
+2 zu 5, (1, 1, 1, 1, 1) 
+\textcolor{red}{DONT TRUST \glqq{}Energy of State before Excitation\grqq{}, only relative values are correct}
+
+less orbital occupations set than relevant for this SALC $\rightarrow$ 
+5 zu 6 + 2 
+1 zu 5, (1, 1, 1, 1, 1) 
+\textcolor{red}{DONT TRUST \glqq{}Energy of State before Excitation\grqq{}, only relative values are correct}
+
+less orbital occupations set than relevant for this SALC $\rightarrow$ 
+5 zu 6 + 2 
+1 zu 5, (1, 1, 1, 1, 1) 
+\textcolor{red}{DONT TRUST \glqq{}Energy of State before Excitation\grqq{}, only relative values are correct}
+
+less orbital occupations set than relevant for this SALC $\rightarrow$ 
+5 zu 6 + 2 
+1 zu 5, (1, 1, 1, 1, 1) 
+\textcolor{red}{DONT TRUST \glqq{}Energy of State before Excitation\grqq{}, only relative values are correct}
+
+less orbital occupations set than relevant for this SALC $\rightarrow$ 
+5 zu 6 + 2 
+2 zu 5, (1, 1, 1, 1, 1) 
+\textcolor{red}{DONT TRUST \glqq{}Energy of State before Excitation\grqq{}, only relative values are correct}
+
+
+
+        \noindent\textbf{Transition from $\phi_{5}$ into $\phi_{s_{5}}$:}
+        \begin{itemize}
+            \item $- (2, 1, 1, 1, 1, 0, 2, 2), (0, 0, 0, 0, 0, 0, 0, 0) \rightarrow (2, 1, 1, 1, 0, 0, 2, 2), (0, 0, 0, 0, 1, 0, 0, 0)$
+        
+            \item $\phi_{5}:$ linear combination = $- \frac{2 \sqrt{3} \left(\frac{\sqrt{2} p_{1}}{2} - \frac{\sqrt{2} p_{4}}{2}\right)}{3}$, \
+            energy = $\alpha - 2 \beta$
+            
+            \item $\xi_{5}:$ linear combination = $- \frac{2 \sqrt{3} \left(\frac{\sqrt{2} s_{1}}{2} - \frac{\sqrt{2} s_{4}}{2}\right)}{3}$, \
+            energy = $\alpha_{s} - 2 \beta_{s}$
+            
+            \item $\Delta$ Energy: $- \alpha + \alpha_{s} + 2 \beta - 2 \beta_{s}$
+            \item Energy of State before Excitation: $5 \alpha + \alpha_{Cl}$
+            \item Energy of State after Excitation: $4 \alpha + \alpha_{Cl} + \alpha_{s} + 2 \beta - 2 \beta_{s}$
+            \item Energy between Average Energies of $\phi$-/$\xi$-orbitals: \
+            $- \frac{4 \alpha}{5} - \frac{\alpha_{Cl}}{5} + \frac{4 \alpha_{s}}{5} + \frac{\alpha_{s Cl}}{5} + \frac{\beta}{5} - \frac{\beta_{s}}{5}$
+        
+            \item dipole transition moment: $\delta$
+        
+        \end{itemize}
+        
+	\textcolor{red}{CAUTION:} state should have same length as occupation $\rightarrow$ missing results?
+	DONT TRUST \glqq{}Energy of State before Excitation\grqq{}, only relative values are correct
+
+ - 	\textcolor{red}{CAUTION:} state should have same length as occupation $\rightarrow$ missing results?
+	DONT TRUST \glqq{}Energy of State before Excitation\grqq{}, only relative values are correct
+
+	\textcolor{red}{CAUTION:} state should have same length as occupation $\rightarrow$ missing results?
+	DONT TRUST \glqq{}Energy of State before Excitation\grqq{}, only relative values are correct
+
+less orbital occupations set than relevant for this SALC $\rightarrow$ 
+5 zu 6 + 2 
+2 zu 5, (1, 1, 1, 1, 1) 
+\textcolor{red}{DONT TRUST \glqq{}Energy of State before Excitation\grqq{}, only relative values are correct}
+
+less orbital occupations set than relevant for this SALC $\rightarrow$ 
+5 zu 6 + 2 
+1 zu 5, (1, 1, 1, 1, 1) 
+\textcolor{red}{DONT TRUST \glqq{}Energy of State before Excitation\grqq{}, only relative values are correct}
+
+less orbital occupations set than relevant for this SALC $\rightarrow$ 
+5 zu 6 + 2 
+1 zu 5, (1, 1, 1, 1, 1) 
+\textcolor{red}{DONT TRUST \glqq{}Energy of State before Excitation\grqq{}, only relative values are correct}
+
+less orbital occupations set than relevant for this SALC $\rightarrow$ 
+5 zu 6 + 2 
+1 zu 5, (1, 1, 1, 1, 1) 
+\textcolor{red}{DONT TRUST \glqq{}Energy of State before Excitation\grqq{}, only relative values are correct}
+
+less orbital occupations set than relevant for this SALC $\rightarrow$ 
+5 zu 6 + 2 
+2 zu 5, (1, 1, 1, 1, 1) 
+\textcolor{red}{DONT TRUST \glqq{}Energy of State before Excitation\grqq{}, only relative values are correct}
+
+ AND 	\textcolor{red}{CAUTION:} state should have same length as occupation $\rightarrow$ missing results?
+	DONT TRUST \glqq{}Energy of State before Excitation\grqq{}, only relative values are correct
+
+less orbital occupations set than relevant for this SALC $\rightarrow$ 
+5 zu 6 + 2 
+2 zu 5, (1, 1, 1, 1, 1) 
+\textcolor{red}{DONT TRUST \glqq{}Energy of State before Excitation\grqq{}, only relative values are correct}
+
+less orbital occupations set than relevant for this SALC $\rightarrow$ 
+5 zu 6 + 2 
+1 zu 5, (1, 1, 1, 1, 1) 
+\textcolor{red}{DONT TRUST \glqq{}Energy of State before Excitation\grqq{}, only relative values are correct}
+
+less orbital occupations set than relevant for this SALC $\rightarrow$ 
+5 zu 6 + 2 
+1 zu 5, (1, 1, 1, 1, 1) 
+\textcolor{red}{DONT TRUST \glqq{}Energy of State before Excitation\grqq{}, only relative values are correct}
+
+less orbital occupations set than relevant for this SALC $\rightarrow$ 
+5 zu 6 + 2 
+1 zu 5, (1, 1, 1, 1, 1) 
+\textcolor{red}{DONT TRUST \glqq{}Energy of State before Excitation\grqq{}, only relative values are correct}
+
+less orbital occupations set than relevant for this SALC $\rightarrow$ 
+5 zu 6 + 2 
+2 zu 5, (1, 1, 1, 1, 1) 
+\textcolor{red}{DONT TRUST \glqq{}Energy of State before Excitation\grqq{}, only relative values are correct}
+
+
+\subsection*{State with Occupation (2, 1, 2, 0, 1, 0, 2, 2) (2 unpaired electrons, mult 3.0)}
+        \noindent\textbf{Transition from $\phi_{2}$ into $\phi_{s_{2}}$:}
+        \begin{itemize}
+            \item $- (2, 1, 2, 0, 1, 0, 2, 2), (0, 0, 0, 0, 0, 0, 0, 0) \rightarrow (2, 0, 2, 0, 1, 0, 2, 2), (0, 1, 0, 0, 0, 0, 0, 0)$
+        
+            \item $\phi_{2}:$ linear combination = $\frac{p_{2}}{2} + \frac{p_{3}}{2} - \frac{p_{5}}{2} - \frac{p_{6}}{2}$, \
+            energy = $\alpha + \beta$
+            
+            \item $\xi_{2}:$ linear combination = $\frac{s_{2}}{2} + \frac{s_{3}}{2} - \frac{s_{5}}{2} - \frac{s_{6}}{2}$, \
+            energy = $\alpha_{s} + \beta_{s}$
+            
+            \item $\Delta$ Energy: $- \alpha + \alpha_{s} - \beta + \beta_{s}$
+            \item Energy of State before Excitation: $4 \alpha + 2 \alpha_{Cl} + \beta$
+            \item Energy of State after Excitation: $3 \alpha + 2 \alpha_{Cl} + \alpha_{s} + \beta_{s}$
+            \item Energy between Average Energies of $\phi$-/$\xi$-orbitals: \
+            $- \frac{4 \alpha}{5} - \frac{\alpha_{Cl}}{5} + \frac{4 \alpha_{s}}{5} + \frac{\alpha_{s Cl}}{5} + \frac{\beta}{5} - \frac{\beta_{s}}{5}$
+        
+            \item dipole transition moment: $\delta$
+        
+        \end{itemize}
+        
+	\textcolor{red}{CAUTION:} state should have same length as occupation $\rightarrow$ missing results?
+	DONT TRUST \glqq{}Energy of State before Excitation\grqq{}, only relative values are correct
+
+
+        \noindent\textbf{Transition from $\phi_{3}$ into $\phi_{s_{3}}$:}
+        \begin{itemize}
+            \item $- (2, 1, 2, 0, 1, 0, 2, 2), (0, 0, 0, 0, 0, 0, 0, 0) \rightarrow (2, 1, 1, 0, 1, 0, 2, 2), (0, 0, 1, 0, 0, 0, 0, 0)$
+        
+            \item $\phi_{3}:$ linear combination = $\frac{\sqrt{2} p_{7}}{2} - \frac{\sqrt{2} p_{8}}{2}$, \
+            energy = $\alpha_{Cl}$
+            
+            \item $\xi_{3}:$ linear combination = $\frac{\sqrt{2} s_{7}}{2} - \frac{\sqrt{2} s_{8}}{2}$, \
+            energy = $\alpha_{s Cl}$
+            
+            \item $\Delta$ Energy: $- \alpha_{Cl} + \alpha_{s Cl}$
+            \item Energy of State before Excitation: $4 \alpha + 2 \alpha_{Cl} + \beta$
+            \item Energy of State after Excitation: $4 \alpha + \alpha_{Cl} + \alpha_{s Cl} + \beta$
+            \item Energy between Average Energies of $\phi$-/$\xi$-orbitals: \
+            $- \frac{4 \alpha}{5} - \frac{\alpha_{Cl}}{5} + \frac{4 \alpha_{s}}{5} + \frac{\alpha_{s Cl}}{5} + \frac{\beta}{5} - \frac{\beta_{s}}{5}$
+        
+            \item dipole transition moment: $\delta$
+        
+        \end{itemize}
+        
+	\textcolor{red}{CAUTION:} state should have same length as occupation $\rightarrow$ missing results?
+	DONT TRUST \glqq{}Energy of State before Excitation\grqq{}, only relative values are correct
+
+ - 	\textcolor{red}{CAUTION:} state should have same length as occupation $\rightarrow$ missing results?
+	DONT TRUST \glqq{}Energy of State before Excitation\grqq{}, only relative values are correct
+
+	\textcolor{red}{CAUTION:} state should have same length as occupation $\rightarrow$ missing results?
+	DONT TRUST \glqq{}Energy of State before Excitation\grqq{}, only relative values are correct
+
+less orbital occupations set than relevant for this SALC $\rightarrow$ 
+5 zu 6 + 2 
+2 zu 5, (1, 1, 1, 1, 1) 
+\textcolor{red}{DONT TRUST \glqq{}Energy of State before Excitation\grqq{}, only relative values are correct}
+
+less orbital occupations set than relevant for this SALC $\rightarrow$ 
+5 zu 6 + 2 
+1 zu 5, (1, 1, 1, 1, 1) 
+\textcolor{red}{DONT TRUST \glqq{}Energy of State before Excitation\grqq{}, only relative values are correct}
+
+less orbital occupations set than relevant for this SALC $\rightarrow$ 
+5 zu 6 + 2 
+1 zu 5, (1, 1, 1, 1, 1) 
+\textcolor{red}{DONT TRUST \glqq{}Energy of State before Excitation\grqq{}, only relative values are correct}
+
+less orbital occupations set than relevant for this SALC $\rightarrow$ 
+5 zu 6 + 2 
+1 zu 5, (1, 1, 1, 1, 1) 
+\textcolor{red}{DONT TRUST \glqq{}Energy of State before Excitation\grqq{}, only relative values are correct}
+
+less orbital occupations set than relevant for this SALC $\rightarrow$ 
+5 zu 6 + 2 
+2 zu 5, (1, 1, 1, 1, 1) 
+\textcolor{red}{DONT TRUST \glqq{}Energy of State before Excitation\grqq{}, only relative values are correct}
+
+ AND 	\textcolor{red}{CAUTION:} state should have same length as occupation $\rightarrow$ missing results?
+	DONT TRUST \glqq{}Energy of State before Excitation\grqq{}, only relative values are correct
+
+less orbital occupations set than relevant for this SALC $\rightarrow$ 
+5 zu 6 + 2 
+2 zu 5, (1, 1, 1, 1, 1) 
+\textcolor{red}{DONT TRUST \glqq{}Energy of State before Excitation\grqq{}, only relative values are correct}
+
+less orbital occupations set than relevant for this SALC $\rightarrow$ 
+5 zu 6 + 2 
+1 zu 5, (1, 1, 1, 1, 1) 
+\textcolor{red}{DONT TRUST \glqq{}Energy of State before Excitation\grqq{}, only relative values are correct}
+
+less orbital occupations set than relevant for this SALC $\rightarrow$ 
+5 zu 6 + 2 
+1 zu 5, (1, 1, 1, 1, 1) 
+\textcolor{red}{DONT TRUST \glqq{}Energy of State before Excitation\grqq{}, only relative values are correct}
+
+less orbital occupations set than relevant for this SALC $\rightarrow$ 
+5 zu 6 + 2 
+1 zu 5, (1, 1, 1, 1, 1) 
+\textcolor{red}{DONT TRUST \glqq{}Energy of State before Excitation\grqq{}, only relative values are correct}
+
+less orbital occupations set than relevant for this SALC $\rightarrow$ 
+5 zu 6 + 2 
+2 zu 5, (1, 1, 1, 1, 1) 
+\textcolor{red}{DONT TRUST \glqq{}Energy of State before Excitation\grqq{}, only relative values are correct}
+
+
+
+        \noindent\textbf{Transition from $\phi_{5}$ into $\phi_{s_{5}}$:}
+        \begin{itemize}
+            \item $- (2, 1, 2, 0, 1, 0, 2, 2), (0, 0, 0, 0, 0, 0, 0, 0) \rightarrow (2, 1, 2, 0, 0, 0, 2, 2), (0, 0, 0, 0, 1, 0, 0, 0)$
+        
+            \item $\phi_{5}:$ linear combination = $- \frac{2 \sqrt{3} \left(\frac{\sqrt{2} p_{1}}{2} - \frac{\sqrt{2} p_{4}}{2}\right)}{3}$, \
+            energy = $\alpha - 2 \beta$
+            
+            \item $\xi_{5}:$ linear combination = $- \frac{2 \sqrt{3} \left(\frac{\sqrt{2} s_{1}}{2} - \frac{\sqrt{2} s_{4}}{2}\right)}{3}$, \
+            energy = $\alpha_{s} - 2 \beta_{s}$
+            
+            \item $\Delta$ Energy: $- \alpha + \alpha_{s} + 2 \beta - 2 \beta_{s}$
+            \item Energy of State before Excitation: $4 \alpha + 2 \alpha_{Cl} + \beta$
+            \item Energy of State after Excitation: $3 \alpha + 2 \alpha_{Cl} + \alpha_{s} + 3 \beta - 2 \beta_{s}$
+            \item Energy between Average Energies of $\phi$-/$\xi$-orbitals: \
+            $- \frac{4 \alpha}{5} - \frac{\alpha_{Cl}}{5} + \frac{4 \alpha_{s}}{5} + \frac{\alpha_{s Cl}}{5} + \frac{\beta}{5} - \frac{\beta_{s}}{5}$
+        
+            \item dipole transition moment: $\delta$
+        
+        \end{itemize}
+        
+	\textcolor{red}{CAUTION:} state should have same length as occupation $\rightarrow$ missing results?
+	DONT TRUST \glqq{}Energy of State before Excitation\grqq{}, only relative values are correct
+
+ - 	\textcolor{red}{CAUTION:} state should have same length as occupation $\rightarrow$ missing results?
+	DONT TRUST \glqq{}Energy of State before Excitation\grqq{}, only relative values are correct
+
+	\textcolor{red}{CAUTION:} state should have same length as occupation $\rightarrow$ missing results?
+	DONT TRUST \glqq{}Energy of State before Excitation\grqq{}, only relative values are correct
+
+less orbital occupations set than relevant for this SALC $\rightarrow$ 
+5 zu 6 + 2 
+2 zu 5, (1, 1, 1, 1, 1) 
+\textcolor{red}{DONT TRUST \glqq{}Energy of State before Excitation\grqq{}, only relative values are correct}
+
+less orbital occupations set than relevant for this SALC $\rightarrow$ 
+5 zu 6 + 2 
+1 zu 5, (1, 1, 1, 1, 1) 
+\textcolor{red}{DONT TRUST \glqq{}Energy of State before Excitation\grqq{}, only relative values are correct}
+
+less orbital occupations set than relevant for this SALC $\rightarrow$ 
+5 zu 6 + 2 
+1 zu 5, (1, 1, 1, 1, 1) 
+\textcolor{red}{DONT TRUST \glqq{}Energy of State before Excitation\grqq{}, only relative values are correct}
+
+less orbital occupations set than relevant for this SALC $\rightarrow$ 
+5 zu 6 + 2 
+1 zu 5, (1, 1, 1, 1, 1) 
+\textcolor{red}{DONT TRUST \glqq{}Energy of State before Excitation\grqq{}, only relative values are correct}
+
+less orbital occupations set than relevant for this SALC $\rightarrow$ 
+5 zu 6 + 2 
+2 zu 5, (1, 1, 1, 1, 1) 
+\textcolor{red}{DONT TRUST \glqq{}Energy of State before Excitation\grqq{}, only relative values are correct}
+
+ AND 	\textcolor{red}{CAUTION:} state should have same length as occupation $\rightarrow$ missing results?
+	DONT TRUST \glqq{}Energy of State before Excitation\grqq{}, only relative values are correct
+
+less orbital occupations set than relevant for this SALC $\rightarrow$ 
+5 zu 6 + 2 
+2 zu 5, (1, 1, 1, 1, 1) 
+\textcolor{red}{DONT TRUST \glqq{}Energy of State before Excitation\grqq{}, only relative values are correct}
+
+less orbital occupations set than relevant for this SALC $\rightarrow$ 
+5 zu 6 + 2 
+1 zu 5, (1, 1, 1, 1, 1) 
+\textcolor{red}{DONT TRUST \glqq{}Energy of State before Excitation\grqq{}, only relative values are correct}
+
+less orbital occupations set than relevant for this SALC $\rightarrow$ 
+5 zu 6 + 2 
+1 zu 5, (1, 1, 1, 1, 1) 
+\textcolor{red}{DONT TRUST \glqq{}Energy of State before Excitation\grqq{}, only relative values are correct}
+
+less orbital occupations set than relevant for this SALC $\rightarrow$ 
+5 zu 6 + 2 
+1 zu 5, (1, 1, 1, 1, 1) 
+\textcolor{red}{DONT TRUST \glqq{}Energy of State before Excitation\grqq{}, only relative values are correct}
+
+less orbital occupations set than relevant for this SALC $\rightarrow$ 
+5 zu 6 + 2 
+2 zu 5, (1, 1, 1, 1, 1) 
+\textcolor{red}{DONT TRUST \glqq{}Energy of State before Excitation\grqq{}, only relative values are correct}
+
+
+\subsection*{State with Occupation (2, 1, 2, 1, 0, 0, 2, 2) (2 unpaired electrons, mult 3.0)}
+        \noindent\textbf{Transition from $\phi_{2}$ into $\phi_{s_{2}}$:}
+        \begin{itemize}
+            \item $- (2, 1, 2, 1, 0, 0, 2, 2), (0, 0, 0, 0, 0, 0, 0, 0) \rightarrow (2, 0, 2, 1, 0, 0, 2, 2), (0, 1, 0, 0, 0, 0, 0, 0)$
+        
+            \item $\phi_{2}:$ linear combination = $\frac{p_{2}}{2} + \frac{p_{3}}{2} - \frac{p_{5}}{2} - \frac{p_{6}}{2}$, \
+            energy = $\alpha + \beta$
+            
+            \item $\xi_{2}:$ linear combination = $\frac{s_{2}}{2} + \frac{s_{3}}{2} - \frac{s_{5}}{2} - \frac{s_{6}}{2}$, \
+            energy = $\alpha_{s} + \beta_{s}$
+            
+            \item $\Delta$ Energy: $- \alpha + \alpha_{s} - \beta + \beta_{s}$
+            \item Energy of State before Excitation: $4 \alpha + 2 \alpha_{Cl} + 2 \beta$
+            \item Energy of State after Excitation: $3 \alpha + 2 \alpha_{Cl} + \alpha_{s} + \beta + \beta_{s}$
+            \item Energy between Average Energies of $\phi$-/$\xi$-orbitals: \
+            $- \frac{4 \alpha}{5} - \frac{\alpha_{Cl}}{5} + \frac{4 \alpha_{s}}{5} + \frac{\alpha_{s Cl}}{5} + \frac{\beta}{5} - \frac{\beta_{s}}{5}$
+        
+            \item dipole transition moment: $\delta$
+        
+        \end{itemize}
+        
+	\textcolor{red}{CAUTION:} state should have same length as occupation $\rightarrow$ missing results?
+	DONT TRUST \glqq{}Energy of State before Excitation\grqq{}, only relative values are correct
+
+
+        \noindent\textbf{Transition from $\phi_{3}$ into $\phi_{s_{3}}$:}
+        \begin{itemize}
+            \item $- (2, 1, 2, 1, 0, 0, 2, 2), (0, 0, 0, 0, 0, 0, 0, 0) \rightarrow (2, 1, 1, 1, 0, 0, 2, 2), (0, 0, 1, 0, 0, 0, 0, 0)$
+        
+            \item $\phi_{3}:$ linear combination = $\frac{\sqrt{2} p_{7}}{2} - \frac{\sqrt{2} p_{8}}{2}$, \
+            energy = $\alpha_{Cl}$
+            
+            \item $\xi_{3}:$ linear combination = $\frac{\sqrt{2} s_{7}}{2} - \frac{\sqrt{2} s_{8}}{2}$, \
+            energy = $\alpha_{s Cl}$
+            
+            \item $\Delta$ Energy: $- \alpha_{Cl} + \alpha_{s Cl}$
+            \item Energy of State before Excitation: $4 \alpha + 2 \alpha_{Cl} + 2 \beta$
+            \item Energy of State after Excitation: $4 \alpha + \alpha_{Cl} + \alpha_{s Cl} + 2 \beta$
+            \item Energy between Average Energies of $\phi$-/$\xi$-orbitals: \
+            $- \frac{4 \alpha}{5} - \frac{\alpha_{Cl}}{5} + \frac{4 \alpha_{s}}{5} + \frac{\alpha_{s Cl}}{5} + \frac{\beta}{5} - \frac{\beta_{s}}{5}$
+        
+            \item dipole transition moment: $\delta$
+        
+        \end{itemize}
+        
+	\textcolor{red}{CAUTION:} state should have same length as occupation $\rightarrow$ missing results?
+	DONT TRUST \glqq{}Energy of State before Excitation\grqq{}, only relative values are correct
+
+ - 	\textcolor{red}{CAUTION:} state should have same length as occupation $\rightarrow$ missing results?
+	DONT TRUST \glqq{}Energy of State before Excitation\grqq{}, only relative values are correct
+
+	\textcolor{red}{CAUTION:} state should have same length as occupation $\rightarrow$ missing results?
+	DONT TRUST \glqq{}Energy of State before Excitation\grqq{}, only relative values are correct
+
+less orbital occupations set than relevant for this SALC $\rightarrow$ 
+5 zu 6 + 2 
+2 zu 5, (1, 1, 1, 1, 1) 
+\textcolor{red}{DONT TRUST \glqq{}Energy of State before Excitation\grqq{}, only relative values are correct}
+
+less orbital occupations set than relevant for this SALC $\rightarrow$ 
+5 zu 6 + 2 
+1 zu 5, (1, 1, 1, 1, 1) 
+\textcolor{red}{DONT TRUST \glqq{}Energy of State before Excitation\grqq{}, only relative values are correct}
+
+less orbital occupations set than relevant for this SALC $\rightarrow$ 
+5 zu 6 + 2 
+1 zu 5, (1, 1, 1, 1, 1) 
+\textcolor{red}{DONT TRUST \glqq{}Energy of State before Excitation\grqq{}, only relative values are correct}
+
+less orbital occupations set than relevant for this SALC $\rightarrow$ 
+5 zu 6 + 2 
+1 zu 5, (1, 1, 1, 1, 1) 
+\textcolor{red}{DONT TRUST \glqq{}Energy of State before Excitation\grqq{}, only relative values are correct}
+
+less orbital occupations set than relevant for this SALC $\rightarrow$ 
+5 zu 6 + 2 
+2 zu 5, (1, 1, 1, 1, 1) 
+\textcolor{red}{DONT TRUST \glqq{}Energy of State before Excitation\grqq{}, only relative values are correct}
+
+ AND 	\textcolor{red}{CAUTION:} state should have same length as occupation $\rightarrow$ missing results?
+	DONT TRUST \glqq{}Energy of State before Excitation\grqq{}, only relative values are correct
+
+less orbital occupations set than relevant for this SALC $\rightarrow$ 
+5 zu 6 + 2 
+2 zu 5, (1, 1, 1, 1, 1) 
+\textcolor{red}{DONT TRUST \glqq{}Energy of State before Excitation\grqq{}, only relative values are correct}
+
+less orbital occupations set than relevant for this SALC $\rightarrow$ 
+5 zu 6 + 2 
+1 zu 5, (1, 1, 1, 1, 1) 
+\textcolor{red}{DONT TRUST \glqq{}Energy of State before Excitation\grqq{}, only relative values are correct}
+
+less orbital occupations set than relevant for this SALC $\rightarrow$ 
+5 zu 6 + 2 
+1 zu 5, (1, 1, 1, 1, 1) 
+\textcolor{red}{DONT TRUST \glqq{}Energy of State before Excitation\grqq{}, only relative values are correct}
+
+less orbital occupations set than relevant for this SALC $\rightarrow$ 
+5 zu 6 + 2 
+1 zu 5, (1, 1, 1, 1, 1) 
+\textcolor{red}{DONT TRUST \glqq{}Energy of State before Excitation\grqq{}, only relative values are correct}
+
+less orbital occupations set than relevant for this SALC $\rightarrow$ 
+5 zu 6 + 2 
+2 zu 5, (1, 1, 1, 1, 1) 
+\textcolor{red}{DONT TRUST \glqq{}Energy of State before Excitation\grqq{}, only relative values are correct}
+
+
+
+        \noindent\textbf{Transition from $\phi_{4}$ into $\phi_{s_{4}}$:}
+        \begin{itemize}
+            \item $- (2, 1, 2, 1, 0, 0, 2, 2), (0, 0, 0, 0, 0, 0, 0, 0) \rightarrow (2, 1, 2, 0, 0, 0, 2, 2), (0, 0, 0, 1, 0, 0, 0, 0)$
+        
+            \item $\phi_{4}:$ linear combination = $\frac{p_{2}}{2} - \frac{p_{3}}{2} + \frac{p_{5}}{2} - \frac{p_{6}}{2}$, \
+            energy = $\alpha - \beta$
+            
+            \item $\xi_{4}:$ linear combination = $\frac{s_{2}}{2} - \frac{s_{3}}{2} + \frac{s_{5}}{2} - \frac{s_{6}}{2}$, \
+            energy = $\alpha_{s} - \beta_{s}$
+            
+            \item $\Delta$ Energy: $- \alpha + \alpha_{s} + \beta - \beta_{s}$
+            \item Energy of State before Excitation: $4 \alpha + 2 \alpha_{Cl} + 2 \beta$
+            \item Energy of State after Excitation: $3 \alpha + 2 \alpha_{Cl} + \alpha_{s} + 3 \beta - \beta_{s}$
+            \item Energy between Average Energies of $\phi$-/$\xi$-orbitals: \
+            $- \frac{4 \alpha}{5} - \frac{\alpha_{Cl}}{5} + \frac{4 \alpha_{s}}{5} + \frac{\alpha_{s Cl}}{5} + \frac{\beta}{5} - \frac{\beta_{s}}{5}$
+        
+            \item dipole transition moment: $\delta$
+        
+        \end{itemize}
+        
+	\textcolor{red}{CAUTION:} state should have same length as occupation $\rightarrow$ missing results?
+	DONT TRUST \glqq{}Energy of State before Excitation\grqq{}, only relative values are correct
+
+ - 	\textcolor{red}{CAUTION:} state should have same length as occupation $\rightarrow$ missing results?
+	DONT TRUST \glqq{}Energy of State before Excitation\grqq{}, only relative values are correct
+
+	\textcolor{red}{CAUTION:} state should have same length as occupation $\rightarrow$ missing results?
+	DONT TRUST \glqq{}Energy of State before Excitation\grqq{}, only relative values are correct
+
+less orbital occupations set than relevant for this SALC $\rightarrow$ 
+5 zu 6 + 2 
+2 zu 5, (1, 1, 1, 1, 1) 
+\textcolor{red}{DONT TRUST \glqq{}Energy of State before Excitation\grqq{}, only relative values are correct}
+
+less orbital occupations set than relevant for this SALC $\rightarrow$ 
+5 zu 6 + 2 
+1 zu 5, (1, 1, 1, 1, 1) 
+\textcolor{red}{DONT TRUST \glqq{}Energy of State before Excitation\grqq{}, only relative values are correct}
+
+less orbital occupations set than relevant for this SALC $\rightarrow$ 
+5 zu 6 + 2 
+1 zu 5, (1, 1, 1, 1, 1) 
+\textcolor{red}{DONT TRUST \glqq{}Energy of State before Excitation\grqq{}, only relative values are correct}
+
+less orbital occupations set than relevant for this SALC $\rightarrow$ 
+5 zu 6 + 2 
+1 zu 5, (1, 1, 1, 1, 1) 
+\textcolor{red}{DONT TRUST \glqq{}Energy of State before Excitation\grqq{}, only relative values are correct}
+
+less orbital occupations set than relevant for this SALC $\rightarrow$ 
+5 zu 6 + 2 
+2 zu 5, (1, 1, 1, 1, 1) 
+\textcolor{red}{DONT TRUST \glqq{}Energy of State before Excitation\grqq{}, only relative values are correct}
+
+ AND 	\textcolor{red}{CAUTION:} state should have same length as occupation $\rightarrow$ missing results?
+	DONT TRUST \glqq{}Energy of State before Excitation\grqq{}, only relative values are correct
+
+less orbital occupations set than relevant for this SALC $\rightarrow$ 
+5 zu 6 + 2 
+2 zu 5, (1, 1, 1, 1, 1) 
+\textcolor{red}{DONT TRUST \glqq{}Energy of State before Excitation\grqq{}, only relative values are correct}
+
+less orbital occupations set than relevant for this SALC $\rightarrow$ 
+5 zu 6 + 2 
+1 zu 5, (1, 1, 1, 1, 1) 
+\textcolor{red}{DONT TRUST \glqq{}Energy of State before Excitation\grqq{}, only relative values are correct}
+
+less orbital occupations set than relevant for this SALC $\rightarrow$ 
+5 zu 6 + 2 
+1 zu 5, (1, 1, 1, 1, 1) 
+\textcolor{red}{DONT TRUST \glqq{}Energy of State before Excitation\grqq{}, only relative values are correct}
+
+less orbital occupations set than relevant for this SALC $\rightarrow$ 
+5 zu 6 + 2 
+1 zu 5, (1, 1, 1, 1, 1) 
+\textcolor{red}{DONT TRUST \glqq{}Energy of State before Excitation\grqq{}, only relative values are correct}
+
+less orbital occupations set than relevant for this SALC $\rightarrow$ 
+5 zu 6 + 2 
+2 zu 5, (1, 1, 1, 1, 1) 
+\textcolor{red}{DONT TRUST \glqq{}Energy of State before Excitation\grqq{}, only relative values are correct}
+
+
+\subsection*{State with Occupation (2, 2, 1, 0, 1, 0, 2, 2) (2 unpaired electrons, mult 3.0)}
+        \noindent\textbf{Transition from $\phi_{2}$ into $\phi_{s_{2}}$:}
+        \begin{itemize}
+            \item $- (2, 2, 1, 0, 1, 0, 2, 2), (0, 0, 0, 0, 0, 0, 0, 0) \rightarrow (2, 1, 1, 0, 1, 0, 2, 2), (0, 1, 0, 0, 0, 0, 0, 0)$
+        
+            \item $\phi_{2}:$ linear combination = $\frac{p_{2}}{2} + \frac{p_{3}}{2} - \frac{p_{5}}{2} - \frac{p_{6}}{2}$, \
+            energy = $\alpha + \beta$
+            
+            \item $\xi_{2}:$ linear combination = $\frac{s_{2}}{2} + \frac{s_{3}}{2} - \frac{s_{5}}{2} - \frac{s_{6}}{2}$, \
+            energy = $\alpha_{s} + \beta_{s}$
+            
+            \item $\Delta$ Energy: $- \alpha + \alpha_{s} - \beta + \beta_{s}$
+            \item Energy of State before Excitation: $5 \alpha + \alpha_{Cl} + 2 \beta$
+            \item Energy of State after Excitation: $4 \alpha + \alpha_{Cl} + \alpha_{s} + \beta + \beta_{s}$
+            \item Energy between Average Energies of $\phi$-/$\xi$-orbitals: \
+            $- \frac{4 \alpha}{5} - \frac{\alpha_{Cl}}{5} + \frac{4 \alpha_{s}}{5} + \frac{\alpha_{s Cl}}{5} + \frac{\beta}{5} - \frac{\beta_{s}}{5}$
+        
+            \item dipole transition moment: $\delta$
+        
+        \end{itemize}
+        
+	\textcolor{red}{CAUTION:} state should have same length as occupation $\rightarrow$ missing results?
+	DONT TRUST \glqq{}Energy of State before Excitation\grqq{}, only relative values are correct
+
+
+        \noindent\textbf{Transition from $\phi_{3}$ into $\phi_{s_{3}}$:}
+        \begin{itemize}
+            \item $- (2, 2, 1, 0, 1, 0, 2, 2), (0, 0, 0, 0, 0, 0, 0, 0) \rightarrow (2, 2, 0, 0, 1, 0, 2, 2), (0, 0, 1, 0, 0, 0, 0, 0)$
+        
+            \item $\phi_{3}:$ linear combination = $\frac{\sqrt{2} p_{7}}{2} - \frac{\sqrt{2} p_{8}}{2}$, \
+            energy = $\alpha_{Cl}$
+            
+            \item $\xi_{3}:$ linear combination = $\frac{\sqrt{2} s_{7}}{2} - \frac{\sqrt{2} s_{8}}{2}$, \
+            energy = $\alpha_{s Cl}$
+            
+            \item $\Delta$ Energy: $- \alpha_{Cl} + \alpha_{s Cl}$
+            \item Energy of State before Excitation: $5 \alpha + \alpha_{Cl} + 2 \beta$
+            \item Energy of State after Excitation: $5 \alpha + \alpha_{s Cl} + 2 \beta$
+            \item Energy between Average Energies of $\phi$-/$\xi$-orbitals: \
+            $- \frac{4 \alpha}{5} - \frac{\alpha_{Cl}}{5} + \frac{4 \alpha_{s}}{5} + \frac{\alpha_{s Cl}}{5} + \frac{\beta}{5} - \frac{\beta_{s}}{5}$
+        
+            \item dipole transition moment: $\delta$
+        
+        \end{itemize}
+        
+	\textcolor{red}{CAUTION:} state should have same length as occupation $\rightarrow$ missing results?
+	DONT TRUST \glqq{}Energy of State before Excitation\grqq{}, only relative values are correct
+
+ - 	\textcolor{red}{CAUTION:} state should have same length as occupation $\rightarrow$ missing results?
+	DONT TRUST \glqq{}Energy of State before Excitation\grqq{}, only relative values are correct
+
+	\textcolor{red}{CAUTION:} state should have same length as occupation $\rightarrow$ missing results?
+	DONT TRUST \glqq{}Energy of State before Excitation\grqq{}, only relative values are correct
+
+less orbital occupations set than relevant for this SALC $\rightarrow$ 
+5 zu 6 + 2 
+2 zu 5, (1, 1, 1, 1, 1) 
+\textcolor{red}{DONT TRUST \glqq{}Energy of State before Excitation\grqq{}, only relative values are correct}
+
+less orbital occupations set than relevant for this SALC $\rightarrow$ 
+5 zu 6 + 2 
+1 zu 5, (1, 1, 1, 1, 1) 
+\textcolor{red}{DONT TRUST \glqq{}Energy of State before Excitation\grqq{}, only relative values are correct}
+
+less orbital occupations set than relevant for this SALC $\rightarrow$ 
+5 zu 6 + 2 
+1 zu 5, (1, 1, 1, 1, 1) 
+\textcolor{red}{DONT TRUST \glqq{}Energy of State before Excitation\grqq{}, only relative values are correct}
+
+less orbital occupations set than relevant for this SALC $\rightarrow$ 
+5 zu 6 + 2 
+1 zu 5, (1, 1, 1, 1, 1) 
+\textcolor{red}{DONT TRUST \glqq{}Energy of State before Excitation\grqq{}, only relative values are correct}
+
+less orbital occupations set than relevant for this SALC $\rightarrow$ 
+5 zu 6 + 2 
+2 zu 5, (1, 1, 1, 1, 1) 
+\textcolor{red}{DONT TRUST \glqq{}Energy of State before Excitation\grqq{}, only relative values are correct}
+
+ AND 	\textcolor{red}{CAUTION:} state should have same length as occupation $\rightarrow$ missing results?
+	DONT TRUST \glqq{}Energy of State before Excitation\grqq{}, only relative values are correct
+
+less orbital occupations set than relevant for this SALC $\rightarrow$ 
+5 zu 6 + 2 
+2 zu 5, (1, 1, 1, 1, 1) 
+\textcolor{red}{DONT TRUST \glqq{}Energy of State before Excitation\grqq{}, only relative values are correct}
+
+less orbital occupations set than relevant for this SALC $\rightarrow$ 
+5 zu 6 + 2 
+1 zu 5, (1, 1, 1, 1, 1) 
+\textcolor{red}{DONT TRUST \glqq{}Energy of State before Excitation\grqq{}, only relative values are correct}
+
+less orbital occupations set than relevant for this SALC $\rightarrow$ 
+5 zu 6 + 2 
+1 zu 5, (1, 1, 1, 1, 1) 
+\textcolor{red}{DONT TRUST \glqq{}Energy of State before Excitation\grqq{}, only relative values are correct}
+
+less orbital occupations set than relevant for this SALC $\rightarrow$ 
+5 zu 6 + 2 
+1 zu 5, (1, 1, 1, 1, 1) 
+\textcolor{red}{DONT TRUST \glqq{}Energy of State before Excitation\grqq{}, only relative values are correct}
+
+less orbital occupations set than relevant for this SALC $\rightarrow$ 
+5 zu 6 + 2 
+2 zu 5, (1, 1, 1, 1, 1) 
+\textcolor{red}{DONT TRUST \glqq{}Energy of State before Excitation\grqq{}, only relative values are correct}
+
+
+
+        \noindent\textbf{Transition from $\phi_{5}$ into $\phi_{s_{5}}$:}
+        \begin{itemize}
+            \item $- (2, 2, 1, 0, 1, 0, 2, 2), (0, 0, 0, 0, 0, 0, 0, 0) \rightarrow (2, 2, 1, 0, 0, 0, 2, 2), (0, 0, 0, 0, 1, 0, 0, 0)$
+        
+            \item $\phi_{5}:$ linear combination = $- \frac{2 \sqrt{3} \left(\frac{\sqrt{2} p_{1}}{2} - \frac{\sqrt{2} p_{4}}{2}\right)}{3}$, \
+            energy = $\alpha - 2 \beta$
+            
+            \item $\xi_{5}:$ linear combination = $- \frac{2 \sqrt{3} \left(\frac{\sqrt{2} s_{1}}{2} - \frac{\sqrt{2} s_{4}}{2}\right)}{3}$, \
+            energy = $\alpha_{s} - 2 \beta_{s}$
+            
+            \item $\Delta$ Energy: $- \alpha + \alpha_{s} + 2 \beta - 2 \beta_{s}$
+            \item Energy of State before Excitation: $5 \alpha + \alpha_{Cl} + 2 \beta$
+            \item Energy of State after Excitation: $4 \alpha + \alpha_{Cl} + \alpha_{s} + 4 \beta - 2 \beta_{s}$
+            \item Energy between Average Energies of $\phi$-/$\xi$-orbitals: \
+            $- \frac{4 \alpha}{5} - \frac{\alpha_{Cl}}{5} + \frac{4 \alpha_{s}}{5} + \frac{\alpha_{s Cl}}{5} + \frac{\beta}{5} - \frac{\beta_{s}}{5}$
+        
+            \item dipole transition moment: $\delta$
+        
+        \end{itemize}
+        
+	\textcolor{red}{CAUTION:} state should have same length as occupation $\rightarrow$ missing results?
+	DONT TRUST \glqq{}Energy of State before Excitation\grqq{}, only relative values are correct
+
+ - 	\textcolor{red}{CAUTION:} state should have same length as occupation $\rightarrow$ missing results?
+	DONT TRUST \glqq{}Energy of State before Excitation\grqq{}, only relative values are correct
+
+	\textcolor{red}{CAUTION:} state should have same length as occupation $\rightarrow$ missing results?
+	DONT TRUST \glqq{}Energy of State before Excitation\grqq{}, only relative values are correct
+
+less orbital occupations set than relevant for this SALC $\rightarrow$ 
+5 zu 6 + 2 
+2 zu 5, (1, 1, 1, 1, 1) 
+\textcolor{red}{DONT TRUST \glqq{}Energy of State before Excitation\grqq{}, only relative values are correct}
+
+less orbital occupations set than relevant for this SALC $\rightarrow$ 
+5 zu 6 + 2 
+1 zu 5, (1, 1, 1, 1, 1) 
+\textcolor{red}{DONT TRUST \glqq{}Energy of State before Excitation\grqq{}, only relative values are correct}
+
+less orbital occupations set than relevant for this SALC $\rightarrow$ 
+5 zu 6 + 2 
+1 zu 5, (1, 1, 1, 1, 1) 
+\textcolor{red}{DONT TRUST \glqq{}Energy of State before Excitation\grqq{}, only relative values are correct}
+
+less orbital occupations set than relevant for this SALC $\rightarrow$ 
+5 zu 6 + 2 
+1 zu 5, (1, 1, 1, 1, 1) 
+\textcolor{red}{DONT TRUST \glqq{}Energy of State before Excitation\grqq{}, only relative values are correct}
+
+less orbital occupations set than relevant for this SALC $\rightarrow$ 
+5 zu 6 + 2 
+2 zu 5, (1, 1, 1, 1, 1) 
+\textcolor{red}{DONT TRUST \glqq{}Energy of State before Excitation\grqq{}, only relative values are correct}
+
+ AND 	\textcolor{red}{CAUTION:} state should have same length as occupation $\rightarrow$ missing results?
+	DONT TRUST \glqq{}Energy of State before Excitation\grqq{}, only relative values are correct
+
+less orbital occupations set than relevant for this SALC $\rightarrow$ 
+5 zu 6 + 2 
+2 zu 5, (1, 1, 1, 1, 1) 
+\textcolor{red}{DONT TRUST \glqq{}Energy of State before Excitation\grqq{}, only relative values are correct}
+
+less orbital occupations set than relevant for this SALC $\rightarrow$ 
+5 zu 6 + 2 
+1 zu 5, (1, 1, 1, 1, 1) 
+\textcolor{red}{DONT TRUST \glqq{}Energy of State before Excitation\grqq{}, only relative values are correct}
+
+less orbital occupations set than relevant for this SALC $\rightarrow$ 
+5 zu 6 + 2 
+1 zu 5, (1, 1, 1, 1, 1) 
+\textcolor{red}{DONT TRUST \glqq{}Energy of State before Excitation\grqq{}, only relative values are correct}
+
+less orbital occupations set than relevant for this SALC $\rightarrow$ 
+5 zu 6 + 2 
+1 zu 5, (1, 1, 1, 1, 1) 
+\textcolor{red}{DONT TRUST \glqq{}Energy of State before Excitation\grqq{}, only relative values are correct}
+
+less orbital occupations set than relevant for this SALC $\rightarrow$ 
+5 zu 6 + 2 
+2 zu 5, (1, 1, 1, 1, 1) 
+\textcolor{red}{DONT TRUST \glqq{}Energy of State before Excitation\grqq{}, only relative values are correct}
+
+
+\subsection*{State with Occupation (2, 2, 1, 1, 0, 0, 2, 2) (2 unpaired electrons, mult 3.0)}
+        \noindent\textbf{Transition from $\phi_{2}$ into $\phi_{s_{2}}$:}
+        \begin{itemize}
+            \item $- (2, 2, 1, 1, 0, 0, 2, 2), (0, 0, 0, 0, 0, 0, 0, 0) \rightarrow (2, 1, 1, 1, 0, 0, 2, 2), (0, 1, 0, 0, 0, 0, 0, 0)$
+        
+            \item $\phi_{2}:$ linear combination = $\frac{p_{2}}{2} + \frac{p_{3}}{2} - \frac{p_{5}}{2} - \frac{p_{6}}{2}$, \
+            energy = $\alpha + \beta$
+            
+            \item $\xi_{2}:$ linear combination = $\frac{s_{2}}{2} + \frac{s_{3}}{2} - \frac{s_{5}}{2} - \frac{s_{6}}{2}$, \
+            energy = $\alpha_{s} + \beta_{s}$
+            
+            \item $\Delta$ Energy: $- \alpha + \alpha_{s} - \beta + \beta_{s}$
+            \item Energy of State before Excitation: $5 \alpha + \alpha_{Cl} + 3 \beta$
+            \item Energy of State after Excitation: $4 \alpha + \alpha_{Cl} + \alpha_{s} + 2 \beta + \beta_{s}$
+            \item Energy between Average Energies of $\phi$-/$\xi$-orbitals: \
+            $- \frac{4 \alpha}{5} - \frac{\alpha_{Cl}}{5} + \frac{4 \alpha_{s}}{5} + \frac{\alpha_{s Cl}}{5} + \frac{\beta}{5} - \frac{\beta_{s}}{5}$
+        
+            \item dipole transition moment: $\delta$
+        
+        \end{itemize}
+        
+	\textcolor{red}{CAUTION:} state should have same length as occupation $\rightarrow$ missing results?
+	DONT TRUST \glqq{}Energy of State before Excitation\grqq{}, only relative values are correct
+
+
+        \noindent\textbf{Transition from $\phi_{3}$ into $\phi_{s_{3}}$:}
+        \begin{itemize}
+            \item $- (2, 2, 1, 1, 0, 0, 2, 2), (0, 0, 0, 0, 0, 0, 0, 0) \rightarrow (2, 2, 0, 1, 0, 0, 2, 2), (0, 0, 1, 0, 0, 0, 0, 0)$
+        
+            \item $\phi_{3}:$ linear combination = $\frac{\sqrt{2} p_{7}}{2} - \frac{\sqrt{2} p_{8}}{2}$, \
+            energy = $\alpha_{Cl}$
+            
+            \item $\xi_{3}:$ linear combination = $\frac{\sqrt{2} s_{7}}{2} - \frac{\sqrt{2} s_{8}}{2}$, \
+            energy = $\alpha_{s Cl}$
+            
+            \item $\Delta$ Energy: $- \alpha_{Cl} + \alpha_{s Cl}$
+            \item Energy of State before Excitation: $5 \alpha + \alpha_{Cl} + 3 \beta$
+            \item Energy of State after Excitation: $5 \alpha + \alpha_{s Cl} + 3 \beta$
+            \item Energy between Average Energies of $\phi$-/$\xi$-orbitals: \
+            $- \frac{4 \alpha}{5} - \frac{\alpha_{Cl}}{5} + \frac{4 \alpha_{s}}{5} + \frac{\alpha_{s Cl}}{5} + \frac{\beta}{5} - \frac{\beta_{s}}{5}$
+        
+            \item dipole transition moment: $\delta$
+        
+        \end{itemize}
+        
+	\textcolor{red}{CAUTION:} state should have same length as occupation $\rightarrow$ missing results?
+	DONT TRUST \glqq{}Energy of State before Excitation\grqq{}, only relative values are correct
+
+ - 	\textcolor{red}{CAUTION:} state should have same length as occupation $\rightarrow$ missing results?
+	DONT TRUST \glqq{}Energy of State before Excitation\grqq{}, only relative values are correct
+
+	\textcolor{red}{CAUTION:} state should have same length as occupation $\rightarrow$ missing results?
+	DONT TRUST \glqq{}Energy of State before Excitation\grqq{}, only relative values are correct
+
+less orbital occupations set than relevant for this SALC $\rightarrow$ 
+5 zu 6 + 2 
+2 zu 5, (1, 1, 1, 1, 1) 
+\textcolor{red}{DONT TRUST \glqq{}Energy of State before Excitation\grqq{}, only relative values are correct}
+
+less orbital occupations set than relevant for this SALC $\rightarrow$ 
+5 zu 6 + 2 
+1 zu 5, (1, 1, 1, 1, 1) 
+\textcolor{red}{DONT TRUST \glqq{}Energy of State before Excitation\grqq{}, only relative values are correct}
+
+less orbital occupations set than relevant for this SALC $\rightarrow$ 
+5 zu 6 + 2 
+1 zu 5, (1, 1, 1, 1, 1) 
+\textcolor{red}{DONT TRUST \glqq{}Energy of State before Excitation\grqq{}, only relative values are correct}
+
+less orbital occupations set than relevant for this SALC $\rightarrow$ 
+5 zu 6 + 2 
+1 zu 5, (1, 1, 1, 1, 1) 
+\textcolor{red}{DONT TRUST \glqq{}Energy of State before Excitation\grqq{}, only relative values are correct}
+
+less orbital occupations set than relevant for this SALC $\rightarrow$ 
+5 zu 6 + 2 
+2 zu 5, (1, 1, 1, 1, 1) 
+\textcolor{red}{DONT TRUST \glqq{}Energy of State before Excitation\grqq{}, only relative values are correct}
+
+ AND 	\textcolor{red}{CAUTION:} state should have same length as occupation $\rightarrow$ missing results?
+	DONT TRUST \glqq{}Energy of State before Excitation\grqq{}, only relative values are correct
+
+less orbital occupations set than relevant for this SALC $\rightarrow$ 
+5 zu 6 + 2 
+2 zu 5, (1, 1, 1, 1, 1) 
+\textcolor{red}{DONT TRUST \glqq{}Energy of State before Excitation\grqq{}, only relative values are correct}
+
+less orbital occupations set than relevant for this SALC $\rightarrow$ 
+5 zu 6 + 2 
+1 zu 5, (1, 1, 1, 1, 1) 
+\textcolor{red}{DONT TRUST \glqq{}Energy of State before Excitation\grqq{}, only relative values are correct}
+
+less orbital occupations set than relevant for this SALC $\rightarrow$ 
+5 zu 6 + 2 
+1 zu 5, (1, 1, 1, 1, 1) 
+\textcolor{red}{DONT TRUST \glqq{}Energy of State before Excitation\grqq{}, only relative values are correct}
+
+less orbital occupations set than relevant for this SALC $\rightarrow$ 
+5 zu 6 + 2 
+1 zu 5, (1, 1, 1, 1, 1) 
+\textcolor{red}{DONT TRUST \glqq{}Energy of State before Excitation\grqq{}, only relative values are correct}
+
+less orbital occupations set than relevant for this SALC $\rightarrow$ 
+5 zu 6 + 2 
+2 zu 5, (1, 1, 1, 1, 1) 
+\textcolor{red}{DONT TRUST \glqq{}Energy of State before Excitation\grqq{}, only relative values are correct}
+
+
+
+        \noindent\textbf{Transition from $\phi_{4}$ into $\phi_{s_{4}}$:}
+        \begin{itemize}
+            \item $- (2, 2, 1, 1, 0, 0, 2, 2), (0, 0, 0, 0, 0, 0, 0, 0) \rightarrow (2, 2, 1, 0, 0, 0, 2, 2), (0, 0, 0, 1, 0, 0, 0, 0)$
+        
+            \item $\phi_{4}:$ linear combination = $\frac{p_{2}}{2} - \frac{p_{3}}{2} + \frac{p_{5}}{2} - \frac{p_{6}}{2}$, \
+            energy = $\alpha - \beta$
+            
+            \item $\xi_{4}:$ linear combination = $\frac{s_{2}}{2} - \frac{s_{3}}{2} + \frac{s_{5}}{2} - \frac{s_{6}}{2}$, \
+            energy = $\alpha_{s} - \beta_{s}$
+            
+            \item $\Delta$ Energy: $- \alpha + \alpha_{s} + \beta - \beta_{s}$
+            \item Energy of State before Excitation: $5 \alpha + \alpha_{Cl} + 3 \beta$
+            \item Energy of State after Excitation: $4 \alpha + \alpha_{Cl} + \alpha_{s} + 4 \beta - \beta_{s}$
+            \item Energy between Average Energies of $\phi$-/$\xi$-orbitals: \
+            $- \frac{4 \alpha}{5} - \frac{\alpha_{Cl}}{5} + \frac{4 \alpha_{s}}{5} + \frac{\alpha_{s Cl}}{5} + \frac{\beta}{5} - \frac{\beta_{s}}{5}$
+        
+            \item dipole transition moment: $\delta$
+        
+        \end{itemize}
+        
+	\textcolor{red}{CAUTION:} state should have same length as occupation $\rightarrow$ missing results?
+	DONT TRUST \glqq{}Energy of State before Excitation\grqq{}, only relative values are correct
+
+ - 	\textcolor{red}{CAUTION:} state should have same length as occupation $\rightarrow$ missing results?
+	DONT TRUST \glqq{}Energy of State before Excitation\grqq{}, only relative values are correct
+
+	\textcolor{red}{CAUTION:} state should have same length as occupation $\rightarrow$ missing results?
+	DONT TRUST \glqq{}Energy of State before Excitation\grqq{}, only relative values are correct
+
+less orbital occupations set than relevant for this SALC $\rightarrow$ 
+5 zu 6 + 2 
+2 zu 5, (1, 1, 1, 1, 1) 
+\textcolor{red}{DONT TRUST \glqq{}Energy of State before Excitation\grqq{}, only relative values are correct}
+
+less orbital occupations set than relevant for this SALC $\rightarrow$ 
+5 zu 6 + 2 
+1 zu 5, (1, 1, 1, 1, 1) 
+\textcolor{red}{DONT TRUST \glqq{}Energy of State before Excitation\grqq{}, only relative values are correct}
+
+less orbital occupations set than relevant for this SALC $\rightarrow$ 
+5 zu 6 + 2 
+1 zu 5, (1, 1, 1, 1, 1) 
+\textcolor{red}{DONT TRUST \glqq{}Energy of State before Excitation\grqq{}, only relative values are correct}
+
+less orbital occupations set than relevant for this SALC $\rightarrow$ 
+5 zu 6 + 2 
+1 zu 5, (1, 1, 1, 1, 1) 
+\textcolor{red}{DONT TRUST \glqq{}Energy of State before Excitation\grqq{}, only relative values are correct}
+
+less orbital occupations set than relevant for this SALC $\rightarrow$ 
+5 zu 6 + 2 
+2 zu 5, (1, 1, 1, 1, 1) 
+\textcolor{red}{DONT TRUST \glqq{}Energy of State before Excitation\grqq{}, only relative values are correct}
+
+ AND 	\textcolor{red}{CAUTION:} state should have same length as occupation $\rightarrow$ missing results?
+	DONT TRUST \glqq{}Energy of State before Excitation\grqq{}, only relative values are correct
+
+less orbital occupations set than relevant for this SALC $\rightarrow$ 
+5 zu 6 + 2 
+2 zu 5, (1, 1, 1, 1, 1) 
+\textcolor{red}{DONT TRUST \glqq{}Energy of State before Excitation\grqq{}, only relative values are correct}
+
+less orbital occupations set than relevant for this SALC $\rightarrow$ 
+5 zu 6 + 2 
+1 zu 5, (1, 1, 1, 1, 1) 
+\textcolor{red}{DONT TRUST \glqq{}Energy of State before Excitation\grqq{}, only relative values are correct}
+
+less orbital occupations set than relevant for this SALC $\rightarrow$ 
+5 zu 6 + 2 
+1 zu 5, (1, 1, 1, 1, 1) 
+\textcolor{red}{DONT TRUST \glqq{}Energy of State before Excitation\grqq{}, only relative values are correct}
+
+less orbital occupations set than relevant for this SALC $\rightarrow$ 
+5 zu 6 + 2 
+1 zu 5, (1, 1, 1, 1, 1) 
+\textcolor{red}{DONT TRUST \glqq{}Energy of State before Excitation\grqq{}, only relative values are correct}
+
+less orbital occupations set than relevant for this SALC $\rightarrow$ 
+5 zu 6 + 2 
+2 zu 5, (1, 1, 1, 1, 1) 
+\textcolor{red}{DONT TRUST \glqq{}Energy of State before Excitation\grqq{}, only relative values are correct}
+
+
+\newpage \section*{Dispersion energies following from the transitions}
+
+\begin{enumerate}
+ \item State: A = [2, 2, 2, 0, 0, 0, 2, 2] $\leftrightarrow$ B = (2, 1, 1, 1, 1, 0, 2, 2) 
+$$E_{dispersion} =\frac{8 \delta^{4}}{r^{6} \left(- \alpha - \alpha_{Cl} + \alpha_{s} + \alpha_{s Cl} + 2 \beta - 2 \beta_{s}\right)} + \frac{8 \delta^{4}}{r^{6} \left(- \alpha - \alpha_{Cl} + \alpha_{s} + \alpha_{s Cl} + \beta - \beta_{s}\right)} + \frac{16 \delta^{4}}{r^{6} \left(- \alpha - \alpha_{Cl} + \alpha_{s} + \alpha_{s Cl} - \beta + \beta_{s}\right)} + \frac{8 \delta^{4}}{r^{6} \left(- 2 \alpha + 2 \alpha_{s} + \beta - \beta_{s}\right)} + \frac{8 \delta^{4}}{r^{6} \left(- 2 \alpha + 2 \alpha_{s} - 2 \beta + 2 \beta_{s}\right)} + \frac{8 \delta^{4}}{r^{6} \left(- 2 \alpha_{Cl} + 2 \alpha_{s Cl}\right)} + \frac{8 \delta^{4}}{r^{6} \left(- 2 \alpha + 2 \alpha_{s}\right)}$$
+ \item State: A = (2, 1, 1, 1, 1, 0, 2, 2) $\leftrightarrow$ B = [2, 2, 2, 0, 0, 0, 2, 2] 
+$$E_{dispersion} =\frac{8 \delta^{4}}{r^{6} \left(- \alpha - \alpha_{Cl} + \alpha_{s} + \alpha_{s Cl} + 2 \beta - 2 \beta_{s}\right)} + \frac{8 \delta^{4}}{r^{6} \left(- \alpha - \alpha_{Cl} + \alpha_{s} + \alpha_{s Cl} + \beta - \beta_{s}\right)} + \frac{16 \delta^{4}}{r^{6} \left(- \alpha - \alpha_{Cl} + \alpha_{s} + \alpha_{s Cl} - \beta + \beta_{s}\right)} + \frac{8 \delta^{4}}{r^{6} \left(- 2 \alpha + 2 \alpha_{s} + \beta - \beta_{s}\right)} + \frac{8 \delta^{4}}{r^{6} \left(- 2 \alpha + 2 \alpha_{s} - 2 \beta + 2 \beta_{s}\right)} + \frac{8 \delta^{4}}{r^{6} \left(- 2 \alpha_{Cl} + 2 \alpha_{s Cl}\right)} + \frac{8 \delta^{4}}{r^{6} \left(- 2 \alpha + 2 \alpha_{s}\right)}$$
+ \item State: A = (2, 1, 2, 0, 1, 0, 2, 2) $\leftrightarrow$ B = (2, 1, 2, 0, 1, 0, 2, 2) 
+$$E_{dispersion} =\frac{16 \delta^{4}}{r^{6} \left(- \alpha - \alpha_{Cl} + \alpha_{s} + \alpha_{s Cl} + 2 \beta - 2 \beta_{s}\right)} + \frac{16 \delta^{4}}{r^{6} \left(- \alpha - \alpha_{Cl} + \alpha_{s} + \alpha_{s Cl} - \beta + \beta_{s}\right)} + \frac{4 \delta^{4}}{r^{6} \left(- 2 \alpha + 2 \alpha_{s} + 4 \beta - 4 \beta_{s}\right)} + \frac{8 \delta^{4}}{r^{6} \left(- 2 \alpha + 2 \alpha_{s} + \beta - \beta_{s}\right)} + \frac{4 \delta^{4}}{r^{6} \left(- 2 \alpha + 2 \alpha_{s} - 2 \beta + 2 \beta_{s}\right)} + \frac{16 \delta^{4}}{r^{6} \left(- 2 \alpha_{Cl} + 2 \alpha_{s Cl}\right)}$$
+ \item State: A = (2, 1, 2, 0, 1, 0, 2, 2) $\leftrightarrow$ B = (2, 1, 2, 1, 0, 0, 2, 2) 
+$$E_{dispersion} =\frac{8 \delta^{4}}{r^{6} \left(- \alpha - \alpha_{Cl} + \alpha_{s} + \alpha_{s Cl} + 2 \beta - 2 \beta_{s}\right)} + \frac{8 \delta^{4}}{r^{6} \left(- \alpha - \alpha_{Cl} + \alpha_{s} + \alpha_{s Cl} + \beta - \beta_{s}\right)} + \frac{16 \delta^{4}}{r^{6} \left(- \alpha - \alpha_{Cl} + \alpha_{s} + \alpha_{s Cl} - \beta + \beta_{s}\right)} + \frac{4 \delta^{4}}{r^{6} \left(- 2 \alpha + 2 \alpha_{s} + 3 \beta - 3 \beta_{s}\right)} + \frac{4 \delta^{4}}{r^{6} \left(- 2 \alpha + 2 \alpha_{s} + \beta - \beta_{s}\right)} + \frac{4 \delta^{4}}{r^{6} \left(- 2 \alpha + 2 \alpha_{s} - 2 \beta + 2 \beta_{s}\right)} + \frac{16 \delta^{4}}{r^{6} \left(- 2 \alpha_{Cl} + 2 \alpha_{s Cl}\right)} + \frac{4 \delta^{4}}{r^{6} \left(- 2 \alpha + 2 \alpha_{s}\right)}$$
+ \item State: A = (2, 1, 2, 0, 1, 0, 2, 2) $\leftrightarrow$ B = (2, 2, 1, 0, 1, 0, 2, 2) 
+$$E_{dispersion} =\frac{12 \delta^{4}}{r^{6} \left(- \alpha - \alpha_{Cl} + \alpha_{s} + \alpha_{s Cl} + 2 \beta - 2 \beta_{s}\right)} + \frac{20 \delta^{4}}{r^{6} \left(- \alpha - \alpha_{Cl} + \alpha_{s} + \alpha_{s Cl} - \beta + \beta_{s}\right)} + \frac{4 \delta^{4}}{r^{6} \left(- 2 \alpha + 2 \alpha_{s} + 4 \beta - 4 \beta_{s}\right)} + \frac{12 \delta^{4}}{r^{6} \left(- 2 \alpha + 2 \alpha_{s} + \beta - \beta_{s}\right)} + \frac{8 \delta^{4}}{r^{6} \left(- 2 \alpha + 2 \alpha_{s} - 2 \beta + 2 \beta_{s}\right)} + \frac{8 \delta^{4}}{r^{6} \left(- 2 \alpha_{Cl} + 2 \alpha_{s Cl}\right)}$$
+ \item State: A = (2, 1, 2, 0, 1, 0, 2, 2) $\leftrightarrow$ B = (2, 2, 1, 1, 0, 0, 2, 2) 
+$$E_{dispersion} =\frac{4 \delta^{4}}{r^{6} \left(- \alpha - \alpha_{Cl} + \alpha_{s} + \alpha_{s Cl} + 2 \beta - 2 \beta_{s}\right)} + \frac{8 \delta^{4}}{r^{6} \left(- \alpha - \alpha_{Cl} + \alpha_{s} + \alpha_{s Cl} + \beta - \beta_{s}\right)} + \frac{20 \delta^{4}}{r^{6} \left(- \alpha - \alpha_{Cl} + \alpha_{s} + \alpha_{s Cl} - \beta + \beta_{s}\right)} + \frac{4 \delta^{4}}{r^{6} \left(- 2 \alpha + 2 \alpha_{s} + 3 \beta - 3 \beta_{s}\right)} + \frac{8 \delta^{4}}{r^{6} \left(- 2 \alpha + 2 \alpha_{s} + \beta - \beta_{s}\right)} + \frac{8 \delta^{4}}{r^{6} \left(- 2 \alpha + 2 \alpha_{s} - 2 \beta + 2 \beta_{s}\right)} + \frac{8 \delta^{4}}{r^{6} \left(- 2 \alpha_{Cl} + 2 \alpha_{s Cl}\right)} + \frac{4 \delta^{4}}{r^{6} \left(- 2 \alpha + 2 \alpha_{s}\right)}$$
+ \item State: A = (2, 1, 2, 1, 0, 0, 2, 2) $\leftrightarrow$ B = (2, 1, 2, 0, 1, 0, 2, 2) 
+$$E_{dispersion} =\frac{8 \delta^{4}}{r^{6} \left(- \alpha - \alpha_{Cl} + \alpha_{s} + \alpha_{s Cl} + 2 \beta - 2 \beta_{s}\right)} + \frac{8 \delta^{4}}{r^{6} \left(- \alpha - \alpha_{Cl} + \alpha_{s} + \alpha_{s Cl} + \beta - \beta_{s}\right)} + \frac{16 \delta^{4}}{r^{6} \left(- \alpha - \alpha_{Cl} + \alpha_{s} + \alpha_{s Cl} - \beta + \beta_{s}\right)} + \frac{4 \delta^{4}}{r^{6} \left(- 2 \alpha + 2 \alpha_{s} + 3 \beta - 3 \beta_{s}\right)} + \frac{4 \delta^{4}}{r^{6} \left(- 2 \alpha + 2 \alpha_{s} + \beta - \beta_{s}\right)} + \frac{4 \delta^{4}}{r^{6} \left(- 2 \alpha + 2 \alpha_{s} - 2 \beta + 2 \beta_{s}\right)} + \frac{16 \delta^{4}}{r^{6} \left(- 2 \alpha_{Cl} + 2 \alpha_{s Cl}\right)} + \frac{4 \delta^{4}}{r^{6} \left(- 2 \alpha + 2 \alpha_{s}\right)}$$
+ \item State: A = (2, 1, 2, 1, 0, 0, 2, 2) $\leftrightarrow$ B = (2, 1, 2, 1, 0, 0, 2, 2) 
+$$E_{dispersion} =\frac{16 \delta^{4}}{r^{6} \left(- \alpha - \alpha_{Cl} + \alpha_{s} + \alpha_{s Cl} + \beta - \beta_{s}\right)} + \frac{16 \delta^{4}}{r^{6} \left(- \alpha - \alpha_{Cl} + \alpha_{s} + \alpha_{s Cl} - \beta + \beta_{s}\right)} + \frac{4 \delta^{4}}{r^{6} \left(- 2 \alpha + 2 \alpha_{s} + 2 \beta - 2 \beta_{s}\right)} + \frac{4 \delta^{4}}{r^{6} \left(- 2 \alpha + 2 \alpha_{s} - 2 \beta + 2 \beta_{s}\right)} + \frac{16 \delta^{4}}{r^{6} \left(- 2 \alpha_{Cl} + 2 \alpha_{s Cl}\right)} + \frac{8 \delta^{4}}{r^{6} \left(- 2 \alpha + 2 \alpha_{s}\right)}$$
+ \item State: A = (2, 1, 2, 1, 0, 0, 2, 2) $\leftrightarrow$ B = (2, 2, 1, 0, 1, 0, 2, 2) 
+$$E_{dispersion} =\frac{8 \delta^{4}}{r^{6} \left(- \alpha - \alpha_{Cl} + \alpha_{s} + \alpha_{s Cl} + 2 \beta - 2 \beta_{s}\right)} + \frac{4 \delta^{4}}{r^{6} \left(- \alpha - \alpha_{Cl} + \alpha_{s} + \alpha_{s Cl} + \beta - \beta_{s}\right)} + \frac{20 \delta^{4}}{r^{6} \left(- \alpha - \alpha_{Cl} + \alpha_{s} + \alpha_{s Cl} - \beta + \beta_{s}\right)} + \frac{4 \delta^{4}}{r^{6} \left(- 2 \alpha + 2 \alpha_{s} + 3 \beta - 3 \beta_{s}\right)} + \frac{4 \delta^{4}}{r^{6} \left(- 2 \alpha + 2 \alpha_{s} + \beta - \beta_{s}\right)} + \frac{8 \delta^{4}}{r^{6} \left(- 2 \alpha + 2 \alpha_{s} - 2 \beta + 2 \beta_{s}\right)} + \frac{8 \delta^{4}}{r^{6} \left(- 2 \alpha_{Cl} + 2 \alpha_{s Cl}\right)} + \frac{8 \delta^{4}}{r^{6} \left(- 2 \alpha + 2 \alpha_{s}\right)}$$
+ \item State: A = (2, 1, 2, 1, 0, 0, 2, 2) $\leftrightarrow$ B = (2, 2, 1, 1, 0, 0, 2, 2) 
+$$E_{dispersion} =\frac{12 \delta^{4}}{r^{6} \left(- \alpha - \alpha_{Cl} + \alpha_{s} + \alpha_{s Cl} + \beta - \beta_{s}\right)} + \frac{20 \delta^{4}}{r^{6} \left(- \alpha - \alpha_{Cl} + \alpha_{s} + \alpha_{s Cl} - \beta + \beta_{s}\right)} + \frac{4 \delta^{4}}{r^{6} \left(- 2 \alpha + 2 \alpha_{s} + 2 \beta - 2 \beta_{s}\right)} + \frac{8 \delta^{4}}{r^{6} \left(- 2 \alpha + 2 \alpha_{s} - 2 \beta + 2 \beta_{s}\right)} + \frac{8 \delta^{4}}{r^{6} \left(- 2 \alpha_{Cl} + 2 \alpha_{s Cl}\right)} + \frac{12 \delta^{4}}{r^{6} \left(- 2 \alpha + 2 \alpha_{s}\right)}$$
+ \item State: A = (2, 2, 1, 0, 1, 0, 2, 2) $\leftrightarrow$ B = (2, 1, 2, 0, 1, 0, 2, 2) 
+$$E_{dispersion} =\frac{12 \delta^{4}}{r^{6} \left(- \alpha - \alpha_{Cl} + \alpha_{s} + \alpha_{s Cl} + 2 \beta - 2 \beta_{s}\right)} + \frac{20 \delta^{4}}{r^{6} \left(- \alpha - \alpha_{Cl} + \alpha_{s} + \alpha_{s Cl} - \beta + \beta_{s}\right)} + \frac{4 \delta^{4}}{r^{6} \left(- 2 \alpha + 2 \alpha_{s} + 4 \beta - 4 \beta_{s}\right)} + \frac{12 \delta^{4}}{r^{6} \left(- 2 \alpha + 2 \alpha_{s} + \beta - \beta_{s}\right)} + \frac{8 \delta^{4}}{r^{6} \left(- 2 \alpha + 2 \alpha_{s} - 2 \beta + 2 \beta_{s}\right)} + \frac{8 \delta^{4}}{r^{6} \left(- 2 \alpha_{Cl} + 2 \alpha_{s Cl}\right)}$$
+ \item State: A = (2, 2, 1, 0, 1, 0, 2, 2) $\leftrightarrow$ B = (2, 1, 2, 1, 0, 0, 2, 2) 
+$$E_{dispersion} =\frac{8 \delta^{4}}{r^{6} \left(- \alpha - \alpha_{Cl} + \alpha_{s} + \alpha_{s Cl} + 2 \beta - 2 \beta_{s}\right)} + \frac{4 \delta^{4}}{r^{6} \left(- \alpha - \alpha_{Cl} + \alpha_{s} + \alpha_{s Cl} + \beta - \beta_{s}\right)} + \frac{20 \delta^{4}}{r^{6} \left(- \alpha - \alpha_{Cl} + \alpha_{s} + \alpha_{s Cl} - \beta + \beta_{s}\right)} + \frac{4 \delta^{4}}{r^{6} \left(- 2 \alpha + 2 \alpha_{s} + 3 \beta - 3 \beta_{s}\right)} + \frac{4 \delta^{4}}{r^{6} \left(- 2 \alpha + 2 \alpha_{s} + \beta - \beta_{s}\right)} + \frac{8 \delta^{4}}{r^{6} \left(- 2 \alpha + 2 \alpha_{s} - 2 \beta + 2 \beta_{s}\right)} + \frac{8 \delta^{4}}{r^{6} \left(- 2 \alpha_{Cl} + 2 \alpha_{s Cl}\right)} + \frac{8 \delta^{4}}{r^{6} \left(- 2 \alpha + 2 \alpha_{s}\right)}$$
+ \item State: A = (2, 2, 1, 0, 1, 0, 2, 2) $\leftrightarrow$ B = (2, 2, 1, 0, 1, 0, 2, 2) 
+$$E_{dispersion} =\frac{8 \delta^{4}}{r^{6} \left(- \alpha - \alpha_{Cl} + \alpha_{s} + \alpha_{s Cl} + 2 \beta - 2 \beta_{s}\right)} + \frac{16 \delta^{4}}{r^{6} \left(- \alpha - \alpha_{Cl} + \alpha_{s} + \alpha_{s Cl} - \beta + \beta_{s}\right)} + \frac{4 \delta^{4}}{r^{6} \left(- 2 \alpha + 2 \alpha_{s} + 4 \beta - 4 \beta_{s}\right)} + \frac{16 \delta^{4}}{r^{6} \left(- 2 \alpha + 2 \alpha_{s} + \beta - \beta_{s}\right)} + \frac{16 \delta^{4}}{r^{6} \left(- 2 \alpha + 2 \alpha_{s} - 2 \beta + 2 \beta_{s}\right)} + \frac{4 \delta^{4}}{r^{6} \left(- 2 \alpha_{Cl} + 2 \alpha_{s Cl}\right)}$$
+ \item State: A = (2, 2, 1, 0, 1, 0, 2, 2) $\leftrightarrow$ B = (2, 2, 1, 1, 0, 0, 2, 2) 
+$$E_{dispersion} =\frac{4 \delta^{4}}{r^{6} \left(- \alpha - \alpha_{Cl} + \alpha_{s} + \alpha_{s Cl} + 2 \beta - 2 \beta_{s}\right)} + \frac{4 \delta^{4}}{r^{6} \left(- \alpha - \alpha_{Cl} + \alpha_{s} + \alpha_{s Cl} + \beta - \beta_{s}\right)} + \frac{16 \delta^{4}}{r^{6} \left(- \alpha - \alpha_{Cl} + \alpha_{s} + \alpha_{s Cl} - \beta + \beta_{s}\right)} + \frac{4 \delta^{4}}{r^{6} \left(- 2 \alpha + 2 \alpha_{s} + 3 \beta - 3 \beta_{s}\right)} + \frac{8 \delta^{4}}{r^{6} \left(- 2 \alpha + 2 \alpha_{s} + \beta - \beta_{s}\right)} + \frac{16 \delta^{4}}{r^{6} \left(- 2 \alpha + 2 \alpha_{s} - 2 \beta + 2 \beta_{s}\right)} + \frac{4 \delta^{4}}{r^{6} \left(- 2 \alpha_{Cl} + 2 \alpha_{s Cl}\right)} + \frac{8 \delta^{4}}{r^{6} \left(- 2 \alpha + 2 \alpha_{s}\right)}$$
+ \item State: A = (2, 2, 1, 1, 0, 0, 2, 2) $\leftrightarrow$ B = (2, 1, 2, 0, 1, 0, 2, 2) 
+$$E_{dispersion} =\frac{4 \delta^{4}}{r^{6} \left(- \alpha - \alpha_{Cl} + \alpha_{s} + \alpha_{s Cl} + 2 \beta - 2 \beta_{s}\right)} + \frac{8 \delta^{4}}{r^{6} \left(- \alpha - \alpha_{Cl} + \alpha_{s} + \alpha_{s Cl} + \beta - \beta_{s}\right)} + \frac{20 \delta^{4}}{r^{6} \left(- \alpha - \alpha_{Cl} + \alpha_{s} + \alpha_{s Cl} - \beta + \beta_{s}\right)} + \frac{4 \delta^{4}}{r^{6} \left(- 2 \alpha + 2 \alpha_{s} + 3 \beta - 3 \beta_{s}\right)} + \frac{8 \delta^{4}}{r^{6} \left(- 2 \alpha + 2 \alpha_{s} + \beta - \beta_{s}\right)} + \frac{8 \delta^{4}}{r^{6} \left(- 2 \alpha + 2 \alpha_{s} - 2 \beta + 2 \beta_{s}\right)} + \frac{8 \delta^{4}}{r^{6} \left(- 2 \alpha_{Cl} + 2 \alpha_{s Cl}\right)} + \frac{4 \delta^{4}}{r^{6} \left(- 2 \alpha + 2 \alpha_{s}\right)}$$
+ \item State: A = (2, 2, 1, 1, 0, 0, 2, 2) $\leftrightarrow$ B = (2, 1, 2, 1, 0, 0, 2, 2) 
+$$E_{dispersion} =\frac{12 \delta^{4}}{r^{6} \left(- \alpha - \alpha_{Cl} + \alpha_{s} + \alpha_{s Cl} + \beta - \beta_{s}\right)} + \frac{20 \delta^{4}}{r^{6} \left(- \alpha - \alpha_{Cl} + \alpha_{s} + \alpha_{s Cl} - \beta + \beta_{s}\right)} + \frac{4 \delta^{4}}{r^{6} \left(- 2 \alpha + 2 \alpha_{s} + 2 \beta - 2 \beta_{s}\right)} + \frac{8 \delta^{4}}{r^{6} \left(- 2 \alpha + 2 \alpha_{s} - 2 \beta + 2 \beta_{s}\right)} + \frac{8 \delta^{4}}{r^{6} \left(- 2 \alpha_{Cl} + 2 \alpha_{s Cl}\right)} + \frac{12 \delta^{4}}{r^{6} \left(- 2 \alpha + 2 \alpha_{s}\right)}$$
+ \item State: A = (2, 2, 1, 1, 0, 0, 2, 2) $\leftrightarrow$ B = (2, 2, 1, 0, 1, 0, 2, 2) 
+$$E_{dispersion} =\frac{4 \delta^{4}}{r^{6} \left(- \alpha - \alpha_{Cl} + \alpha_{s} + \alpha_{s Cl} + 2 \beta - 2 \beta_{s}\right)} + \frac{4 \delta^{4}}{r^{6} \left(- \alpha - \alpha_{Cl} + \alpha_{s} + \alpha_{s Cl} + \beta - \beta_{s}\right)} + \frac{16 \delta^{4}}{r^{6} \left(- \alpha - \alpha_{Cl} + \alpha_{s} + \alpha_{s Cl} - \beta + \beta_{s}\right)} + \frac{4 \delta^{4}}{r^{6} \left(- 2 \alpha + 2 \alpha_{s} + 3 \beta - 3 \beta_{s}\right)} + \frac{8 \delta^{4}}{r^{6} \left(- 2 \alpha + 2 \alpha_{s} + \beta - \beta_{s}\right)} + \frac{16 \delta^{4}}{r^{6} \left(- 2 \alpha + 2 \alpha_{s} - 2 \beta + 2 \beta_{s}\right)} + \frac{4 \delta^{4}}{r^{6} \left(- 2 \alpha_{Cl} + 2 \alpha_{s Cl}\right)} + \frac{8 \delta^{4}}{r^{6} \left(- 2 \alpha + 2 \alpha_{s}\right)}$$
+ \item State: A = (2, 2, 1, 1, 0, 0, 2, 2) $\leftrightarrow$ B = (2, 2, 1, 1, 0, 0, 2, 2) 
+$$E_{dispersion} =\frac{8 \delta^{4}}{r^{6} \left(- \alpha - \alpha_{Cl} + \alpha_{s} + \alpha_{s Cl} + \beta - \beta_{s}\right)} + \frac{16 \delta^{4}}{r^{6} \left(- \alpha - \alpha_{Cl} + \alpha_{s} + \alpha_{s Cl} - \beta + \beta_{s}\right)} + \frac{4 \delta^{4}}{r^{6} \left(- 2 \alpha + 2 \alpha_{s} + 2 \beta - 2 \beta_{s}\right)} + \frac{16 \delta^{4}}{r^{6} \left(- 2 \alpha + 2 \alpha_{s} - 2 \beta + 2 \beta_{s}\right)} + \frac{4 \delta^{4}}{r^{6} \left(- 2 \alpha_{Cl} + 2 \alpha_{s Cl}\right)} + \frac{16 \delta^{4}}{r^{6} \left(- 2 \alpha + 2 \alpha_{s}\right)}$$
+\end{enumerate}
+Ground-State:
+
+A =[2, 2, 2, 0, 0, 0, 2, 2]$\leftrightarrow$ B =[2, 2, 2, 0, 0, 0, 2, 2]
+$$E_{dispersion} =- \frac{8 \delta^{4}}{r^{6} \left(\alpha - \alpha_{s} + \beta - \beta_{s}\right)}$$
+
+
+\end{document}

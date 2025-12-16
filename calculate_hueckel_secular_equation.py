@@ -4,6 +4,7 @@ import sympy as sp
 from info_document.calculate_with_timeout import calculate_with_timeout
 from molecule_orbital import molecule_orbital
 from solve_2x2 import solve_2x2
+from solve_for_eigenvalues_first import solve_for_eigenvalues_first
 
 
 def alternative_solver(H, info:str):
@@ -36,13 +37,16 @@ def calculate_hueckel_secular_equation(H, info: str, sorting_dict_values: dict):
     # Eigenwerte und Eigenvektoren bestimmen
     # H=H.subs(sp.Symbol('alpha_Cl'), sp.Symbol('alpha')*sp.Symbol('x'))
     # H=H.subs(sp.Symbol('beta_Cl'), sp.Symbol('beta') * sp.Symbol('x'))
-    eigen_data = calculate_with_timeout(H.eigenvects, (), 60)
-    # print("Eigen data:", "\n\t", eigen_data)
+    eigen_data = calculate_with_timeout(H.eigenvects, (), 60, msg="Calculation of H.eigenvects() timed out.")
     if eigen_data is None:
-        if H.rows == H.cols and H.rows == 2:
-            eigen_data = solve_2x2(H=H)
+        eigen_data = calculate_with_timeout(solve_for_eigenvalues_first, (H,), timeout_in_s=60,
+                                            msg="Calculation of solve_for_eigenvalues_only() timed out.")
         if eigen_data is None:
-            eigen_data = alternative_solver(H=H, info=info)
+            if H.rows == H.cols and H.rows == 2:
+                eigen_data = solve_2x2(H=H)
+            if eigen_data is None:
+                eigen_data = alternative_solver(H=H, info=info)
+    print("Eigen data:", "\n\t", eigen_data, flush=True)
     eigen_pairs = []
 
     for val, mult, vecs in eigen_data:
