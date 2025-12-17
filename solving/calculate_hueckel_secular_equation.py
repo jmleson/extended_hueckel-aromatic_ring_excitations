@@ -1,10 +1,8 @@
 
 import sympy as sp
 
-from info_document.calculate_with_timeout import calculate_with_timeout
 from molecule_orbital import molecule_orbital
-from solve_2x2 import solve_2x2
-from solve_for_eigenvalues_first import solve_for_eigenvalues_first
+from solving.solve_for_eigenvalues_first import solve_for_eigenvalues_first
 
 
 def alternative_solver(H, info:str):
@@ -37,22 +35,20 @@ def calculate_hueckel_secular_equation(H, info: str, sorting_dict_values: dict):
     # Eigenwerte und Eigenvektoren bestimmen
     # H=H.subs(sp.Symbol('alpha_Cl'), sp.Symbol('alpha')*sp.Symbol('x'))
     # H=H.subs(sp.Symbol('beta_Cl'), sp.Symbol('beta') * sp.Symbol('x'))
-    eigen_data = calculate_with_timeout(H.eigenvects, (), 600, msg="Calculation of H.eigenvects() timed out.")
-    if eigen_data is None:
-        eigen_data = calculate_with_timeout(solve_for_eigenvalues_first, (H,), timeout_in_s=43200,
-                                            msg="Calculation of solve_for_eigenvalues_only() timed out.")
-        if eigen_data is None:
-            if H.rows == H.cols and H.rows == 2:
-                eigen_data = solve_2x2(H=H)
-            if eigen_data is None:
-                eigen_data = alternative_solver(H=H, info=info)
-    print("Eigen data:", "\n\t", eigen_data, flush=True)
+    eigen_data = solve_for_eigenvalues_first(H=H)
+    # print("Eigen data (", info, "):", "\n\t", type(eigen_data), flush=True)
     eigen_pairs = []
-
+    # for val, mult, vecs in eigen_data:
+    #     print("v after solving = ", vecs)
     for val, mult, vecs in eigen_data:
         for vec in vecs:
-            eigen_pairs.append((val, vec.normalized()))
-
+            try:
+                eigen_pairs.append((val, vec.normalized()))
+            except:
+                print("\tunable to normalize vector")
+                eigen_pairs.append((val, vec))
+    # for val, vec in eigen_pairs:
+    #     print("v after adding = ", vec)
     # Sortieren nach substituierten Werten
     try:
         # print(eigen_pairs)
@@ -65,6 +61,8 @@ def calculate_hueckel_secular_equation(H, info: str, sorting_dict_values: dict):
         # cannot determine truth value of Relational:
         print("\tunsorted eigen pairs")
         sorted_pairs = eigen_pairs
+    # for val, vec in sorted_pairs:
+    #     print("v after sort = ", vec)
 
     # print("\nEigenvalues (including degenerate orbitals):")
     molecule_orbitals = []

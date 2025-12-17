@@ -2,8 +2,8 @@ import itertools
 from collections import defaultdict
 from fractions import Fraction
 
-import sympy
 import sympy as sp
+from sympy import I
 
 from PointGroups.C2v import C2v
 from PointGroups.D2h import D2h
@@ -11,6 +11,7 @@ from PointGroups.D4h import D4h
 from PointGroups.D6h import D6h
 from SALC import SALC, norm_and_group_SALCs, linear_independent, get_linear_independent_SALCs
 from is_multiple import is_multiple
+from save_latex_export import save_latex_export
 from tst.solve_saekular_equation import calculate_hueckel_secular_equation
 
 
@@ -300,6 +301,7 @@ class MoleculeRepresentation():
         alpha, beta, alpha_s, beta_s = sp.symbols(f"alpha beta alpha_s beta_s")
         alpha_Cl, beta_Cl, alpha_s_Cl, beta_s_Cl = sp.symbols(f"alpha_{self.heterosymbol} beta_{self.heterosymbol} alpha_s_{self.heterosymbol} beta_s_{self.heterosymbol}")
         alpha_N, beta_N, alpha_s_N, beta_s_N = sp.symbols("alpha_N beta_N alpha_s_N beta_s_N")
+
         sorting_dict_values = {alpha: 0, beta: -1,
                                alpha_s: 0, beta_s: -1,
                                alpha_Cl: 0, beta_Cl: -1,
@@ -309,8 +311,8 @@ class MoleculeRepresentation():
                                }
         for irred, salcs in SALCs_by_irred.items():
             H = self.get_effective_hamilton_matrix(SALCs=salcs, irred=irred)
-            try:
-            # if True:
+            # try:
+            if True:
                 result_irred = calculate_hueckel_secular_equation(H, info=irred, sorting_dict_values=sorting_dict_values)
                 for i in result_irred:
                     i.symmetry = irred
@@ -320,13 +322,13 @@ class MoleculeRepresentation():
                         if i.eigenvector[row] != 0:
                             i.salcs.append({"factor": i.eigenvector[row], "salc": salcs[row]})
                     result.append(i)
-            except Exception as e:
-                print(f"\tThis irred ({irred}) failed {e}...trying next one...")
+            # except Exception as e:
+            #     print(f"\tThis irred ({irred}) failed {e}...trying next one...")
 
         # sorting:
         molecule_orbitals = sorted(
             result,
-            key=lambda m: m.eigenvalue.subs(sorting_dict_values)
+            key=lambda m: sp.re(m.eigenvalue.subs(sorting_dict_values).evalf())# nur Realteil
         )
         return molecule_orbitals
 
@@ -366,7 +368,7 @@ class MoleculeRepresentation():
                 if print_active:
                     s.print()
                 content += fr"""
-                \item SALC of {s.irred}: \quad ${sympy.latex(s.equation)}$
+                \item SALC of {s.irred}: \quad ${save_latex_export(s.equation)}$
                 """.strip() + "\n"
             content += r"\end{itemize}"+"\n"
         except Exception as e:
@@ -376,7 +378,7 @@ class MoleculeRepresentation():
         SALCs_by_irred = norm_and_group_SALCs(SALCs)
         for irred, salcs in SALCs_by_irred.items():
             H = self.get_effective_hamilton_matrix(SALCs=salcs, irred=irred)
-            content += f"     $$ H_{{{irred}}}= " + sympy.latex(H).replace("matrix","bmatrix") + "$$ \n"
+            content += f"     $$ H_{{{irred}}}= " + save_latex_export(H).replace("matrix","bmatrix") + "$$ \n"
 
         content += "\n\nSolving Hückels secular equations, that follow from these H, leads to:\n"
         # try:
@@ -389,10 +391,25 @@ class MoleculeRepresentation():
                 salc_vector = sp.Matrix([[sa["salc"].equation] for sa in s.salcs])
                 latex_labels = [r"\text{%d. SALC in %s}" % (i+1, s.symmetry) for i in range(len(s.eigenvector))]
                 latex_labels_str = r"\left[\begin{array}{c}" + r" \\ ".join(latex_labels) + r"\end{array}\right]"
+
+                eigenvalue_str = fr" ${save_latex_export(s.eigenvalue, replacement_text= " eigenvalue ")}$"
+                # if len(eigenvalue_str) >= 1000:
+                #     eigenvalue_str = " eigenvalue "
                 content += (fr"""
-                            \item orbital of {s.symmetry} with energy = ${sympy.latex(s.eigenvalue)}$ \\
-                            ( ${sympy.latex(s.eigenvector)} * { latex_labels_str } = {sympy.latex(salc_vector)} $ )
+                            \item orbital of {s.symmetry} with energy = 
+                            {eigenvalue_str} \\
                             """.strip() + "\n")
+
+                eigenvector_str = fr"( ${save_latex_export(s.eigenvector, replacement_text=" eigenvector ")} * { latex_labels_str } "
+                # if len(eigenvector_str) >= 1000:
+                #     eigenvector_str = fr"( $eigenvector * { latex_labels_str } "
+                content += eigenvector_str + "\n"
+
+                salc_vector = fr"= {save_latex_export(salc_vector, replacement_text="SALC vector")} $ )"
+                # if len(salc_vector) >= 1000:
+                #     salc_vector = fr"= SALCvector $ )"
+                content += salc_vector + "\n"
+                content += "\n"
             content += r"\end{itemize}" + "\n"
         # except Exception as e:
         #     content += r"\textcolor{red}{"+ f"Error generating molecule orbitals: {e}\n" +r"}"

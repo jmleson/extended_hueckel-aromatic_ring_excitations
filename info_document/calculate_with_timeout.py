@@ -15,23 +15,12 @@ def calculate_with_timeout(func, args, timeout_in_s, msg:str = "Calculation time
         result = pool.apply_async(worker, (func, args))
         try:
             return result.get(timeout=timeout_in_s)
-        except:# multiprocessing.TimeoutError:
-            print(msg)
+        except:
+            print(msg, flush=True)
             pool.terminate()
             pool.join()  # Ensure the pool is properly cleaned up
             return None
-        # except AttributeError:# because result is None and thereby has not attribute "get"
-        #     print(msg)
-        #     pool.terminate()
-        #     pool.join()  # Ensure the pool is properly cleaned up
-        #     return None
 
 
 
-if __name__ == "__main__":
-
-    def test_function():
-        while True:
-            pass
-
-    calculate_with_timeout(test_function, (), 5)
+# if __name__ == "__main__":

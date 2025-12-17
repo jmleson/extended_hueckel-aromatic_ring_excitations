@@ -12,6 +12,7 @@ from info_document.sketch_chemical_ring import sketch_chemical_ring
 from molecule_orbital import molecule_orbital
 import sympy as sp
 
+from save_latex_export import try_simplifying, save_latex_export
 from wrappers import safe_simplify, safe_ratsimp, safe_expand
 
 
@@ -89,12 +90,8 @@ class MoleculeState:
             # if len(str([g[1] for g in ground_state_with_warning])) > 0:
             #     result += str([g[1] for g in ground_state_with_warning]) +"\n\n"
             result += "A =" + str(ground_state_occupation) + r"$\leftrightarrow$ B =" + str(ground_state_occupation) +"\n"
-            simplified_expression = calculate_with_timeout(safe_simplify, (e_disp,),
-                                                           timeout_in_s=50, msg="simplifying")
-            if simplified_expression is None:
-                result +=  r"$$E_{dispersion} =" + sympy.latex(e_disp) + "$$\n"
-            else:
-                result +=  r"$$E_{dispersion} =" + sympy.latex(simplified_expression) + "$$\n"
+            simplified_latex_expression = save_latex_export(e_disp)
+            result +=  r"$$E_{dispersion} =" +"\n"+ simplified_latex_expression + "$$\n"
             return result
 
     def calculate_result_for_all_transitions_results(self, print_active:bool=True):
@@ -119,22 +116,7 @@ class MoleculeState:
                     if print_active:
                         print("\tE_dispersion =", e_disp)
                     else:
-                        starting_expression = copy.deepcopy(e_disp)
-                        # try:
-                        simplified_expression = starting_expression
-                        # if True:
-                            # simplified_expression = calculate_with_timeout(safe_simplify, (e_disp,),
-                            #                                             timeout_in_s=2, msg="simplifying")
-                            # if simplified_expression is None: #time out
-                                # simplified_expression = calculate_with_timeout(safe_ratsimp, (e_disp,),
-                                #                                         timeout_in_s=1, msg="simplifying (ratsimp)")
-                                # simplified_expression = calculate_with_timeout(safe_expand, (simplified_expression,),
-                                #                                         timeout_in_s=1, msg="simplifying (expand)")
-                                # if simplified_expression is None:
-                                #     simplified_expression = starting_expression
-                        # except Exception as e:
-                        #     simplified_expression = starting_expression
-                        result += r"$$E_{dispersion} =" + sympy.latex( simplified_expression ) + "$$\n"
+                        result += r"$$E_{dispersion} =" + save_latex_export( e_disp ) + "$$\n"
                 else:
                     # skip triplet quintet combinations
                     pass

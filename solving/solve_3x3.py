@@ -4,7 +4,7 @@ import sympy as sp
 from solve_for_eigenvalues_first import find_eigenvector_general
 
 
-def solve_2x2(H:sp.Matrix):
+def solve_3x3(H:sp.Matrix):
     if H.rows != 3 or H.cols != 3:
         raise Exception("this method is for 3x3 matrices only")
     # Eigen-Values:

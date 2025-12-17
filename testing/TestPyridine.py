@@ -4,9 +4,8 @@ import sympy as sp
 
 from MoleculeRepresentation import MoleculeRepresentation
 from SALC import SALC, norm_and_group_SALCs
-from calculate_hueckel_secular_equation import calculate_hueckel_secular_equation
+from solving.calculate_hueckel_secular_equation import calculate_hueckel_secular_equation
 from is_multiple import is_multiple
-from round_and_collect import round_and_collect
 
 
 class TestPyridine(unittest.TestCase):

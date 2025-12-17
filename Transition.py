@@ -1,8 +1,10 @@
-import sympy
-
 from TransitionIntegral import TransitionIntegral
+from info_document.calculate_with_timeout import calculate_with_timeout
 from molecule_orbital import molecule_orbital
 import sympy as sp
+
+from save_latex_export import save_latex_export
+
 
 class Transition:
 
@@ -31,7 +33,11 @@ class Transition:
         self.transition_integral = TransitionIntegral(bra=self.orbital_to_excite_of, ket=self.orbital_to_excite_to)
 
     def get_difference_between_mean_orbital_energies(self):
-        return self.energy_zeros_s - self.energy_zero_p
+        x = self.energy_zeros_s - self.energy_zero_p
+        simple = calculate_with_timeout(x.simplify,(), timeout_in_s=60)
+        if simple is None:
+            return x
+        return simple
 
     def get_changed_orbital_index(self):
         if sum(self.s_occupation_after_transition) != 1:
@@ -70,8 +76,8 @@ class Transition:
                 lc += (self.orbital_to_excite_of.salcs[0]["factor"] * (
                     self.orbital_to_excite_of.salcs[0]["salc"].equation))
             latex_str += fr"""
-            \item $\phi_{{{changed_orbital_index + 1}}}:$ linear combination = ${sympy.latex(lc)}$, \
-            energy = ${sympy.latex(self.orbital_to_excite_of.eigenvalue)}$
+            \item $\phi_{{{changed_orbital_index + 1}}}:$ linear combination = ${save_latex_export(lc)}$, \
+            energy = ${save_latex_export(self.orbital_to_excite_of.eigenvalue)}$
             """
 
         if self.orbital_to_excite_to is not None:
@@ -80,21 +86,34 @@ class Transition:
                 lc += (self.orbital_to_excite_to.salcs[0]["factor"] * (
                     self.orbital_to_excite_to.salcs[0]["salc"].equation))
             latex_str += fr"""
-            \item $\xi_{{{changed_orbital_index + 1}}}:$ linear combination = ${sympy.latex(lc)}$, \
-            energy = ${sympy.latex(self.orbital_to_excite_to.eigenvalue)}$
+            \item $\xi_{{{changed_orbital_index + 1}}}:$ linear combination = ${save_latex_export(lc)}$, \
+            energy = ${save_latex_export(self.orbital_to_excite_to.eigenvalue)}$
             """
 
+
+        energy_of_state_before_excitation = fr"${save_latex_export(self.energy_of_state_before_excitation)}$"
+        # if len(energy_of_state_before_excitation) > 1000:
+        #     energy_of_state_before_excitation = "\n%"+ energy_of_state_before_excitation.replace("\n", "\n%") + "\n"
+        #     energy_of_state_before_excitation += "too long to print" + "\n"
+        energy_of_state_after_excitation = fr"${save_latex_export(self.energy_of_state_after_excitation)}$"
+        # if len(energy_of_state_after_excitation) > 1000:
+        #     energy_of_state_after_excitation = "\n%" + energy_of_state_after_excitation.replace("\n", "\n%") + "\n"
+        #     energy_of_state_after_excitation += "too long to print" + "\n"
+        energy_of_average_difference = fr"${save_latex_export(self.get_difference_between_mean_orbital_energies())}$"
+        # if len(energy_of_average_difference) > 1000:
+        #     energy_of_average_difference = "\n%" + energy_of_average_difference.replace("\n", "\n%") + "\n"
+        #     energy_of_average_difference += "too long to print" + "\n"
         latex_str += fr"""
-            \item $\Delta$ Energy: ${sympy.latex(self.get_transitioning_energy())}$
-            \item Energy of State before Excitation: ${sympy.latex(self.energy_of_state_before_excitation)}$
-            \item Energy of State after Excitation: ${sympy.latex(self.energy_of_state_after_excitation)}$
-            \item Energy between Average Energies of $\phi$-/$\xi$-orbitals: \
-            ${sympy.latex(self.get_difference_between_mean_orbital_energies())}$
+            \item $\Delta$ Energy: ${save_latex_export(self.get_transitioning_energy())}$
+            \item Energy of State before Excitation: {energy_of_state_before_excitation}
+            \item Energy of State after Excitation: {energy_of_state_after_excitation}
+            \item Energy between Average Energies of $\phi$-/$\xi$-orbitals: 
+            {energy_of_average_difference}
         """
 
         if self.transition_integral is not None:
             latex_str += fr"""
-            \item dipole transition moment: ${sympy.latex(self.transition_integral.multiply_out())}$
+            \item dipole transition moment: ${save_latex_export(self.transition_integral.multiply_out())}$
         """
 
         latex_str += r"""

@@ -1,7 +1,7 @@
 import sympy as sp
 
-from calculate_hueckel_secular_equation import calculate_hueckel_secular_equation
-from molecule_orbital import molecule_orbital
+from solving.calculate_hueckel_secular_equation import calculate_hueckel_secular_equation
+
 
 #
 # def calculate_hueckel_secular_equation(H, info: str, sorting_dict_values: dict):
