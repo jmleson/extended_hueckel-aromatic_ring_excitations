@@ -8,7 +8,7 @@ from PointGroups.C2v import C2v
 from SALC import SALC
 from molecule_orbital import molecule_orbital
 from tst.solve_saekular_equation import calculate_hueckel_secular_equation
-from round_and_collect import round_and_collect
+from testing.round_and_collect import round_and_collect
 
 
 class TestLinearButadiene(unittest.TestCase):

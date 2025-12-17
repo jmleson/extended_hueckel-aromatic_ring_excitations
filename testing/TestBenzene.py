@@ -6,7 +6,7 @@ import sympy as sp
 from MoleculeRepresentation import MoleculeRepresentation
 from SALC import SALC
 from is_multiple import is_multiple
-from round_and_collect import round_and_collect
+from testing.round_and_collect import round_and_collect
 
 
 class TestBenzene(unittest.TestCase):

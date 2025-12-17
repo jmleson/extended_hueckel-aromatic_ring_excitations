@@ -1,13 +1,6 @@
-
-import math
 import unittest
-from fractions import Fraction
-import sympy as sp
 
 from MoleculeRepresentation import MoleculeRepresentation
-from SALC import SALC, norm_and_group_SALCs
-from is_multiple import is_multiple
-from round_and_collect import round_and_collect
 
 
 class TestPyrazine(unittest.TestCase):

@@ -92,17 +92,8 @@ class Transition:
 
 
         energy_of_state_before_excitation = fr"${save_latex_export(self.energy_of_state_before_excitation)}$"
-        # if len(energy_of_state_before_excitation) > 1000:
-        #     energy_of_state_before_excitation = "\n%"+ energy_of_state_before_excitation.replace("\n", "\n%") + "\n"
-        #     energy_of_state_before_excitation += "too long to print" + "\n"
         energy_of_state_after_excitation = fr"${save_latex_export(self.energy_of_state_after_excitation)}$"
-        # if len(energy_of_state_after_excitation) > 1000:
-        #     energy_of_state_after_excitation = "\n%" + energy_of_state_after_excitation.replace("\n", "\n%") + "\n"
-        #     energy_of_state_after_excitation += "too long to print" + "\n"
         energy_of_average_difference = fr"${save_latex_export(self.get_difference_between_mean_orbital_energies())}$"
-        # if len(energy_of_average_difference) > 1000:
-        #     energy_of_average_difference = "\n%" + energy_of_average_difference.replace("\n", "\n%") + "\n"
-        #     energy_of_average_difference += "too long to print" + "\n"
         latex_str += fr"""
             \item $\Delta$ Energy: ${save_latex_export(self.get_transitioning_energy())}$
             \item Energy of State before Excitation: {energy_of_state_before_excitation}

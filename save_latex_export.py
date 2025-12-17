@@ -1,4 +1,3 @@
-import copy
 
 import sympy as sp
 
@@ -7,7 +6,7 @@ from wrappers import safe_simplify
 
 
 def save_latex_export(expr: sp.Expr, replacement_text:str="too long to print"):
-    # expr = try_simplifying(expr=expr)
+    expr = try_simplifying(expr=expr)
     text = str(sp.latex(expr, fold_frac_powers=True))
     if len(text) >= 1000:
             text = "\n%" + break_string(text.replace("\n", "\n%")) + "\n"
@@ -29,23 +28,8 @@ def break_string(s: str) -> str:
 
 
 def try_simplifying(expr: sp.Expr):
-    # starting_expression = copy.deepcopy(e_disp)
-    # simplified_expression = starting_expression
     simplified_expression = calculate_with_timeout(safe_simplify, (expr,),
                                                    timeout_in_s=120, msg="simplifying")
     if simplified_expression is None:
         return expr
-
-    # if True:
-    # simplified_expression = calculate_with_timeout(safe_simplify, (e_disp,),
-    #                                             timeout_in_s=2, msg="simplifying")
-    # if simplified_expression is None: #time out
-    # simplified_expression = calculate_with_timeout(safe_ratsimp, (e_disp,),
-    #                                         timeout_in_s=1, msg="simplifying (ratsimp)")
-    # simplified_expression = calculate_with_timeout(safe_expand, (simplified_expression,),
-    #                                         timeout_in_s=1, msg="simplifying (expand)")
-    # if simplified_expression is None:
-    #     simplified_expression = starting_expression
-    # except Exception as e:
-    #     simplified_expression = starting_expression
     return simplified_expression
