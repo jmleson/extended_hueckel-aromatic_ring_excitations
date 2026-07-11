@@ -1,7 +1,7 @@
 
 import sympy as sp
 
-from solving.calculate_hueckel_secular_equation import calculate_hueckel_secular_equation
+from solving.old.calculate_hueckel_secular_equation import calculate_hueckel_secular_equation
 
 # Define the symbols
 E, alpha, alpha_N, beta, beta_N = sp.symbols('E alpha alpha_N beta beta_N')

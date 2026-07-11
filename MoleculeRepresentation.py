@@ -3,7 +3,6 @@ from collections import defaultdict
 from fractions import Fraction
 
 import sympy as sp
-from sympy import I
 
 from PointGroups.C2v import C2v
 from PointGroups.D2h import D2h
@@ -11,8 +10,9 @@ from PointGroups.D4h import D4h
 from PointGroups.D6h import D6h
 from SALC import SALC, norm_and_group_SALCs, linear_independent, get_linear_independent_SALCs
 from is_multiple import is_multiple
-from save_latex_export import save_latex_export
-from tst.solve_saekular_equation import calculate_hueckel_secular_equation
+from save_latex_export import save_latex_export, try_simplifying
+from solving.get_molecular_orbitals_from_secular_equation import get_molecular_orbitals_from_secular_equation
+
 
 
 
@@ -173,7 +173,7 @@ class MoleculeRepresentation():
     def get_linear_independent_SALCs(self, salc_list:list, irreducible_representation):
         if linear_independent(salc_list):
             return salc_list
-        # linear dependent -> orthogonalization:#TODO
+        # linear dependent -> orthogonalization:
         dict_of_salcs_grouped_by_irred = defaultdict(list)
         for salc in salc_list:
             dict_of_salcs_grouped_by_irred[salc.irred].append(salc)
@@ -186,11 +186,14 @@ class MoleculeRepresentation():
             elif expected_numbers[key] > len(items):
                 raise Exception(f"Zu wenig SALCs für {key}")
             else:
+                print("ORTHOGONALIZATION NEEDED")
                 new_set = get_linear_independent_SALCs(items, expected_no=expected_numbers[key])
                 # print(key, len(new_set))
                 for s in new_set:
                     new_salc_list.append(s)
         return new_salc_list
+
+
 
     def get_all_SALCs(self):
         reducible_representation = self.get_reducible_representation_for_ring_p_orbitals()
@@ -222,9 +225,9 @@ class MoleculeRepresentation():
     def orbitals_adjoint(self, p1, p2):
         # print("orbitals_adjoint:", p1, "*", p2)
         alpha, beta = sp.symbols("alpha_s beta_s") if self.s_orbital_active else sp.symbols("alpha beta")
-        alpha_cl, beta_cl = sp.symbols(f"alpha_s_{self.heterosymbol} beta_s_{self.heterosymbol}") \
+        alpha_cl, beta_cl = sp.symbols(f"alpha_{{s_{self.heterosymbol}}} beta_{{s_{self.heterosymbol}}}") \
             if self.s_orbital_active else sp.symbols(f"alpha_{self.heterosymbol} beta_{self.heterosymbol}")
-        alpha_n, beta_n = sp.symbols("alpha_s_N beta_s_N") if self.s_orbital_active else sp.symbols("alpha_N beta_N")
+        alpha_n, beta_n = sp.symbols("alpha_{s_N} beta_{s_N}") if self.s_orbital_active else sp.symbols("alpha_N beta_N")
         if p1 == p2:
             if p1 not in range(1,self.n+1):
                 return alpha_cl
@@ -299,8 +302,8 @@ class MoleculeRepresentation():
 
         result = []
         alpha, beta, alpha_s, beta_s = sp.symbols(f"alpha beta alpha_s beta_s")
-        alpha_Cl, beta_Cl, alpha_s_Cl, beta_s_Cl = sp.symbols(f"alpha_{self.heterosymbol} beta_{self.heterosymbol} alpha_s_{self.heterosymbol} beta_s_{self.heterosymbol}")
-        alpha_N, beta_N, alpha_s_N, beta_s_N = sp.symbols("alpha_N beta_N alpha_s_N beta_s_N")
+        alpha_Cl, beta_Cl, alpha_s_Cl, beta_s_Cl = sp.symbols(f"alpha_{self.heterosymbol} beta_{self.heterosymbol} alpha_{{s_{self.heterosymbol}}} beta_{{s_{self.heterosymbol}}}")
+        alpha_N, beta_N, alpha_s_N, beta_s_N = sp.symbols("alpha_N beta_N alpha_{s_N} beta_{s_N}")
 
         sorting_dict_values = {alpha: 0, beta: -1,
                                alpha_s: 0, beta_s: -1,
@@ -313,15 +316,16 @@ class MoleculeRepresentation():
             H = self.get_effective_hamilton_matrix(SALCs=salcs, irred=irred)
             # try:
             if True:
-                result_irred = calculate_hueckel_secular_equation(H, info=irred, sorting_dict_values=sorting_dict_values)
-                for i in result_irred:
-                    i.symmetry = irred
+                result_irred = get_molecular_orbitals_from_secular_equation(H, info=irred, sorting_dict_values=sorting_dict_values)
+                assert len(result_irred) == len(salcs)
+                for mo in result_irred:
+                    mo.symmetry = irred
                     # print(i.symmetry)
                     # sp.pprint(i.eigenvector)
-                    for row in range(len(i.eigenvector)):
-                        if i.eigenvector[row] != 0:
-                            i.salcs.append({"factor": i.eigenvector[row], "salc": salcs[row]})
-                    result.append(i)
+                    for row in range(len(mo.eigenvector)):
+                        # if mo.eigenvector[row] != 0:# save all !
+                        mo.salcs.append({"factor": mo.eigenvector[row], "salc": salcs[row]})
+                    result.append(mo)
             # except Exception as e:
             #     print(f"\tThis irred ({irred}) failed {e}...trying next one...")
 
@@ -381,39 +385,54 @@ class MoleculeRepresentation():
             content += f"     $$ H_{{{irred}}}= " + save_latex_export(H).replace("matrix","bmatrix") + "$$ \n"
 
         content += "\n\nSolving Hückels secular equations, that follow from these H, leads to:\n"
-        # try:
         if True:
             molecule_orbitals = self.get_energy_levels()
             if len(molecule_orbitals) == 0:
                 raise Exception("no orbitals available")
+
+            irred_content = {}
             content += r"\begin{itemize}" + "\n"
             for s in molecule_orbitals:
-                salc_vector = sp.Matrix([[sa["salc"].equation] for sa in s.salcs])
+                global_irred_error = False
+                irred = s.salcs[0]["salc"].irred
+                if not irred in irred_content.keys():
+                    irred_content[irred] = []
+                eigenvalue_str = save_latex_export(s.eigenvalue, replacement_text=" eigenvalue ")
+                eigenvector_str = save_latex_export(s.eigenvector.T, replacement_text=" eigenvector ")
+
                 latex_labels = [r"\text{%d. SALC in %s}" % (i+1, s.symmetry) for i in range(len(s.eigenvector))]
                 latex_labels_str = r"\left[\begin{array}{c}" + r" \\ ".join(latex_labels) + r"\end{array}\right]"
 
-                eigenvalue_str = fr" ${save_latex_export(s.eigenvalue, replacement_text= " eigenvalue ")}$"
-                # if len(eigenvalue_str) >= 1000:
-                #     eigenvalue_str = " eigenvalue "
-                content += (fr"""
-                            \item orbital of {s.symmetry} with energy = 
-                            {eigenvalue_str} \\
-                            """.strip() + "\n")
+                salc_vector = save_latex_export(sp.Matrix([[sa["salc"].equation] for sa in s.salcs]) )
 
-                eigenvector_str = fr"( ${save_latex_export(s.eigenvector, replacement_text=" eigenvector ")} * { latex_labels_str } "
-                # if len(eigenvector_str) >= 1000:
-                #     eigenvector_str = fr"( $eigenvector * { latex_labels_str } "
-                content += eigenvector_str + "\n"
+                mo = sp.Integer(0)
+                if not len(s.salcs) == len(s.eigenvector):
+                    mo = "undefined"
+                else:
+                    for index in range(len(s.salcs)):
+                        mo += s.salcs[index]["salc"].equation * s.eigenvector[index]
+                    mo = save_latex_export(mo, replacement_text="MO vector")
+                    if mo == 0 or mo == "0":
+                        # Error: SALCs linearly dependent, need to be orthogonalized"
+                        global_irred_error = True
 
-                salc_vector = fr"= {save_latex_export(salc_vector, replacement_text="SALC vector")} $ )"
-                # if len(salc_vector) >= 1000:
-                #     salc_vector = fr"= SALCvector $ )"
-                content += salc_vector + "\n"
-                content += "\n"
+                content_mo = ""
+                content_mo += (fr"""
+                                \item orbital of {s.symmetry} with energy = 
+                                ${eigenvalue_str}$ \\
+                                """.strip() + "\n")
+                content_mo += "( \n$$\n"+ fr"{eigenvector_str} * {latex_labels_str} = {eigenvector_str} * {salc_vector} " + "\n"
+                content_mo += " $$ $$ " + fr"= {mo} "+ "\n $$ \n )\n"
+                content_mo += "\n"
+                irred_content[irred].append(content_mo)
+                if global_irred_error:
+                    irred_content[irred].append(r"\textcolor{red}{Error in Orthogonalization of SALCs}")
+
+            for key, values in irred_content.items():
+                irred_errors = "\n".join( set([i for i in values if "error" in i.lower()]) )
+                values = [v + irred_errors for v in values]
+                content += "".join(values)
             content += r"\end{itemize}" + "\n"
-        # except Exception as e:
-        #     content += r"\textcolor{red}{"+ f"Error generating molecule orbitals: {e}\n" +r"}"
-
         return content + "\n"
 
 

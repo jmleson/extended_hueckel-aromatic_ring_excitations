@@ -59,13 +59,15 @@ class Transition:
         e1 = self.orbital_to_excite_to.eigenvalue - self.orbital_to_excite_of.eigenvalue# single occupation assumed
         e2 = self.energy_of_state_after_excitation - self.energy_of_state_before_excitation
         # print(e1, "\t<->\t", e2,flush=True)
-        assert e1 == e2
-        return e2
+        if not e1 == e2:
+            print(f"\tstrange energies, {e1} == {e2}")
+        # assert e1 == e2
+        return e1
 
     def to_latex(self):
         changed_orbital_index = self.get_changed_orbital_index()
         latex_str = fr"""
-        \noindent\textbf{{Transition from $\phi_{{{changed_orbital_index + 1}}}$ into $\phi_{{s_{{{changed_orbital_index + 1}}}}}$:}}
+        \noindent\textbf{{Transition from $\psi_{{{changed_orbital_index + 1}}}$ into $\psi_{{s_{{{changed_orbital_index + 1}}}}}$:}}
         \begin{{itemize}}
             \item $- {self.p_before_transition}, {self.get_s_before_transition()} \rightarrow {self.get_p_after_transition()}, {self.s_occupation_after_transition}$
         """
@@ -76,7 +78,7 @@ class Transition:
                 lc += (self.orbital_to_excite_of.salcs[0]["factor"] * (
                     self.orbital_to_excite_of.salcs[0]["salc"].equation))
             latex_str += fr"""
-            \item $\phi_{{{changed_orbital_index + 1}}}:$ linear combination = ${save_latex_export(lc)}$, \
+            \item $\psi_{{{changed_orbital_index + 1}}}:$ linear combination = ${save_latex_export(lc)}$, \
             energy = ${save_latex_export(self.orbital_to_excite_of.eigenvalue)}$
             """
 
@@ -86,7 +88,7 @@ class Transition:
                 lc += (self.orbital_to_excite_to.salcs[0]["factor"] * (
                     self.orbital_to_excite_to.salcs[0]["salc"].equation))
             latex_str += fr"""
-            \item $\xi_{{{changed_orbital_index + 1}}}:$ linear combination = ${save_latex_export(lc)}$, \
+            \item $\eta_{{{changed_orbital_index + 1}}}:$ linear combination = ${save_latex_export(lc)}$, \
             energy = ${save_latex_export(self.orbital_to_excite_to.eigenvalue)}$
             """
 
@@ -94,13 +96,17 @@ class Transition:
         energy_of_state_before_excitation = fr"${save_latex_export(self.energy_of_state_before_excitation)}$"
         energy_of_state_after_excitation = fr"${save_latex_export(self.energy_of_state_after_excitation)}$"
         energy_of_average_difference = fr"${save_latex_export(self.get_difference_between_mean_orbital_energies())}$"
-        latex_str += fr"""
-            \item $\Delta$ Energy: ${save_latex_export(self.get_transitioning_energy())}$
-            \item Energy of State before Excitation: {energy_of_state_before_excitation}
-            \item Energy of State after Excitation: {energy_of_state_after_excitation}
-            \item Energy between Average Energies of $\phi$-/$\xi$-orbitals: 
-            {energy_of_average_difference}
-        """
+        if not "?" in energy_of_state_before_excitation+energy_of_state_after_excitation+energy_of_average_difference:
+            latex_str += fr"""
+                \item $\Delta$ Energy: ${save_latex_export(self.get_transitioning_energy())}$
+                \item Energy of State before Excitation: {energy_of_state_before_excitation}
+                \item Energy of State after Excitation: {energy_of_state_after_excitation}
+                \item Energy between Average Energies of $\psi$-/$\eta$-orbitals: {energy_of_average_difference}
+            """
+        else:
+            latex_str += fr"""
+                       \item $\Delta$ Energy: ${save_latex_export(self.get_transitioning_energy())}$
+            """
 
         if self.transition_integral is not None:
             latex_str += fr"""

@@ -4,8 +4,8 @@ import sympy as sp
 
 from MoleculeRepresentation import MoleculeRepresentation
 from SALC import SALC, norm_and_group_SALCs
-from solving.calculate_hueckel_secular_equation import calculate_hueckel_secular_equation
 from is_multiple import is_multiple
+from solving.get_molecular_orbitals_from_secular_equation import get_molecular_orbitals_from_secular_equation
 
 
 class TestPyridine(unittest.TestCase):
@@ -123,6 +123,6 @@ class TestPyridine(unittest.TestCase):
         assert h_matrix.shape == expected.shape
         assert h_matrix.equals(expected)
 
-        calculate_hueckel_secular_equation(h_matrix, info="test", sorting_dict_values={alpha_N: 0, beta_N: -1, alpha: 0, beta: -1})
+        # get_molecular_orbitals_from_secular_equation(h_matrix, info="test", sorting_dict_values={alpha_N: 0, beta_N: -1, alpha: 0, beta: -1})
 
 

@@ -7,7 +7,7 @@ from MoleculeRepresentation import MoleculeRepresentation
 from PointGroups.C2v import C2v
 from SALC import SALC
 from molecule_orbital import molecule_orbital
-from tst.solve_saekular_equation import calculate_hueckel_secular_equation
+from solving.get_molecular_orbitals_from_secular_equation import get_molecular_orbitals_from_secular_equation
 from testing.round_and_collect import round_and_collect
 
 
@@ -144,7 +144,7 @@ class TestLinearButadiene(unittest.TestCase):
         ])
         assert h_matrix.shape == expected.shape
         assert h_matrix.equals(expected)
-        molecule_orbitals = calculate_hueckel_secular_equation(h_matrix, info="tst", sorting_dict_values={alpha: 0, beta: -1})
+        molecule_orbitals = get_molecular_orbitals_from_secular_equation(h_matrix, info="tst", sorting_dict_values={alpha: 0, beta: -1})
         e_1 = alpha + beta * ((1+sp.sqrt(5))/2)
         e_2 = alpha + beta * ((1-sp.sqrt(5))/2)
         assert sp.simplify(e_1 - molecule_orbitals[0].eigenvalue) == 0
@@ -158,7 +158,7 @@ class TestLinearButadiene(unittest.TestCase):
         ])
         assert h_matrix.shape == expected.shape
         assert h_matrix.equals(expected)
-        molecule_orbitals = calculate_hueckel_secular_equation(h_matrix, info="tst", sorting_dict_values={alpha: 0, beta: -1})
+        molecule_orbitals = get_molecular_orbitals_from_secular_equation(h_matrix, info="tst", sorting_dict_values={alpha: 0, beta: -1})
         e_1 = alpha - beta * ((1 + sp.sqrt(5)) / 2)
         e_2 = alpha - beta * ((1 - sp.sqrt(5)) / 2)
         assert sp.simplify(e_2 - molecule_orbitals[0].eigenvalue) == 0

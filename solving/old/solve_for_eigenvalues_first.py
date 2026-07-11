@@ -4,7 +4,7 @@
 import sympy as sp
 
 from info_document.calculate_with_timeout import calculate_with_timeout
-from solving.solve_2x2 import find_eigenvector_2x2
+from solving.old.solve_2x2 import find_eigenvector_2x2
 
 
 def solve_for_eigenvalues_first(H: sp.Matrix):
@@ -15,9 +15,13 @@ def solve_for_eigenvalues_first(H: sp.Matrix):
     print("solve_for_eigenvalues_only", "...", flush=True)
     epsilons = []
     mults = []
-    for value, mult in H.eigenvals().items():
-        epsilons.append(value)
-        mults.append(mult)
+    try:
+        for value, mult in H.eigenvals().items():
+            epsilons.append(value)
+            mults.append(mult)
+    except Exception as exc:
+        print(exc, flush=True)
+        return []
 
     # Eigen-Vectors:
     eigenvecs = []
@@ -53,7 +57,6 @@ def find_eigenvector_general(H: sp.Matrix, eigenvalue) -> list[sp.Matrix]:
     if nullspace is None:
         nullspace = construct_empty_eigenvector(H, eigenvalue)
         # print("\tafter construct_empty_eigenvector", nullspace is None, flush=True)
-
     return nullspace # list of vectors
 
 

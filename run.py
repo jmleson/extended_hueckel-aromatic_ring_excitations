@@ -2,16 +2,19 @@
 from MoleculeState import MoleculeState
 
 
-# def cyclopentadiene():
-#     m = MoleculeState(n=4, bound_cl_to_c_positions=[], n_instead_of_c=[])
-#     m.set_occupation(p_occupation=(2, 1, 1, 0))
-#     m.calculate_result_for_all_transitions_of_set_occupation()
-#
-#     m.set_occupation(p_occupation=(2, 2, 0, 0))
-#     m.calculate_result_for_all_transitions_of_set_occupation()
-#
-#     m.set_occupation(p_occupation=(2, 0, 2, 0))
-#     m.calculate_result_for_all_transitions_of_set_occupation()
+def cyclopentadiene(print_active:bool=True):
+    m = MoleculeState(n=4, bound_cl_to_c_positions=[], n_instead_of_c=[])
+    m.set_occupation(p_occupation=(2, 1, 1, 0))
+    m.calculate_result_for_all_transitions_of_set_occupation()
+
+    m.set_occupation(p_occupation=(2, 2, 0, 0))
+    m.calculate_result_for_all_transitions_of_set_occupation()
+
+    m.set_occupation(p_occupation=(2, 0, 2, 0))
+    m.calculate_result_for_all_transitions_of_set_occupation()
+
+    if not print_active:
+        m.latex_datei_erstellen("Cyclopentadiene")
 
 
 
@@ -20,8 +23,8 @@ def benzene(print_active:bool=True):
     if not print_active:
         m.latex_datei_erstellen("Benzene")
     else:
-        # m.calculate_result_for_all_transitions(print_active=print_active)
-        # m.calculate_result_for_all_transitions_results(print_active=print_active)
+        m.calculate_result_for_all_transitions(print_active=print_active)
+        m.calculate_result_for_all_transitions_results(print_active=print_active)
         m.compare_ground_state_assumption(print_active=print_active)
 
 
@@ -86,12 +89,12 @@ def hexafluorobenzene(print_active:bool=True):
 if __name__ == "__main__":
     print_active = False
 
-    # cyclopentadiene()
+    cyclopentadiene()
     benzene(print_active)
     chlorobenzene(print_active)
-    pyridine(print_active)
     pyrazine(print_active)
 
-    dichlorobenzene(print_active)
-    hexachlorobenzene(print_active)
-    hexafluorobenzene(print_active)
+    # hexafluorobenzene(print_active)#TODO
+    # pyridine(print_active)#TODO
+    # dichlorobenzene(print_active)
+    # hexachlorobenzene(print_active)

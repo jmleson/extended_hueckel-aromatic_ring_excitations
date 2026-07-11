@@ -13,7 +13,7 @@ from molecule_orbital import molecule_orbital
 import sympy as sp
 
 from save_latex_export import try_simplifying, save_latex_export
-from wrappers import safe_simplify, safe_ratsimp, safe_expand
+# from wrappers import safe_simplify, safe_ratsimp, safe_expand
 
 
 class MoleculeState:
@@ -157,7 +157,7 @@ class MoleculeState:
 
     def calculate_energy_for_state_and_occupation(self, state:list[molecule_orbital], occupation:tuple[int,...]) -> Tuple[sp.Expr, str]:
         warning = ""
-        if len(state) != self.n +len(self.bound_cl_to_c_positions):
+        if len(state) != self.n + len(self.bound_cl_to_c_positions):
             warning = ("\t" + r"\textcolor{red}{CAUTION:} "
                     + r"state should have same length as occupation $\rightarrow$ missing results?" + "\n\t"
                     + r"DONT TRUST \glqq{}Energy of State before Excitation\grqq{}, only relative values are correct"
@@ -345,6 +345,9 @@ class MoleculeState:
             msg = str(e).replace("_", r"\_")
             content += r"\textcolor{red}{"+f"Error for Ground State {msg}"+"}"
 
+        content = content.replace(r"\alpha", r"\tilde{\alpha}").replace(r"\beta", r"\tilde{\beta}").replace(r"\delta",r"\tilde{\delta}")
+        content = content.replace(r"\Gamma", r"\mathsf{\Gamma}")
+        content = content.replace(r"p_", r"\text{p}_").replace(r"s_", r"\text{s}_")
         with open(tex_datei, "w") as f:
             f.write(header + content + footer)
         print(f"LaTeX-Datei gespeichert als: {tex_datei}")

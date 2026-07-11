@@ -130,6 +130,10 @@ def get_linear_independent_SALCs(salc_list: list[SALC], expected_no:int) -> list
 
 
 
+# def combine_eigenvectors_to_linearily_combined_salcs_analogously(eigenvectors:list, expected_no):
+#     # TODO
+
+
 
 if __name__ == "__main__":
     p1, p2, p3, p4, = sp.symbols(f"p1 p2 p3 p4")
