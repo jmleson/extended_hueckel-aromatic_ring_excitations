@@ -43,11 +43,14 @@ def get_molecular_orbitals_from_secular_equation(H: sp.Matrix, info:str, sorting
         # print()
 
     # SORT ORBITALS ACCORDING TO ENERGY:
-    sorted_pairs = sorted(
-                molecule_orbitals,
-                key=lambda x: float( x.eigenvalue.subs(sorting_dict_values) )
-            )
-    print("\t", len(sorted_pairs), "MOs for ", H.rows, "x", H.cols, "matrix, mult-sum = ", sum(mults))
+    try:
+        sorted_pairs = sorted(
+                    molecule_orbitals,
+                    key=lambda x: float( x.eigenvalue.subs(sorting_dict_values) )
+                )
+        print("\t", len(sorted_pairs), "MOs for ", H.rows, "x", H.cols, "matrix, mult-sum = ", sum(mults))
+    except:
+        sorted_pairs = molecule_orbitals
     assert len(sorted_pairs) == H.rows or len(sorted_pairs) == sum(mults)
     return sorted_pairs
 
