@@ -89,10 +89,10 @@ def hexafluorobenzene(print_active:bool=True):
 if __name__ == "__main__":
     print_active = False
 
-    # cyclopentadiene()
-    # benzene(print_active)
-    # chlorobenzene(print_active)
-    # pyrazine(print_active)
+    cyclopentadiene()
+    benzene(print_active)
+    chlorobenzene(print_active)
+    pyrazine(print_active)
 
     hexafluorobenzene(print_active)
     pyridine(print_active)
