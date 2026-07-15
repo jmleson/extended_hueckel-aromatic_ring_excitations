@@ -112,7 +112,7 @@ m.latex_datei_erstellen("Benzene")
 ```
 This creates a traceable derivation of dispersion coefficients in `RESULTS/Benzene.tex`, that can be compiled via `./RESULTS/run_latex.sh` which yields the corresponding file `RESULTS/out/Benzene.pdf`.  
 
-> ❗ The code prioritizes traceability over speed. Solving the secular equations may take considerable time, depending on the system. 
+> ❗ The code prioritizes traceability over speed. Solving the secular equations may take considerable time or even fail, depending on the system. 
 
 
 
