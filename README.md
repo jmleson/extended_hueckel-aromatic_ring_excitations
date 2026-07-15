@@ -51,18 +51,17 @@ We label orbitals derived from p-orbitals as $\psi$ and those derived from s-orb
 The code computes the dispersion energy for different combinations of monomer states using the formula (Hapka 2019, Jiemchooroj 2005): 
 
 $$
-E_{\text{dispersion}}({0}, {\tilde{0}}) = \frac{1}{R^6} \cdot C_6 
-⟨φ₀|μ_z|ξ_i^a⟩
+E_{\text{dispersion}}({0}, {\tilde{0}}) = \frac{1}{R^6} \cdot C_6
 $$
 
 $$
 = \frac{1}{R^6} \cdot
         {\sum_{i,a}} {\sum_{j,b} }
         \frac{
-          \left(\;
-            {⟨\psi_0| \hat{\mu}_z |\eta_i^a}⟩ \; T_{zz} \;
+          \left(\quad
+            {⟨\psi_0| \hat{\mu}_z |\eta_i^a}⟩ \quad T_{zz} \quad
             {⟨\tilde{\psi_0}| \hat{\mu}_z |\tilde{\eta}_j^b⟩}
-          \;\right)^2
+          \quad\right)^2
         }{
           {\left(E_i^a  - E_0 \right)} + {\left( \tilde{E}_j^b - \tilde{E}_0 \right)}
         }
@@ -71,7 +70,7 @@ $$
 This expression accounts for the dispersion interaction between two monomers ($0$, or $\tilde{0}$) and excited states (transition from $i$ into $a$, or from $j$ into $b$).  
 The sum runs over all excited states accessible from the initial states of the monomers.
 
-Our code can compute the resulting dispersion coefficients $C_6$ for various substituted aromatic systems.
+Our code is able to compute the resulting dispersion coefficients $C_6$ for various substituted aromatic systems.
 
 
 
@@ -90,12 +89,11 @@ ___
 
 ### 📦 Dependencies
 
-This project requires:
+This project requires libraries such as:
 - `pypointgroup` 
 - `sympy` 
-- `matplotlib`
-
-Install with:
+- `fractions`
+To install the needed requirements, use:
 ```bash
 python3 -m venv .venv
 source .venv/bin/activate
@@ -107,15 +105,24 @@ pip install -r requirements.txt
 Exemplary usage is provided in `run.py`. 
 For instance, to generate a LaTeX file for benzene:
 ```python
-    m = MoleculeState(n=6, bound_cl_to_c_positions=[],n_instead_of_c=[])
-    m.latex_datei_erstellen("Benzene")
+from src.main.MoleculeState import MoleculeState
+
+m = MoleculeState(n=6, bound_cl_to_c_positions=[],n_instead_of_c=[])
+m.latex_datei_erstellen("Benzene")
 ```
-This creates a traceable derivation of dispersion coefficients in `RESULTS/Benzene.tex`, that can be compiled via `./RESULTS/run_latex.sh` which yields the corresponding file `RESULTS/out/Benzene.pdf`.
+This creates a traceable derivation of dispersion coefficients in `RESULTS/Benzene.tex`, that can be compiled via `./RESULTS/run_latex.sh` which yields the corresponding file `RESULTS/out/Benzene.pdf`.  
+
+> ❗ The code prioritizes traceability over speed. Solving the secular equations may take considerable time, depending on the system. 
+
+
+
 
 
 ### 📊 Print Results to Console
 To print results directly to the console instead of generating a file, use:
 ```python
+from src.main.MoleculeState import MoleculeState
+
 m = MoleculeState(n=6, bound_cl_to_c_positions=[],n_instead_of_c=[])
 m.calculate_result_for_all_transitions(print_active=print_active)
 m.calculate_result_for_all_transitions_results(print_active=print_active)

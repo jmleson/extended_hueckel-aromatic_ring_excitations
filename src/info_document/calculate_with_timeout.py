@@ -1,10 +1,6 @@
 
 
-
-import concurrent.futures
-import sympy as sp
 import multiprocessing
-import time
 
 
 def worker(func, args):

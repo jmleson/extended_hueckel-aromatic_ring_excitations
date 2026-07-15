@@ -1,3 +1,10 @@
 pypointgroup
 sympy
 matplotlib
+multiprocessing
+numpy
+fractions
+collections
+itertools
+math
+unittest
