@@ -1,6 +1,6 @@
 import unittest
 
-from MoleculeRepresentation import MoleculeRepresentation
+from src.main.MoleculeRepresentation import MoleculeRepresentation
 
 
 class TestPyrazine(unittest.TestCase):
@@ -23,3 +23,7 @@ class TestPyrazine(unittest.TestCase):
             if other not in ["E", "C2(y)", "σ(xy)", "σ(yz)"]:
                 assert reducible_representation[other] == 0
         assert len(reducible_representation.items()) == 8
+
+
+if __name__ == "__main__":
+    unittest.main()

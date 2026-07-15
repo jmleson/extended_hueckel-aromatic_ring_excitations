@@ -1,10 +1,10 @@
 import unittest
 import sympy as sp
 
-from MoleculeRepresentation import MoleculeRepresentation
-from SALC import SALC
-from TransitionIntegral import TransitionIntegral
-from molecule_orbital import molecule_orbital
+from src.main.MoleculeRepresentation import MoleculeRepresentation
+from src.main.SALC import SALC
+from src.main.TransitionIntegral import TransitionIntegral
+from src.main.molecule_orbital import molecule_orbital
 
 
 class TestTransitionIntegral(unittest.TestCase):
@@ -137,3 +137,7 @@ class TestTransitionIntegral(unittest.TestCase):
         t = self.get_second_test_case()
         result = t.multiply_out()
         assert result == 3*7*self.delta
+
+
+if __name__ == "__main__":
+    unittest.main()

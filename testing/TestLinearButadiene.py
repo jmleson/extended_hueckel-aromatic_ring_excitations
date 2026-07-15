@@ -3,11 +3,11 @@ from fractions import Fraction
 
 import sympy as sp
 
-from MoleculeRepresentation import MoleculeRepresentation
-from PointGroups.C2v import C2v
-from SALC import SALC
-from molecule_orbital import molecule_orbital
-from solving.get_molecular_orbitals_from_secular_equation import get_molecular_orbitals_from_secular_equation
+from src.main.MoleculeRepresentation import MoleculeRepresentation
+from src.PointGroups.C2v import C2v
+from src.main.SALC import SALC
+from src.main.molecule_orbital import molecule_orbital
+from src.solving.get_molecular_orbitals_from_secular_equation import get_molecular_orbitals_from_secular_equation
 from testing.round_and_collect import round_and_collect
 
 

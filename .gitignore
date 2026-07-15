@@ -5,7 +5,7 @@ __init__.py
 
 # Distribution / packaging
 .Python
-build/
+src/build/
 develop-eggs/
 dist/
 downloads/

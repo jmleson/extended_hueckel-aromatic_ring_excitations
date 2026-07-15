@@ -3,9 +3,9 @@ import unittest
 from fractions import Fraction
 import sympy as sp
 
-from MoleculeRepresentation import MoleculeRepresentation
-from SALC import SALC
-from is_multiple import is_multiple
+from src.main.MoleculeRepresentation import MoleculeRepresentation
+from src.main.SALC import SALC
+from src.main.is_multiple import is_multiple
 from testing.round_and_collect import round_and_collect
 
 
@@ -300,3 +300,7 @@ class TestBenzene(unittest.TestCase):
         # B1u
         h = self.p.h_eff(salc_1=self.phi_s_6, salc_2=self.phi_s_6)
         assert sp.simplify(round_and_collect(h, [alpha_s, beta_s], round_to) - (alpha_s - 2 * beta_s)) == 0
+
+
+if __name__ == "__main__":
+    unittest.main()

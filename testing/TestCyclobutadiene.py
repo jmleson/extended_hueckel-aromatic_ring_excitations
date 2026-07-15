@@ -2,10 +2,10 @@ import unittest
 from fractions import Fraction
 import sympy as sp
 
-from MoleculeRepresentation import MoleculeRepresentation
-from SALC import SALC
-from is_multiple import is_multiple
-from molecule_orbital import molecule_orbital
+from src.main.MoleculeRepresentation import MoleculeRepresentation
+from src.main.SALC import SALC
+from src.main.is_multiple import is_multiple
+from src.main.molecule_orbital import molecule_orbital
 from testing.round_and_collect import round_and_collect
 
 

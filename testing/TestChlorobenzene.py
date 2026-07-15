@@ -1,8 +1,8 @@
 import unittest
 import sympy as sp
 
-from MoleculeRepresentation import MoleculeRepresentation
-from SALC import SALC, norm_and_group_SALCs
+from src.main.MoleculeRepresentation import MoleculeRepresentation
+from src.main.SALC import SALC, norm_and_group_SALCs
 from testing.round_and_collect import round_and_collect
 
 
@@ -222,3 +222,7 @@ class TestChlorobenzene(unittest.TestCase):
         ])
         assert h_matrix.shape == expected.shape
         assert h_matrix.equals(expected)
+
+
+if __name__ == "__main__":
+    unittest.main()

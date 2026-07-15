@@ -2,10 +2,9 @@
 import unittest
 import sympy as sp
 
-from MoleculeRepresentation import MoleculeRepresentation
-from SALC import SALC, norm_and_group_SALCs
-from is_multiple import is_multiple
-from solving.get_molecular_orbitals_from_secular_equation import get_molecular_orbitals_from_secular_equation
+from src.main.MoleculeRepresentation import MoleculeRepresentation
+from src.main.SALC import SALC, norm_and_group_SALCs
+from src.main.is_multiple import is_multiple
 
 
 class TestPyridine(unittest.TestCase):
@@ -125,4 +124,7 @@ class TestPyridine(unittest.TestCase):
 
         # get_molecular_orbitals_from_secular_equation(h_matrix, info="test", sorting_dict_values={alpha_N: 0, beta_N: -1, alpha: 0, beta: -1})
 
+
+if __name__ == "__main__":
+    unittest.main()
 

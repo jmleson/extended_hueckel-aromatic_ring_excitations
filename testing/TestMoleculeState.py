@@ -1,9 +1,9 @@
 import unittest
 import sympy as sp
 
-from MoleculeState import MoleculeState
-from Transition import Transition
-from molecule_orbital import molecule_orbital
+from src.main.MoleculeState import MoleculeState
+from src.main.Transition import Transition
+from src.main.molecule_orbital import molecule_orbital
 
 
 class TestMoleculeState(unittest.TestCase):
@@ -124,3 +124,6 @@ class TestMoleculeState(unittest.TestCase):
                      orbital_to_excite_of=mo_p, orbital_to_excite_to=mo_s)
             assert self.m.symmetry_allowed_transition(transition=t) is combi[2]
 
+
+if __name__ == "__main__":
+    unittest.main()
