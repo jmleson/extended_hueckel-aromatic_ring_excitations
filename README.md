@@ -26,7 +26,7 @@ While open-chain systems are supported, the model was designed for **monocyclic 
 - Dichlorobenzenes
 - ...
 
-> ✅ The output is a **traceable, and human-readable** LaTeX (or PDF) file for the given molecule.
+> ✅ The output is a **traceable, human-readable** LaTeX (or PDF) file for the given molecule.
 ---
 
 ## ✅ Key Features
