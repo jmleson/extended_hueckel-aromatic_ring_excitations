@@ -7,11 +7,13 @@ from src.main.wrappers import safe_simplify
 
 def save_latex_export(expr: sp.Expr, replacement_text:str="too long to print"):
     expr = try_simplifying(expr=expr)
-    text = str(sp.latex(expr, fold_frac_powers=True))
+
+    kwargs = {"fold_frac_powers": True}
+    text = str(sp.latex(expr, **kwargs))
     # if len(text) >= 1000:# TODO re-enable
     #         text = "\n%" + break_string(text.replace("\n", "\n%")) + "\n"
     #         text += replacement_text + "\n"
-    return text
+    return text.replace(r"\left[\begin{matrix}",r"\begin{pmatrix}").replace(r"\end{matrix}\right]",r"\end{pmatrix}")
 
 def break_string(s: str) -> str:
     n= 500

@@ -1,8 +1,8 @@
 #!/usr/bin/env bash
 set -u
 
-FILES=("benzene"  "pyrazine" #"pyridine"
-  "chlorobenzene" "dichlorobenzene" "hexafluorobenzene" "hexachlorobenzene"
+FILES=("cyclopentadiene" "benzene"  "pyrazine" #"pyridine"
+  "chlorobenzene" "dichlorobenzene" "hexafluorobenzene" #"hexachlorobenzene"
   )
 BUILDDIR="out"
 DUMP="dump.txt"
@@ -107,4 +107,6 @@ if [[ ${#FAILED[@]} -gt 0 ]]; then
 else
     echo "All files compiled successfully."
     rm -f "$DUMP"
+    rm $BUILDDIR/*aux
+    rm $BUILDDIR/*log
 fi

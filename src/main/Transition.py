@@ -46,6 +46,9 @@ class Transition:
     def get_s_before_transition(self):
         return tuple([0 for i in range(self.n)])
 
+    def get_p_before_transition(self):
+        return tuple(self.p_before_transition)
+
     def get_p_after_transition(self):
         return tuple([self.p_before_transition[i] - self.s_occupation_after_transition[i] for i in range(self.n)])
 
@@ -68,7 +71,7 @@ class Transition:
         latex_str = fr"""
         \noindent\textbf{{Transition from $\psi_{{{changed_orbital_index + 1}}}$ into $\psi_{{s_{{{changed_orbital_index + 1}}}}}$:}}
         \begin{{itemize}}
-            \item $- {self.p_before_transition}, {self.get_s_before_transition()} \rightarrow {self.get_p_after_transition()}, {self.s_occupation_after_transition}$
+            \item $- {self.get_p_before_transition()}, {self.get_s_before_transition()} \rightarrow {self.get_p_after_transition()}, {self.s_occupation_after_transition}$
         """
 
         if self.orbital_to_excite_of is not None:
@@ -121,7 +124,7 @@ class Transition:
     def print(self):
         changed_orbital_index = self.get_changed_orbital_index()
         print(f"\t\033[1mtransition\033[0m from phi_{changed_orbital_index+1} into phi_s_{changed_orbital_index+1}:")
-        print("\t\t-", self.p_before_transition, ",", self.get_s_before_transition(), "-->", self.get_p_after_transition(), ",", self.s_occupation_after_transition )
+        print("\t\t-", self.get_p_before_transition(), ",", self.get_s_before_transition(), "-->", self.get_p_after_transition(), ",", self.s_occupation_after_transition )
         if self.orbital_to_excite_of is not None:
                 lc = 0
                 for i in range(len(self.orbital_to_excite_of.salcs)):

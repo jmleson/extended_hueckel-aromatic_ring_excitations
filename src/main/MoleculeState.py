@@ -135,7 +135,7 @@ class MoleculeState:
             if print_active:
                 print(f"\033[1mState: {triplet}\033[0m")
             transitions += (r"\subsection*{State with Occupation "
-                            + f"{triplet['occupation']} ({triplet['unpaired electrons']} "
+                            + f"{tuple(triplet['occupation'])} ({triplet['unpaired electrons']} "
                             +  f"unpaired electrons, mult {triplet['multiplicity']})"
                             + r"}")
             self.set_occupation(p_occupation=triplet["occupation"])

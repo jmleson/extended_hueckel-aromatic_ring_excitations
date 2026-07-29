@@ -15,7 +15,7 @@
                 \Large Point Group: \textbf{C2v}
             \end{center}\newpage\section*{p orbitals}
 Symmetry behavior of the p-orbitals:
-$$\mathsf{\Gamma}_{red} = \,7 E\;\oplus{}\,-3 C2\;\oplus{}\,-7 \sigma v(xz)\;\oplus{}\,3 \sigma v(yz)\;$$
+$$\mathsf{\Gamma}_{red} = \,7 E\;; \,-3 C2\;; \,-7 \sigma v(xz)\;; \,3 \sigma v(yz)\;$$
 $$\mathsf{\Gamma}_{irred} = \,2 A2\;\oplus{}\,5 B2\;$$
 
 
@@ -29,8 +29,8 @@ $$\mathsf{\Gamma}_{irred} = \,2 A2\;\oplus{}\,5 B2\;$$
 \item SALC of B2: \quad $\text{p}_{7}$
 \end{itemize}
 Put together these SALCs form the following Hamilton matrices:
-     $$ H_{B2}= \left[\begin{bmatrix}\tilde{\alpha} & \sqrt{2} \tilde{\beta} & 0 & 0 & \tilde{\beta}_{Cl}\\\sqrt{2} \tilde{\beta} & \tilde{\alpha} & \tilde{\beta} & 0 & 0\\0 & \tilde{\beta} & \tilde{\alpha} & \sqrt{2} \tilde{\beta} & 0\\0 & 0 & \sqrt{2} \tilde{\beta} & \tilde{\alpha} & 0\\\tilde{\beta}_{Cl} & 0 & 0 & 0 & \tilde{\alpha}_{Cl}\end{bmatrix}\right]$$ 
-     $$ H_{A2}= \left[\begin{bmatrix}\tilde{\alpha} & \tilde{\beta}\\\tilde{\beta} & \tilde{\alpha}\end{bmatrix}\right]$$ 
+     $$ H_{B2}= \begin{pmatrix}\tilde{\alpha} & \sqrt{2} \tilde{\beta} & 0 & 0 & \tilde{\beta}_{Cl}\\\sqrt{2} \tilde{\beta} & \tilde{\alpha} & \tilde{\beta} & 0 & 0\\0 & \tilde{\beta} & \tilde{\alpha} & \sqrt{2} \tilde{\beta} & 0\\0 & 0 & \sqrt{2} \tilde{\beta} & \tilde{\alpha} & 0\\\tilde{\beta}_{Cl} & 0 & 0 & 0 & \tilde{\alpha}_{Cl}\end{pmatrix}$$ 
+     $$ H_{A2}= \begin{pmatrix}\tilde{\alpha} & \tilde{\beta}\\\tilde{\beta} & \tilde{\alpha}\end{pmatrix}$$ 
 
 
 Solving Hückels secular equations, that follow from these H, leads to:
@@ -39,7 +39,7 @@ Solving Hückels secular equations, that follow from these H, leads to:
                                 $\tilde{\alpha} + \tilde{\beta}$ \\
 ( 
 $$
-\left[\begin{matrix}\frac{\sqrt{2}}{2} & \frac{\sqrt{2}}{2}\end{matrix}\right] * \left[\begin{array}{c}\text{1. SALC in A2} \\ \text{2. SALC in A2}\end{array}\right] = \left[\begin{matrix}\frac{\sqrt{2}}{2} & \frac{\sqrt{2}}{2}\end{matrix}\right] * \left[\begin{matrix}\frac{\sqrt{2} \text{p}_{2}}{2} - \frac{\sqrt{2} \text{p}_{6}}{2}\\\frac{\sqrt{2} \text{p}_{3}}{2} - \frac{\sqrt{2} \text{p}_{5}}{2}\end{matrix}\right] 
+\begin{pmatrix}\frac{\sqrt{2}}{2} & \frac{\sqrt{2}}{2}\end{pmatrix} * \left(\begin{array}{c}\text{1. SALC in A2} \\ \text{2. SALC in A2}\end{array}\right) = \begin{pmatrix}\frac{\sqrt{2}}{2} & \frac{\sqrt{2}}{2}\end{pmatrix} * \begin{pmatrix}\frac{\sqrt{2} \text{p}_{2}}{2} - \frac{\sqrt{2} \text{p}_{6}}{2}\\\frac{\sqrt{2} \text{p}_{3}}{2} - \frac{\sqrt{2} \text{p}_{5}}{2}\end{pmatrix} 
  $$ $$ = \frac{\text{p}_{2}}{2} + \frac{\text{p}_{3}}{2} - \frac{\text{p}_{5}}{2} - \frac{\text{p}_{6}}{2} 
  $$ 
  )
@@ -48,7 +48,7 @@ $$
                                 $\tilde{\alpha} - \tilde{\beta}$ \\
 ( 
 $$
-\left[\begin{matrix}- \frac{\sqrt{2}}{2} & \frac{\sqrt{2}}{2}\end{matrix}\right] * \left[\begin{array}{c}\text{1. SALC in A2} \\ \text{2. SALC in A2}\end{array}\right] = \left[\begin{matrix}- \frac{\sqrt{2}}{2} & \frac{\sqrt{2}}{2}\end{matrix}\right] * \left[\begin{matrix}\frac{\sqrt{2} \text{p}_{2}}{2} - \frac{\sqrt{2} \text{p}_{6}}{2}\\\frac{\sqrt{2} \text{p}_{3}}{2} - \frac{\sqrt{2} \text{p}_{5}}{2}\end{matrix}\right] 
+\begin{pmatrix}- \frac{\sqrt{2}}{2} & \frac{\sqrt{2}}{2}\end{pmatrix} * \left(\begin{array}{c}\text{1. SALC in A2} \\ \text{2. SALC in A2}\end{array}\right) = \begin{pmatrix}- \frac{\sqrt{2}}{2} & \frac{\sqrt{2}}{2}\end{pmatrix} * \begin{pmatrix}\frac{\sqrt{2} \text{p}_{2}}{2} - \frac{\sqrt{2} \text{p}_{6}}{2}\\\frac{\sqrt{2} \text{p}_{3}}{2} - \frac{\sqrt{2} \text{p}_{5}}{2}\end{pmatrix} 
  $$ $$ = - \frac{\text{p}_{2}}{2} + \frac{\text{p}_{3}}{2} - \frac{\text{p}_{5}}{2} + \frac{\text{p}_{6}}{2} 
  $$ 
  )
@@ -57,7 +57,7 @@ $$
                                 $E0(B2)$ \\
 ( 
 $$
-\left[\begin{matrix}?_{1} Norm^{2} & ?_{2} Norm^{2} & ?_{3} Norm^{2} & ?_{4} Norm^{2} & ?_{5} Norm^{2}\end{matrix}\right] * \left[\begin{array}{c}\text{1. SALC in B2} \\ \text{2. SALC in B2} \\ \text{3. SALC in B2} \\ \text{4. SALC in B2} \\ \text{5. SALC in B2}\end{array}\right] = \left[\begin{matrix}?_{1} Norm^{2} & ?_{2} Norm^{2} & ?_{3} Norm^{2} & ?_{4} Norm^{2} & ?_{5} Norm^{2}\end{matrix}\right] * \left[\begin{matrix}\text{p}_{1}\\\frac{\sqrt{2} \text{p}_{2}}{2} + \frac{\sqrt{2} \text{p}_{6}}{2}\\\frac{\sqrt{2} \text{p}_{3}}{2} + \frac{\sqrt{2} \text{p}_{5}}{2}\\\text{p}_{4}\\\text{p}_{7}\end{matrix}\right] 
+\begin{pmatrix}?_{1} Norm^{2} & ?_{2} Norm^{2} & ?_{3} Norm^{2} & ?_{4} Norm^{2} & ?_{5} Norm^{2}\end{pmatrix} * \left(\begin{array}{c}\text{1. SALC in B2} \\ \text{2. SALC in B2} \\ \text{3. SALC in B2} \\ \text{4. SALC in B2} \\ \text{5. SALC in B2}\end{array}\right) = \begin{pmatrix}?_{1} Norm^{2} & ?_{2} Norm^{2} & ?_{3} Norm^{2} & ?_{4} Norm^{2} & ?_{5} Norm^{2}\end{pmatrix} * \begin{pmatrix}\text{p}_{1}\\\frac{\sqrt{2} \text{p}_{2}}{2} + \frac{\sqrt{2} \text{p}_{6}}{2}\\\frac{\sqrt{2} \text{p}_{3}}{2} + \frac{\sqrt{2} \text{p}_{5}}{2}\\\text{p}_{4}\\\text{p}_{7}\end{pmatrix} 
  $$ $$ = ?_{1} Norm^{2} \text{p}_{1} + ?_{2} Norm^{2} \left(\frac{\sqrt{2} \text{p}_{2}}{2} + \frac{\sqrt{2} \text{p}_{6}}{2}\right) + ?_{3} Norm^{2} \left(\frac{\sqrt{2} \text{p}_{3}}{2} + \frac{\sqrt{2} \text{p}_{5}}{2}\right) + ?_{4} Norm^{2} \text{p}_{4} + ?_{5} Norm^{2} \text{p}_{7} 
  $$ 
  )
@@ -66,7 +66,7 @@ $$
                                 $E1(B2)$ \\
 ( 
 $$
-\left[\begin{matrix}?_{1} Norm^{2} & ?_{2} Norm^{2} & ?_{3} Norm^{2} & ?_{4} Norm^{2} & ?_{5} Norm^{2}\end{matrix}\right] * \left[\begin{array}{c}\text{1. SALC in B2} \\ \text{2. SALC in B2} \\ \text{3. SALC in B2} \\ \text{4. SALC in B2} \\ \text{5. SALC in B2}\end{array}\right] = \left[\begin{matrix}?_{1} Norm^{2} & ?_{2} Norm^{2} & ?_{3} Norm^{2} & ?_{4} Norm^{2} & ?_{5} Norm^{2}\end{matrix}\right] * \left[\begin{matrix}\text{p}_{1}\\\frac{\sqrt{2} \text{p}_{2}}{2} + \frac{\sqrt{2} \text{p}_{6}}{2}\\\frac{\sqrt{2} \text{p}_{3}}{2} + \frac{\sqrt{2} \text{p}_{5}}{2}\\\text{p}_{4}\\\text{p}_{7}\end{matrix}\right] 
+\begin{pmatrix}?_{1} Norm^{2} & ?_{2} Norm^{2} & ?_{3} Norm^{2} & ?_{4} Norm^{2} & ?_{5} Norm^{2}\end{pmatrix} * \left(\begin{array}{c}\text{1. SALC in B2} \\ \text{2. SALC in B2} \\ \text{3. SALC in B2} \\ \text{4. SALC in B2} \\ \text{5. SALC in B2}\end{array}\right) = \begin{pmatrix}?_{1} Norm^{2} & ?_{2} Norm^{2} & ?_{3} Norm^{2} & ?_{4} Norm^{2} & ?_{5} Norm^{2}\end{pmatrix} * \begin{pmatrix}\text{p}_{1}\\\frac{\sqrt{2} \text{p}_{2}}{2} + \frac{\sqrt{2} \text{p}_{6}}{2}\\\frac{\sqrt{2} \text{p}_{3}}{2} + \frac{\sqrt{2} \text{p}_{5}}{2}\\\text{p}_{4}\\\text{p}_{7}\end{pmatrix} 
  $$ $$ = ?_{1} Norm^{2} \text{p}_{1} + ?_{2} Norm^{2} \left(\frac{\sqrt{2} \text{p}_{2}}{2} + \frac{\sqrt{2} \text{p}_{6}}{2}\right) + ?_{3} Norm^{2} \left(\frac{\sqrt{2} \text{p}_{3}}{2} + \frac{\sqrt{2} \text{p}_{5}}{2}\right) + ?_{4} Norm^{2} \text{p}_{4} + ?_{5} Norm^{2} \text{p}_{7} 
  $$ 
  )
@@ -75,7 +75,7 @@ $$
                                 $E2(B2)$ \\
 ( 
 $$
-\left[\begin{matrix}?_{1} Norm^{2} & ?_{2} Norm^{2} & ?_{3} Norm^{2} & ?_{4} Norm^{2} & ?_{5} Norm^{2}\end{matrix}\right] * \left[\begin{array}{c}\text{1. SALC in B2} \\ \text{2. SALC in B2} \\ \text{3. SALC in B2} \\ \text{4. SALC in B2} \\ \text{5. SALC in B2}\end{array}\right] = \left[\begin{matrix}?_{1} Norm^{2} & ?_{2} Norm^{2} & ?_{3} Norm^{2} & ?_{4} Norm^{2} & ?_{5} Norm^{2}\end{matrix}\right] * \left[\begin{matrix}\text{p}_{1}\\\frac{\sqrt{2} \text{p}_{2}}{2} + \frac{\sqrt{2} \text{p}_{6}}{2}\\\frac{\sqrt{2} \text{p}_{3}}{2} + \frac{\sqrt{2} \text{p}_{5}}{2}\\\text{p}_{4}\\\text{p}_{7}\end{matrix}\right] 
+\begin{pmatrix}?_{1} Norm^{2} & ?_{2} Norm^{2} & ?_{3} Norm^{2} & ?_{4} Norm^{2} & ?_{5} Norm^{2}\end{pmatrix} * \left(\begin{array}{c}\text{1. SALC in B2} \\ \text{2. SALC in B2} \\ \text{3. SALC in B2} \\ \text{4. SALC in B2} \\ \text{5. SALC in B2}\end{array}\right) = \begin{pmatrix}?_{1} Norm^{2} & ?_{2} Norm^{2} & ?_{3} Norm^{2} & ?_{4} Norm^{2} & ?_{5} Norm^{2}\end{pmatrix} * \begin{pmatrix}\text{p}_{1}\\\frac{\sqrt{2} \text{p}_{2}}{2} + \frac{\sqrt{2} \text{p}_{6}}{2}\\\frac{\sqrt{2} \text{p}_{3}}{2} + \frac{\sqrt{2} \text{p}_{5}}{2}\\\text{p}_{4}\\\text{p}_{7}\end{pmatrix} 
  $$ $$ = ?_{1} Norm^{2} \text{p}_{1} + ?_{2} Norm^{2} \left(\frac{\sqrt{2} \text{p}_{2}}{2} + \frac{\sqrt{2} \text{p}_{6}}{2}\right) + ?_{3} Norm^{2} \left(\frac{\sqrt{2} \text{p}_{3}}{2} + \frac{\sqrt{2} \text{p}_{5}}{2}\right) + ?_{4} Norm^{2} \text{p}_{4} + ?_{5} Norm^{2} \text{p}_{7} 
  $$ 
  )
@@ -84,7 +84,7 @@ $$
                                 $E3(B2)$ \\
 ( 
 $$
-\left[\begin{matrix}?_{1} Norm^{2} & ?_{2} Norm^{2} & ?_{3} Norm^{2} & ?_{4} Norm^{2} & ?_{5} Norm^{2}\end{matrix}\right] * \left[\begin{array}{c}\text{1. SALC in B2} \\ \text{2. SALC in B2} \\ \text{3. SALC in B2} \\ \text{4. SALC in B2} \\ \text{5. SALC in B2}\end{array}\right] = \left[\begin{matrix}?_{1} Norm^{2} & ?_{2} Norm^{2} & ?_{3} Norm^{2} & ?_{4} Norm^{2} & ?_{5} Norm^{2}\end{matrix}\right] * \left[\begin{matrix}\text{p}_{1}\\\frac{\sqrt{2} \text{p}_{2}}{2} + \frac{\sqrt{2} \text{p}_{6}}{2}\\\frac{\sqrt{2} \text{p}_{3}}{2} + \frac{\sqrt{2} \text{p}_{5}}{2}\\\text{p}_{4}\\\text{p}_{7}\end{matrix}\right] 
+\begin{pmatrix}?_{1} Norm^{2} & ?_{2} Norm^{2} & ?_{3} Norm^{2} & ?_{4} Norm^{2} & ?_{5} Norm^{2}\end{pmatrix} * \left(\begin{array}{c}\text{1. SALC in B2} \\ \text{2. SALC in B2} \\ \text{3. SALC in B2} \\ \text{4. SALC in B2} \\ \text{5. SALC in B2}\end{array}\right) = \begin{pmatrix}?_{1} Norm^{2} & ?_{2} Norm^{2} & ?_{3} Norm^{2} & ?_{4} Norm^{2} & ?_{5} Norm^{2}\end{pmatrix} * \begin{pmatrix}\text{p}_{1}\\\frac{\sqrt{2} \text{p}_{2}}{2} + \frac{\sqrt{2} \text{p}_{6}}{2}\\\frac{\sqrt{2} \text{p}_{3}}{2} + \frac{\sqrt{2} \text{p}_{5}}{2}\\\text{p}_{4}\\\text{p}_{7}\end{pmatrix} 
  $$ $$ = ?_{1} Norm^{2} \text{p}_{1} + ?_{2} Norm^{2} \left(\frac{\sqrt{2} \text{p}_{2}}{2} + \frac{\sqrt{2} \text{p}_{6}}{2}\right) + ?_{3} Norm^{2} \left(\frac{\sqrt{2} \text{p}_{3}}{2} + \frac{\sqrt{2} \text{p}_{5}}{2}\right) + ?_{4} Norm^{2} \text{p}_{4} + ?_{5} Norm^{2} \text{p}_{7} 
  $$ 
  )
@@ -93,7 +93,7 @@ $$
                                 $E4(B2)$ \\
 ( 
 $$
-\left[\begin{matrix}?_{1} Norm^{2} & ?_{2} Norm^{2} & ?_{3} Norm^{2} & ?_{4} Norm^{2} & ?_{5} Norm^{2}\end{matrix}\right] * \left[\begin{array}{c}\text{1. SALC in B2} \\ \text{2. SALC in B2} \\ \text{3. SALC in B2} \\ \text{4. SALC in B2} \\ \text{5. SALC in B2}\end{array}\right] = \left[\begin{matrix}?_{1} Norm^{2} & ?_{2} Norm^{2} & ?_{3} Norm^{2} & ?_{4} Norm^{2} & ?_{5} Norm^{2}\end{matrix}\right] * \left[\begin{matrix}\text{p}_{1}\\\frac{\sqrt{2} \text{p}_{2}}{2} + \frac{\sqrt{2} \text{p}_{6}}{2}\\\frac{\sqrt{2} \text{p}_{3}}{2} + \frac{\sqrt{2} \text{p}_{5}}{2}\\\text{p}_{4}\\\text{p}_{7}\end{matrix}\right] 
+\begin{pmatrix}?_{1} Norm^{2} & ?_{2} Norm^{2} & ?_{3} Norm^{2} & ?_{4} Norm^{2} & ?_{5} Norm^{2}\end{pmatrix} * \left(\begin{array}{c}\text{1. SALC in B2} \\ \text{2. SALC in B2} \\ \text{3. SALC in B2} \\ \text{4. SALC in B2} \\ \text{5. SALC in B2}\end{array}\right) = \begin{pmatrix}?_{1} Norm^{2} & ?_{2} Norm^{2} & ?_{3} Norm^{2} & ?_{4} Norm^{2} & ?_{5} Norm^{2}\end{pmatrix} * \begin{pmatrix}\text{p}_{1}\\\frac{\sqrt{2} \text{p}_{2}}{2} + \frac{\sqrt{2} \text{p}_{6}}{2}\\\frac{\sqrt{2} \text{p}_{3}}{2} + \frac{\sqrt{2} \text{p}_{5}}{2}\\\text{p}_{4}\\\text{p}_{7}\end{pmatrix} 
  $$ $$ = ?_{1} Norm^{2} \text{p}_{1} + ?_{2} Norm^{2} \left(\frac{\sqrt{2} \text{p}_{2}}{2} + \frac{\sqrt{2} \text{p}_{6}}{2}\right) + ?_{3} Norm^{2} \left(\frac{\sqrt{2} \text{p}_{3}}{2} + \frac{\sqrt{2} \text{p}_{5}}{2}\right) + ?_{4} Norm^{2} \text{p}_{4} + ?_{5} Norm^{2} \text{p}_{7} 
  $$ 
  )
@@ -104,7 +104,7 @@ $$
 
 \newpage \section*{s orbitals}
 Symmetry behavior of the s-orbitals:
-$$\mathsf{\Gamma}_{red} = \,7 E\;\oplus{}\,3 C2\;\oplus{}\,7 \sigma v(xz)\;\oplus{}\,3 \sigma v(yz)\;$$
+$$\mathsf{\Gamma}_{red} = \,7 E\;; \,3 C2\;; \,7 \sigma v(xz)\;; \,3 \sigma v(yz)\;$$
 $$\mathsf{\Gamma}_{irred} = \,5 A1\;\oplus{}\,2 B1\;$$
 
 
@@ -118,8 +118,8 @@ $$\mathsf{\Gamma}_{irred} = \,5 A1\;\oplus{}\,2 B1\;$$
 \item SALC of A1: \quad $\text{s}_{7}$
 \end{itemize}
 Put together these SALCs form the following Hamilton matrices:
-     $$ H_{A1}= \left[\begin{bmatrix}\tilde{\alpha}_{s} & \sqrt{2} \tilde{\beta}_{s} & 0 & 0 & beta_{\text{s}_Cl}\\\sqrt{2} \tilde{\beta}_{s} & \tilde{\alpha}_{s} & \tilde{\beta}_{s} & 0 & 0\\0 & \tilde{\beta}_{s} & \tilde{\alpha}_{s} & \sqrt{2} \tilde{\beta}_{s} & 0\\0 & 0 & \sqrt{2} \tilde{\beta}_{s} & \tilde{\alpha}_{s} & 0\\tilde{\beta}_{\text{s}_Cl} & 0 & 0 & 0 & alpha_{\text{s}_Cl}\end{bmatrix}\right]$$ 
-     $$ H_{B1}= \left[\begin{bmatrix}\tilde{\alpha}_{s} & \tilde{\beta}_{s}\\\tilde{\beta}_{s} & \tilde{\alpha}_{s}\end{bmatrix}\right]$$ 
+     $$ H_{A1}= \begin{pmatrix}\tilde{\alpha}_{s} & \sqrt{2} \tilde{\beta}_{s} & 0 & 0 & beta_{\text{s}_Cl}\\\sqrt{2} \tilde{\beta}_{s} & \tilde{\alpha}_{s} & \tilde{\beta}_{s} & 0 & 0\\0 & \tilde{\beta}_{s} & \tilde{\alpha}_{s} & \sqrt{2} \tilde{\beta}_{s} & 0\\0 & 0 & \sqrt{2} \tilde{\beta}_{s} & \tilde{\alpha}_{s} & 0\\tilde{\beta}_{\text{s}_Cl} & 0 & 0 & 0 & alpha_{\text{s}_Cl}\end{pmatrix}$$ 
+     $$ H_{B1}= \begin{pmatrix}\tilde{\alpha}_{s} & \tilde{\beta}_{s}\\\tilde{\beta}_{s} & \tilde{\alpha}_{s}\end{pmatrix}$$ 
 
 
 Solving Hückels secular equations, that follow from these H, leads to:
@@ -128,7 +128,7 @@ Solving Hückels secular equations, that follow from these H, leads to:
                                 $\tilde{\alpha}_{s} + \tilde{\beta}_{s}$ \\
 ( 
 $$
-\left[\begin{matrix}\frac{\sqrt{2}}{2} & \frac{\sqrt{2}}{2}\end{matrix}\right] * \left[\begin{array}{c}\text{1. SALC in B1} \\ \text{2. SALC in B1}\end{array}\right] = \left[\begin{matrix}\frac{\sqrt{2}}{2} & \frac{\sqrt{2}}{2}\end{matrix}\right] * \left[\begin{matrix}\frac{\sqrt{2} \text{s}_{2}}{2} - \frac{\sqrt{2} \text{s}_{6}}{2}\\\frac{\sqrt{2} \text{s}_{3}}{2} - \frac{\sqrt{2} \text{s}_{5}}{2}\end{matrix}\right] 
+\begin{pmatrix}\frac{\sqrt{2}}{2} & \frac{\sqrt{2}}{2}\end{pmatrix} * \left(\begin{array}{c}\text{1. SALC in B1} \\ \text{2. SALC in B1}\end{array}\right) = \begin{pmatrix}\frac{\sqrt{2}}{2} & \frac{\sqrt{2}}{2}\end{pmatrix} * \begin{pmatrix}\frac{\sqrt{2} \text{s}_{2}}{2} - \frac{\sqrt{2} \text{s}_{6}}{2}\\\frac{\sqrt{2} \text{s}_{3}}{2} - \frac{\sqrt{2} \text{s}_{5}}{2}\end{pmatrix} 
  $$ $$ = \frac{\text{s}_{2}}{2} + \frac{\text{s}_{3}}{2} - \frac{\text{s}_{5}}{2} - \frac{\text{s}_{6}}{2} 
  $$ 
  )
@@ -137,7 +137,7 @@ $$
                                 $\tilde{\alpha}_{s} - \tilde{\beta}_{s}$ \\
 ( 
 $$
-\left[\begin{matrix}- \frac{\sqrt{2}}{2} & \frac{\sqrt{2}}{2}\end{matrix}\right] * \left[\begin{array}{c}\text{1. SALC in B1} \\ \text{2. SALC in B1}\end{array}\right] = \left[\begin{matrix}- \frac{\sqrt{2}}{2} & \frac{\sqrt{2}}{2}\end{matrix}\right] * \left[\begin{matrix}\frac{\sqrt{2} \text{s}_{2}}{2} - \frac{\sqrt{2} \text{s}_{6}}{2}\\\frac{\sqrt{2} \text{s}_{3}}{2} - \frac{\sqrt{2} \text{s}_{5}}{2}\end{matrix}\right] 
+\begin{pmatrix}- \frac{\sqrt{2}}{2} & \frac{\sqrt{2}}{2}\end{pmatrix} * \left(\begin{array}{c}\text{1. SALC in B1} \\ \text{2. SALC in B1}\end{array}\right) = \begin{pmatrix}- \frac{\sqrt{2}}{2} & \frac{\sqrt{2}}{2}\end{pmatrix} * \begin{pmatrix}\frac{\sqrt{2} \text{s}_{2}}{2} - \frac{\sqrt{2} \text{s}_{6}}{2}\\\frac{\sqrt{2} \text{s}_{3}}{2} - \frac{\sqrt{2} \text{s}_{5}}{2}\end{pmatrix} 
  $$ $$ = - \frac{\text{s}_{2}}{2} + \frac{\text{s}_{3}}{2} - \frac{\text{s}_{5}}{2} + \frac{\text{s}_{6}}{2} 
  $$ 
  )
@@ -146,7 +146,7 @@ $$
                                 $E0(A1)$ \\
 ( 
 $$
-\left[\begin{matrix}?_{1} Norm^{2} & ?_{2} Norm^{2} & ?_{3} Norm^{2} & ?_{4} Norm^{2} & ?_{5} Norm^{2}\end{matrix}\right] * \left[\begin{array}{c}\text{1. SALC in A1} \\ \text{2. SALC in A1} \\ \text{3. SALC in A1} \\ \text{4. SALC in A1} \\ \text{5. SALC in A1}\end{array}\right] = \left[\begin{matrix}?_{1} Norm^{2} & ?_{2} Norm^{2} & ?_{3} Norm^{2} & ?_{4} Norm^{2} & ?_{5} Norm^{2}\end{matrix}\right] * \left[\begin{matrix}\text{s}_{1}\\\frac{\sqrt{2} \text{s}_{2}}{2} + \frac{\sqrt{2} \text{s}_{6}}{2}\\\frac{\sqrt{2} \text{s}_{3}}{2} + \frac{\sqrt{2} \text{s}_{5}}{2}\\\text{s}_{4}\\\text{s}_{7}\end{matrix}\right] 
+\begin{pmatrix}?_{1} Norm^{2} & ?_{2} Norm^{2} & ?_{3} Norm^{2} & ?_{4} Norm^{2} & ?_{5} Norm^{2}\end{pmatrix} * \left(\begin{array}{c}\text{1. SALC in A1} \\ \text{2. SALC in A1} \\ \text{3. SALC in A1} \\ \text{4. SALC in A1} \\ \text{5. SALC in A1}\end{array}\right) = \begin{pmatrix}?_{1} Norm^{2} & ?_{2} Norm^{2} & ?_{3} Norm^{2} & ?_{4} Norm^{2} & ?_{5} Norm^{2}\end{pmatrix} * \begin{pmatrix}\text{s}_{1}\\\frac{\sqrt{2} \text{s}_{2}}{2} + \frac{\sqrt{2} \text{s}_{6}}{2}\\\frac{\sqrt{2} \text{s}_{3}}{2} + \frac{\sqrt{2} \text{s}_{5}}{2}\\\text{s}_{4}\\\text{s}_{7}\end{pmatrix} 
  $$ $$ = ?_{1} Norm^{2} \text{s}_{1} + ?_{2} Norm^{2} \left(\frac{\sqrt{2} \text{s}_{2}}{2} + \frac{\sqrt{2} \text{s}_{6}}{2}\right) + ?_{3} Norm^{2} \left(\frac{\sqrt{2} \text{s}_{3}}{2} + \frac{\sqrt{2} \text{s}_{5}}{2}\right) + ?_{4} Norm^{2} \text{s}_{4} + ?_{5} Norm^{2} \text{s}_{7} 
  $$ 
  )
@@ -155,7 +155,7 @@ $$
                                 $E1(A1)$ \\
 ( 
 $$
-\left[\begin{matrix}?_{1} Norm^{2} & ?_{2} Norm^{2} & ?_{3} Norm^{2} & ?_{4} Norm^{2} & ?_{5} Norm^{2}\end{matrix}\right] * \left[\begin{array}{c}\text{1. SALC in A1} \\ \text{2. SALC in A1} \\ \text{3. SALC in A1} \\ \text{4. SALC in A1} \\ \text{5. SALC in A1}\end{array}\right] = \left[\begin{matrix}?_{1} Norm^{2} & ?_{2} Norm^{2} & ?_{3} Norm^{2} & ?_{4} Norm^{2} & ?_{5} Norm^{2}\end{matrix}\right] * \left[\begin{matrix}\text{s}_{1}\\\frac{\sqrt{2} \text{s}_{2}}{2} + \frac{\sqrt{2} \text{s}_{6}}{2}\\\frac{\sqrt{2} \text{s}_{3}}{2} + \frac{\sqrt{2} \text{s}_{5}}{2}\\\text{s}_{4}\\\text{s}_{7}\end{matrix}\right] 
+\begin{pmatrix}?_{1} Norm^{2} & ?_{2} Norm^{2} & ?_{3} Norm^{2} & ?_{4} Norm^{2} & ?_{5} Norm^{2}\end{pmatrix} * \left(\begin{array}{c}\text{1. SALC in A1} \\ \text{2. SALC in A1} \\ \text{3. SALC in A1} \\ \text{4. SALC in A1} \\ \text{5. SALC in A1}\end{array}\right) = \begin{pmatrix}?_{1} Norm^{2} & ?_{2} Norm^{2} & ?_{3} Norm^{2} & ?_{4} Norm^{2} & ?_{5} Norm^{2}\end{pmatrix} * \begin{pmatrix}\text{s}_{1}\\\frac{\sqrt{2} \text{s}_{2}}{2} + \frac{\sqrt{2} \text{s}_{6}}{2}\\\frac{\sqrt{2} \text{s}_{3}}{2} + \frac{\sqrt{2} \text{s}_{5}}{2}\\\text{s}_{4}\\\text{s}_{7}\end{pmatrix} 
  $$ $$ = ?_{1} Norm^{2} \text{s}_{1} + ?_{2} Norm^{2} \left(\frac{\sqrt{2} \text{s}_{2}}{2} + \frac{\sqrt{2} \text{s}_{6}}{2}\right) + ?_{3} Norm^{2} \left(\frac{\sqrt{2} \text{s}_{3}}{2} + \frac{\sqrt{2} \text{s}_{5}}{2}\right) + ?_{4} Norm^{2} \text{s}_{4} + ?_{5} Norm^{2} \text{s}_{7} 
  $$ 
  )
@@ -164,7 +164,7 @@ $$
                                 $E2(A1)$ \\
 ( 
 $$
-\left[\begin{matrix}?_{1} Norm^{2} & ?_{2} Norm^{2} & ?_{3} Norm^{2} & ?_{4} Norm^{2} & ?_{5} Norm^{2}\end{matrix}\right] * \left[\begin{array}{c}\text{1. SALC in A1} \\ \text{2. SALC in A1} \\ \text{3. SALC in A1} \\ \text{4. SALC in A1} \\ \text{5. SALC in A1}\end{array}\right] = \left[\begin{matrix}?_{1} Norm^{2} & ?_{2} Norm^{2} & ?_{3} Norm^{2} & ?_{4} Norm^{2} & ?_{5} Norm^{2}\end{matrix}\right] * \left[\begin{matrix}\text{s}_{1}\\\frac{\sqrt{2} \text{s}_{2}}{2} + \frac{\sqrt{2} \text{s}_{6}}{2}\\\frac{\sqrt{2} \text{s}_{3}}{2} + \frac{\sqrt{2} \text{s}_{5}}{2}\\\text{s}_{4}\\\text{s}_{7}\end{matrix}\right] 
+\begin{pmatrix}?_{1} Norm^{2} & ?_{2} Norm^{2} & ?_{3} Norm^{2} & ?_{4} Norm^{2} & ?_{5} Norm^{2}\end{pmatrix} * \left(\begin{array}{c}\text{1. SALC in A1} \\ \text{2. SALC in A1} \\ \text{3. SALC in A1} \\ \text{4. SALC in A1} \\ \text{5. SALC in A1}\end{array}\right) = \begin{pmatrix}?_{1} Norm^{2} & ?_{2} Norm^{2} & ?_{3} Norm^{2} & ?_{4} Norm^{2} & ?_{5} Norm^{2}\end{pmatrix} * \begin{pmatrix}\text{s}_{1}\\\frac{\sqrt{2} \text{s}_{2}}{2} + \frac{\sqrt{2} \text{s}_{6}}{2}\\\frac{\sqrt{2} \text{s}_{3}}{2} + \frac{\sqrt{2} \text{s}_{5}}{2}\\\text{s}_{4}\\\text{s}_{7}\end{pmatrix} 
  $$ $$ = ?_{1} Norm^{2} \text{s}_{1} + ?_{2} Norm^{2} \left(\frac{\sqrt{2} \text{s}_{2}}{2} + \frac{\sqrt{2} \text{s}_{6}}{2}\right) + ?_{3} Norm^{2} \left(\frac{\sqrt{2} \text{s}_{3}}{2} + \frac{\sqrt{2} \text{s}_{5}}{2}\right) + ?_{4} Norm^{2} \text{s}_{4} + ?_{5} Norm^{2} \text{s}_{7} 
  $$ 
  )
@@ -173,7 +173,7 @@ $$
                                 $E3(A1)$ \\
 ( 
 $$
-\left[\begin{matrix}?_{1} Norm^{2} & ?_{2} Norm^{2} & ?_{3} Norm^{2} & ?_{4} Norm^{2} & ?_{5} Norm^{2}\end{matrix}\right] * \left[\begin{array}{c}\text{1. SALC in A1} \\ \text{2. SALC in A1} \\ \text{3. SALC in A1} \\ \text{4. SALC in A1} \\ \text{5. SALC in A1}\end{array}\right] = \left[\begin{matrix}?_{1} Norm^{2} & ?_{2} Norm^{2} & ?_{3} Norm^{2} & ?_{4} Norm^{2} & ?_{5} Norm^{2}\end{matrix}\right] * \left[\begin{matrix}\text{s}_{1}\\\frac{\sqrt{2} \text{s}_{2}}{2} + \frac{\sqrt{2} \text{s}_{6}}{2}\\\frac{\sqrt{2} \text{s}_{3}}{2} + \frac{\sqrt{2} \text{s}_{5}}{2}\\\text{s}_{4}\\\text{s}_{7}\end{matrix}\right] 
+\begin{pmatrix}?_{1} Norm^{2} & ?_{2} Norm^{2} & ?_{3} Norm^{2} & ?_{4} Norm^{2} & ?_{5} Norm^{2}\end{pmatrix} * \left(\begin{array}{c}\text{1. SALC in A1} \\ \text{2. SALC in A1} \\ \text{3. SALC in A1} \\ \text{4. SALC in A1} \\ \text{5. SALC in A1}\end{array}\right) = \begin{pmatrix}?_{1} Norm^{2} & ?_{2} Norm^{2} & ?_{3} Norm^{2} & ?_{4} Norm^{2} & ?_{5} Norm^{2}\end{pmatrix} * \begin{pmatrix}\text{s}_{1}\\\frac{\sqrt{2} \text{s}_{2}}{2} + \frac{\sqrt{2} \text{s}_{6}}{2}\\\frac{\sqrt{2} \text{s}_{3}}{2} + \frac{\sqrt{2} \text{s}_{5}}{2}\\\text{s}_{4}\\\text{s}_{7}\end{pmatrix} 
  $$ $$ = ?_{1} Norm^{2} \text{s}_{1} + ?_{2} Norm^{2} \left(\frac{\sqrt{2} \text{s}_{2}}{2} + \frac{\sqrt{2} \text{s}_{6}}{2}\right) + ?_{3} Norm^{2} \left(\frac{\sqrt{2} \text{s}_{3}}{2} + \frac{\sqrt{2} \text{s}_{5}}{2}\right) + ?_{4} Norm^{2} \text{s}_{4} + ?_{5} Norm^{2} \text{s}_{7} 
  $$ 
  )
@@ -182,7 +182,7 @@ $$
                                 $E4(A1)$ \\
 ( 
 $$
-\left[\begin{matrix}?_{1} Norm^{2} & ?_{2} Norm^{2} & ?_{3} Norm^{2} & ?_{4} Norm^{2} & ?_{5} Norm^{2}\end{matrix}\right] * \left[\begin{array}{c}\text{1. SALC in A1} \\ \text{2. SALC in A1} \\ \text{3. SALC in A1} \\ \text{4. SALC in A1} \\ \text{5. SALC in A1}\end{array}\right] = \left[\begin{matrix}?_{1} Norm^{2} & ?_{2} Norm^{2} & ?_{3} Norm^{2} & ?_{4} Norm^{2} & ?_{5} Norm^{2}\end{matrix}\right] * \left[\begin{matrix}\text{s}_{1}\\\frac{\sqrt{2} \text{s}_{2}}{2} + \frac{\sqrt{2} \text{s}_{6}}{2}\\\frac{\sqrt{2} \text{s}_{3}}{2} + \frac{\sqrt{2} \text{s}_{5}}{2}\\\text{s}_{4}\\\text{s}_{7}\end{matrix}\right] 
+\begin{pmatrix}?_{1} Norm^{2} & ?_{2} Norm^{2} & ?_{3} Norm^{2} & ?_{4} Norm^{2} & ?_{5} Norm^{2}\end{pmatrix} * \left(\begin{array}{c}\text{1. SALC in A1} \\ \text{2. SALC in A1} \\ \text{3. SALC in A1} \\ \text{4. SALC in A1} \\ \text{5. SALC in A1}\end{array}\right) = \begin{pmatrix}?_{1} Norm^{2} & ?_{2} Norm^{2} & ?_{3} Norm^{2} & ?_{4} Norm^{2} & ?_{5} Norm^{2}\end{pmatrix} * \begin{pmatrix}\text{s}_{1}\\\frac{\sqrt{2} \text{s}_{2}}{2} + \frac{\sqrt{2} \text{s}_{6}}{2}\\\frac{\sqrt{2} \text{s}_{3}}{2} + \frac{\sqrt{2} \text{s}_{5}}{2}\\\text{s}_{4}\\\text{s}_{7}\end{pmatrix} 
  $$ $$ = ?_{1} Norm^{2} \text{s}_{1} + ?_{2} Norm^{2} \left(\frac{\sqrt{2} \text{s}_{2}}{2} + \frac{\sqrt{2} \text{s}_{6}}{2}\right) + ?_{3} Norm^{2} \left(\frac{\sqrt{2} \text{s}_{3}}{2} + \frac{\sqrt{2} \text{s}_{5}}{2}\right) + ?_{4} Norm^{2} \text{s}_{4} + ?_{5} Norm^{2} \text{s}_{7} 
  $$ 
  )
@@ -191,10 +191,10 @@ $$
 
 
 
-\newpage \section*{Transitions from p orbitals into s orbitals}\subsection*{State with Occupation [2, 2, 2, 0, 0, 0, 2] (0 unpaired electrons, mult 1.0)}
+\newpage \section*{Transitions from p orbitals into s orbitals}\subsection*{State with Occupation (2, 2, 2, 0, 0, 0, 2) (0 unpaired electrons, mult 1.0)}
         \noindent\textbf{Transition from $\psi_{2}$ into $\psi_{\text{s}_{2}}$:}
         \begin{itemize}
-            \item $- [2, 2, 2, 0, 0, 0, 2], (0, 0, 0, 0, 0, 0, 0) \rightarrow (2, 1, 2, 0, 0, 0, 2), (0, 1, 0, 0, 0, 0, 0)$
+            \item $- (2, 2, 2, 0, 0, 0, 2), (0, 0, 0, 0, 0, 0, 0) \rightarrow (2, 1, 2, 0, 0, 0, 2), (0, 1, 0, 0, 0, 0, 0)$
         
             \item $\psi_{2}:$ linear combination = $- \text{p}_{2} + \text{p}_{6}$, \
             energy = $\tilde{\alpha} - \tilde{\beta}$
@@ -214,7 +214,7 @@ $$
 
         \noindent\textbf{Transition from $\psi_{3}$ into $\psi_{\text{s}_{3}}$:}
         \begin{itemize}
-            \item $- [2, 2, 2, 0, 0, 0, 2], (0, 0, 0, 0, 0, 0, 0) \rightarrow (2, 2, 1, 0, 0, 0, 2), (0, 0, 1, 0, 0, 0, 0)$
+            \item $- (2, 2, 2, 0, 0, 0, 2), (0, 0, 0, 0, 0, 0, 0) \rightarrow (2, 2, 1, 0, 0, 0, 2), (0, 0, 1, 0, 0, 0, 0)$
         
             \item $\psi_{3}:$ linear combination = $5 ?_{1} Norm^{2} \text{p}_{1}$, \
             energy = $E0(B2)$

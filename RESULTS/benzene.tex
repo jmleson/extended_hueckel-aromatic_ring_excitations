@@ -15,7 +15,7 @@
                 \Large Point Group: \textbf{D6h}
             \end{center}\newpage\section*{p orbitals}
 Symmetry behavior of the p-orbitals:
-$$\mathsf{\Gamma}_{red} = \,6 E\;\oplus{}\,-2 C'2\;\oplus{}\,-6 \sigma h\;\oplus{}\,2 \sigma v\;$$
+$$\mathsf{\Gamma}_{red} = \,6 E\;; \,-2 C'2\;; \,-6 \sigma h\;; \,2 \sigma v\;$$
 $$\mathsf{\Gamma}_{irred} = \,1 B2g\;\oplus{}\,1 E1g\;\oplus{}\,1 A2u\;\oplus{}\,1 E2u\;$$
 
 
@@ -28,10 +28,10 @@ $$\mathsf{\Gamma}_{irred} = \,1 B2g\;\oplus{}\,1 E1g\;\oplus{}\,1 A2u\;\oplus{}\
 \item SALC of E2u: \quad $\frac{\text{p}_{2}}{2} - \frac{\text{p}_{3}}{2} + \frac{\text{p}_{5}}{2} - \frac{\text{p}_{6}}{2}$
 \end{itemize}
 Put together these SALCs form the following Hamilton matrices:
-     $$ H_{B2g}= \left[\begin{bmatrix}\tilde{\alpha} - 2 \tilde{\beta}\end{bmatrix}\right]$$ 
-     $$ H_{E1g}= \left[\begin{bmatrix}\tilde{\alpha} + \tilde{\beta} & 0\\0 & \tilde{\alpha} + \tilde{\beta}\end{bmatrix}\right]$$ 
-     $$ H_{A2u}= \left[\begin{bmatrix}\tilde{\alpha} + 2 \tilde{\beta}\end{bmatrix}\right]$$ 
-     $$ H_{E2u}= \left[\begin{bmatrix}\tilde{\alpha} - \tilde{\beta} & 0\\0 & \tilde{\alpha} - \tilde{\beta}\end{bmatrix}\right]$$ 
+     $$ H_{B2g}= \begin{pmatrix}\tilde{\alpha} - 2 \tilde{\beta}\end{pmatrix}$$ 
+     $$ H_{E1g}= \begin{pmatrix}\tilde{\alpha} + \tilde{\beta} & 0\\0 & \tilde{\alpha} + \tilde{\beta}\end{pmatrix}$$ 
+     $$ H_{A2u}= \begin{pmatrix}\tilde{\alpha} + 2 \tilde{\beta}\end{pmatrix}$$ 
+     $$ H_{E2u}= \begin{pmatrix}\tilde{\alpha} - \tilde{\beta} & 0\\0 & \tilde{\alpha} - \tilde{\beta}\end{pmatrix}$$ 
 
 
 Solving Hückels secular equations, that follow from these H, leads to:
@@ -40,7 +40,7 @@ Solving Hückels secular equations, that follow from these H, leads to:
                                 $\tilde{\alpha} + 2 \tilde{\beta}$ \\
 ( 
 $$
-\left[\begin{matrix}1\end{matrix}\right] * \left[\begin{array}{c}\text{1. SALC in A2u}\end{array}\right] = \left[\begin{matrix}1\end{matrix}\right] * \left[\begin{matrix}\frac{\sqrt{6} \text{p}_{1}}{6} + \frac{\sqrt{6} \text{p}_{2}}{6} + \frac{\sqrt{6} \text{p}_{3}}{6} + \frac{\sqrt{6} \text{p}_{4}}{6} + \frac{\sqrt{6} \text{p}_{5}}{6} + \frac{\sqrt{6} \text{p}_{6}}{6}\end{matrix}\right] 
+\begin{pmatrix}1\end{pmatrix} * \left(\begin{array}{c}\text{1. SALC in A2u}\end{array}\right) = \begin{pmatrix}1\end{pmatrix} * \begin{pmatrix}\frac{\sqrt{6} \text{p}_{1}}{6} + \frac{\sqrt{6} \text{p}_{2}}{6} + \frac{\sqrt{6} \text{p}_{3}}{6} + \frac{\sqrt{6} \text{p}_{4}}{6} + \frac{\sqrt{6} \text{p}_{5}}{6} + \frac{\sqrt{6} \text{p}_{6}}{6}\end{pmatrix} 
  $$ $$ = \frac{\sqrt{6} \left(\text{p}_{1} + \text{p}_{2} + \text{p}_{3} + \text{p}_{4} + \text{p}_{5} + \text{p}_{6}\right)}{6} 
  $$ 
  )
@@ -49,7 +49,7 @@ $$
                                 $\tilde{\alpha} + \tilde{\beta}$ \\
 ( 
 $$
-\left[\begin{matrix}1 & 0\end{matrix}\right] * \left[\begin{array}{c}\text{1. SALC in E1g} \\ \text{2. SALC in E1g}\end{array}\right] = \left[\begin{matrix}1 & 0\end{matrix}\right] * \left[\begin{matrix}\frac{\sqrt{3} \text{p}_{1}}{3} + \frac{\sqrt{3} \text{p}_{2}}{6} - \frac{\sqrt{3} \text{p}_{3}}{6} - \frac{\sqrt{3} \text{p}_{4}}{3} - \frac{\sqrt{3} \text{p}_{5}}{6} + \frac{\sqrt{3} \text{p}_{6}}{6}\\\frac{\text{p}_{2}}{2} + \frac{\text{p}_{3}}{2} - \frac{\text{p}_{5}}{2} - \frac{\text{p}_{6}}{2}\end{matrix}\right] 
+\begin{pmatrix}1 & 0\end{pmatrix} * \left(\begin{array}{c}\text{1. SALC in E1g} \\ \text{2. SALC in E1g}\end{array}\right) = \begin{pmatrix}1 & 0\end{pmatrix} * \begin{pmatrix}\frac{\sqrt{3} \text{p}_{1}}{3} + \frac{\sqrt{3} \text{p}_{2}}{6} - \frac{\sqrt{3} \text{p}_{3}}{6} - \frac{\sqrt{3} \text{p}_{4}}{3} - \frac{\sqrt{3} \text{p}_{5}}{6} + \frac{\sqrt{3} \text{p}_{6}}{6}\\\frac{\text{p}_{2}}{2} + \frac{\text{p}_{3}}{2} - \frac{\text{p}_{5}}{2} - \frac{\text{p}_{6}}{2}\end{pmatrix} 
  $$ $$ = \frac{\sqrt{3} \left(2 \text{p}_{1} + \text{p}_{2} - \text{p}_{3} - 2 \text{p}_{4} - \text{p}_{5} + \text{p}_{6}\right)}{6} 
  $$ 
  )
@@ -58,7 +58,7 @@ $$
                                 $\tilde{\alpha} + \tilde{\beta}$ \\
 ( 
 $$
-\left[\begin{matrix}0 & 1\end{matrix}\right] * \left[\begin{array}{c}\text{1. SALC in E1g} \\ \text{2. SALC in E1g}\end{array}\right] = \left[\begin{matrix}0 & 1\end{matrix}\right] * \left[\begin{matrix}\frac{\sqrt{3} \text{p}_{1}}{3} + \frac{\sqrt{3} \text{p}_{2}}{6} - \frac{\sqrt{3} \text{p}_{3}}{6} - \frac{\sqrt{3} \text{p}_{4}}{3} - \frac{\sqrt{3} \text{p}_{5}}{6} + \frac{\sqrt{3} \text{p}_{6}}{6}\\\frac{\text{p}_{2}}{2} + \frac{\text{p}_{3}}{2} - \frac{\text{p}_{5}}{2} - \frac{\text{p}_{6}}{2}\end{matrix}\right] 
+\begin{pmatrix}0 & 1\end{pmatrix} * \left(\begin{array}{c}\text{1. SALC in E1g} \\ \text{2. SALC in E1g}\end{array}\right) = \begin{pmatrix}0 & 1\end{pmatrix} * \begin{pmatrix}\frac{\sqrt{3} \text{p}_{1}}{3} + \frac{\sqrt{3} \text{p}_{2}}{6} - \frac{\sqrt{3} \text{p}_{3}}{6} - \frac{\sqrt{3} \text{p}_{4}}{3} - \frac{\sqrt{3} \text{p}_{5}}{6} + \frac{\sqrt{3} \text{p}_{6}}{6}\\\frac{\text{p}_{2}}{2} + \frac{\text{p}_{3}}{2} - \frac{\text{p}_{5}}{2} - \frac{\text{p}_{6}}{2}\end{pmatrix} 
  $$ $$ = \frac{\text{p}_{2}}{2} + \frac{\text{p}_{3}}{2} - \frac{\text{p}_{5}}{2} - \frac{\text{p}_{6}}{2} 
  $$ 
  )
@@ -67,7 +67,7 @@ $$
                                 $\tilde{\alpha} - \tilde{\beta}$ \\
 ( 
 $$
-\left[\begin{matrix}1 & 0\end{matrix}\right] * \left[\begin{array}{c}\text{1. SALC in E2u} \\ \text{2. SALC in E2u}\end{array}\right] = \left[\begin{matrix}1 & 0\end{matrix}\right] * \left[\begin{matrix}\frac{\sqrt{3} \text{p}_{1}}{3} - \frac{\sqrt{3} \text{p}_{2}}{6} - \frac{\sqrt{3} \text{p}_{3}}{6} + \frac{\sqrt{3} \text{p}_{4}}{3} - \frac{\sqrt{3} \text{p}_{5}}{6} - \frac{\sqrt{3} \text{p}_{6}}{6}\\\frac{\text{p}_{2}}{2} - \frac{\text{p}_{3}}{2} + \frac{\text{p}_{5}}{2} - \frac{\text{p}_{6}}{2}\end{matrix}\right] 
+\begin{pmatrix}1 & 0\end{pmatrix} * \left(\begin{array}{c}\text{1. SALC in E2u} \\ \text{2. SALC in E2u}\end{array}\right) = \begin{pmatrix}1 & 0\end{pmatrix} * \begin{pmatrix}\frac{\sqrt{3} \text{p}_{1}}{3} - \frac{\sqrt{3} \text{p}_{2}}{6} - \frac{\sqrt{3} \text{p}_{3}}{6} + \frac{\sqrt{3} \text{p}_{4}}{3} - \frac{\sqrt{3} \text{p}_{5}}{6} - \frac{\sqrt{3} \text{p}_{6}}{6}\\\frac{\text{p}_{2}}{2} - \frac{\text{p}_{3}}{2} + \frac{\text{p}_{5}}{2} - \frac{\text{p}_{6}}{2}\end{pmatrix} 
  $$ $$ = \frac{\sqrt{3} \left(2 \text{p}_{1} - \text{p}_{2} - \text{p}_{3} + 2 \text{p}_{4} - \text{p}_{5} - \text{p}_{6}\right)}{6} 
  $$ 
  )
@@ -76,7 +76,7 @@ $$
                                 $\tilde{\alpha} - \tilde{\beta}$ \\
 ( 
 $$
-\left[\begin{matrix}0 & 1\end{matrix}\right] * \left[\begin{array}{c}\text{1. SALC in E2u} \\ \text{2. SALC in E2u}\end{array}\right] = \left[\begin{matrix}0 & 1\end{matrix}\right] * \left[\begin{matrix}\frac{\sqrt{3} \text{p}_{1}}{3} - \frac{\sqrt{3} \text{p}_{2}}{6} - \frac{\sqrt{3} \text{p}_{3}}{6} + \frac{\sqrt{3} \text{p}_{4}}{3} - \frac{\sqrt{3} \text{p}_{5}}{6} - \frac{\sqrt{3} \text{p}_{6}}{6}\\\frac{\text{p}_{2}}{2} - \frac{\text{p}_{3}}{2} + \frac{\text{p}_{5}}{2} - \frac{\text{p}_{6}}{2}\end{matrix}\right] 
+\begin{pmatrix}0 & 1\end{pmatrix} * \left(\begin{array}{c}\text{1. SALC in E2u} \\ \text{2. SALC in E2u}\end{array}\right) = \begin{pmatrix}0 & 1\end{pmatrix} * \begin{pmatrix}\frac{\sqrt{3} \text{p}_{1}}{3} - \frac{\sqrt{3} \text{p}_{2}}{6} - \frac{\sqrt{3} \text{p}_{3}}{6} + \frac{\sqrt{3} \text{p}_{4}}{3} - \frac{\sqrt{3} \text{p}_{5}}{6} - \frac{\sqrt{3} \text{p}_{6}}{6}\\\frac{\text{p}_{2}}{2} - \frac{\text{p}_{3}}{2} + \frac{\text{p}_{5}}{2} - \frac{\text{p}_{6}}{2}\end{pmatrix} 
  $$ $$ = \frac{\text{p}_{2}}{2} - \frac{\text{p}_{3}}{2} + \frac{\text{p}_{5}}{2} - \frac{\text{p}_{6}}{2} 
  $$ 
  )
@@ -85,7 +85,7 @@ $$
                                 $\tilde{\alpha} - 2 \tilde{\beta}$ \\
 ( 
 $$
-\left[\begin{matrix}1\end{matrix}\right] * \left[\begin{array}{c}\text{1. SALC in B2g}\end{array}\right] = \left[\begin{matrix}1\end{matrix}\right] * \left[\begin{matrix}\frac{\sqrt{6} \text{p}_{1}}{6} - \frac{\sqrt{6} \text{p}_{2}}{6} + \frac{\sqrt{6} \text{p}_{3}}{6} - \frac{\sqrt{6} \text{p}_{4}}{6} + \frac{\sqrt{6} \text{p}_{5}}{6} - \frac{\sqrt{6} \text{p}_{6}}{6}\end{matrix}\right] 
+\begin{pmatrix}1\end{pmatrix} * \left(\begin{array}{c}\text{1. SALC in B2g}\end{array}\right) = \begin{pmatrix}1\end{pmatrix} * \begin{pmatrix}\frac{\sqrt{6} \text{p}_{1}}{6} - \frac{\sqrt{6} \text{p}_{2}}{6} + \frac{\sqrt{6} \text{p}_{3}}{6} - \frac{\sqrt{6} \text{p}_{4}}{6} + \frac{\sqrt{6} \text{p}_{5}}{6} - \frac{\sqrt{6} \text{p}_{6}}{6}\end{pmatrix} 
  $$ $$ = \frac{\sqrt{6} \left(\text{p}_{1} - \text{p}_{2} + \text{p}_{3} - \text{p}_{4} + \text{p}_{5} - \text{p}_{6}\right)}{6} 
  $$ 
  )
@@ -96,7 +96,7 @@ $$
 
 \newpage \section*{s orbitals}
 Symmetry behavior of the s-orbitals:
-$$\mathsf{\Gamma}_{red} = \,6 E\;\oplus{}\,2 C'2\;\oplus{}\,6 \sigma h\;\oplus{}\,2 \sigma v\;$$
+$$\mathsf{\Gamma}_{red} = \,6 E\;; \,2 C'2\;; \,6 \sigma h\;; \,2 \sigma v\;$$
 $$\mathsf{\Gamma}_{irred} = \,1 A1g\;\oplus{}\,1 E2g\;\oplus{}\,1 B1u\;\oplus{}\,1 E1u\;$$
 
 
@@ -109,10 +109,10 @@ $$\mathsf{\Gamma}_{irred} = \,1 A1g\;\oplus{}\,1 E2g\;\oplus{}\,1 B1u\;\oplus{}\
 \item SALC of E1u: \quad $\frac{\text{s}_{2}}{2} + \frac{\text{s}_{3}}{2} - \frac{\text{s}_{5}}{2} - \frac{\text{s}_{6}}{2}$
 \end{itemize}
 Put together these SALCs form the following Hamilton matrices:
-     $$ H_{A1g}= \left[\begin{bmatrix}\tilde{\alpha}_{s} + 2 \tilde{\beta}_{s}\end{bmatrix}\right]$$ 
-     $$ H_{E2g}= \left[\begin{bmatrix}\tilde{\alpha}_{s} - \tilde{\beta}_{s} & 0\\0 & \tilde{\alpha}_{s} - \tilde{\beta}_{s}\end{bmatrix}\right]$$ 
-     $$ H_{B1u}= \left[\begin{bmatrix}\tilde{\alpha}_{s} - 2 \tilde{\beta}_{s}\end{bmatrix}\right]$$ 
-     $$ H_{E1u}= \left[\begin{bmatrix}\tilde{\alpha}_{s} + \tilde{\beta}_{s} & 0\\0 & \tilde{\alpha}_{s} + \tilde{\beta}_{s}\end{bmatrix}\right]$$ 
+     $$ H_{A1g}= \begin{pmatrix}\tilde{\alpha}_{s} + 2 \tilde{\beta}_{s}\end{pmatrix}$$ 
+     $$ H_{E2g}= \begin{pmatrix}\tilde{\alpha}_{s} - \tilde{\beta}_{s} & 0\\0 & \tilde{\alpha}_{s} - \tilde{\beta}_{s}\end{pmatrix}$$ 
+     $$ H_{B1u}= \begin{pmatrix}\tilde{\alpha}_{s} - 2 \tilde{\beta}_{s}\end{pmatrix}$$ 
+     $$ H_{E1u}= \begin{pmatrix}\tilde{\alpha}_{s} + \tilde{\beta}_{s} & 0\\0 & \tilde{\alpha}_{s} + \tilde{\beta}_{s}\end{pmatrix}$$ 
 
 
 Solving Hückels secular equations, that follow from these H, leads to:
@@ -121,7 +121,7 @@ Solving Hückels secular equations, that follow from these H, leads to:
                                 $\tilde{\alpha}_{s} + 2 \tilde{\beta}_{s}$ \\
 ( 
 $$
-\left[\begin{matrix}1\end{matrix}\right] * \left[\begin{array}{c}\text{1. SALC in A1g}\end{array}\right] = \left[\begin{matrix}1\end{matrix}\right] * \left[\begin{matrix}\frac{\sqrt{6} \text{s}_{1}}{6} + \frac{\sqrt{6} \text{s}_{2}}{6} + \frac{\sqrt{6} \text{s}_{3}}{6} + \frac{\sqrt{6} \text{s}_{4}}{6} + \frac{\sqrt{6} \text{s}_{5}}{6} + \frac{\sqrt{6} \text{s}_{6}}{6}\end{matrix}\right] 
+\begin{pmatrix}1\end{pmatrix} * \left(\begin{array}{c}\text{1. SALC in A1g}\end{array}\right) = \begin{pmatrix}1\end{pmatrix} * \begin{pmatrix}\frac{\sqrt{6} \text{s}_{1}}{6} + \frac{\sqrt{6} \text{s}_{2}}{6} + \frac{\sqrt{6} \text{s}_{3}}{6} + \frac{\sqrt{6} \text{s}_{4}}{6} + \frac{\sqrt{6} \text{s}_{5}}{6} + \frac{\sqrt{6} \text{s}_{6}}{6}\end{pmatrix} 
  $$ $$ = \frac{\sqrt{6} \left(\text{s}_{1} + \text{s}_{2} + \text{s}_{3} + \text{s}_{4} + \text{s}_{5} + \text{s}_{6}\right)}{6} 
  $$ 
  )
@@ -130,7 +130,7 @@ $$
                                 $\tilde{\alpha}_{s} + \tilde{\beta}_{s}$ \\
 ( 
 $$
-\left[\begin{matrix}1 & 0\end{matrix}\right] * \left[\begin{array}{c}\text{1. SALC in E1u} \\ \text{2. SALC in E1u}\end{array}\right] = \left[\begin{matrix}1 & 0\end{matrix}\right] * \left[\begin{matrix}\frac{\sqrt{3} \text{s}_{1}}{3} + \frac{\sqrt{3} \text{s}_{2}}{6} - \frac{\sqrt{3} \text{s}_{3}}{6} - \frac{\sqrt{3} \text{s}_{4}}{3} - \frac{\sqrt{3} \text{s}_{5}}{6} + \frac{\sqrt{3} \text{s}_{6}}{6}\\\frac{\text{s}_{2}}{2} + \frac{\text{s}_{3}}{2} - \frac{\text{s}_{5}}{2} - \frac{\text{s}_{6}}{2}\end{matrix}\right] 
+\begin{pmatrix}1 & 0\end{pmatrix} * \left(\begin{array}{c}\text{1. SALC in E1u} \\ \text{2. SALC in E1u}\end{array}\right) = \begin{pmatrix}1 & 0\end{pmatrix} * \begin{pmatrix}\frac{\sqrt{3} \text{s}_{1}}{3} + \frac{\sqrt{3} \text{s}_{2}}{6} - \frac{\sqrt{3} \text{s}_{3}}{6} - \frac{\sqrt{3} \text{s}_{4}}{3} - \frac{\sqrt{3} \text{s}_{5}}{6} + \frac{\sqrt{3} \text{s}_{6}}{6}\\\frac{\text{s}_{2}}{2} + \frac{\text{s}_{3}}{2} - \frac{\text{s}_{5}}{2} - \frac{\text{s}_{6}}{2}\end{pmatrix} 
  $$ $$ = \frac{\sqrt{3} \left(2 \text{s}_{1} + \text{s}_{2} - \text{s}_{3} - 2 \text{s}_{4} - \text{s}_{5} + \text{s}_{6}\right)}{6} 
  $$ 
  )
@@ -139,7 +139,7 @@ $$
                                 $\tilde{\alpha}_{s} + \tilde{\beta}_{s}$ \\
 ( 
 $$
-\left[\begin{matrix}0 & 1\end{matrix}\right] * \left[\begin{array}{c}\text{1. SALC in E1u} \\ \text{2. SALC in E1u}\end{array}\right] = \left[\begin{matrix}0 & 1\end{matrix}\right] * \left[\begin{matrix}\frac{\sqrt{3} \text{s}_{1}}{3} + \frac{\sqrt{3} \text{s}_{2}}{6} - \frac{\sqrt{3} \text{s}_{3}}{6} - \frac{\sqrt{3} \text{s}_{4}}{3} - \frac{\sqrt{3} \text{s}_{5}}{6} + \frac{\sqrt{3} \text{s}_{6}}{6}\\\frac{\text{s}_{2}}{2} + \frac{\text{s}_{3}}{2} - \frac{\text{s}_{5}}{2} - \frac{\text{s}_{6}}{2}\end{matrix}\right] 
+\begin{pmatrix}0 & 1\end{pmatrix} * \left(\begin{array}{c}\text{1. SALC in E1u} \\ \text{2. SALC in E1u}\end{array}\right) = \begin{pmatrix}0 & 1\end{pmatrix} * \begin{pmatrix}\frac{\sqrt{3} \text{s}_{1}}{3} + \frac{\sqrt{3} \text{s}_{2}}{6} - \frac{\sqrt{3} \text{s}_{3}}{6} - \frac{\sqrt{3} \text{s}_{4}}{3} - \frac{\sqrt{3} \text{s}_{5}}{6} + \frac{\sqrt{3} \text{s}_{6}}{6}\\\frac{\text{s}_{2}}{2} + \frac{\text{s}_{3}}{2} - \frac{\text{s}_{5}}{2} - \frac{\text{s}_{6}}{2}\end{pmatrix} 
  $$ $$ = \frac{\text{s}_{2}}{2} + \frac{\text{s}_{3}}{2} - \frac{\text{s}_{5}}{2} - \frac{\text{s}_{6}}{2} 
  $$ 
  )
@@ -148,7 +148,7 @@ $$
                                 $\tilde{\alpha}_{s} - \tilde{\beta}_{s}$ \\
 ( 
 $$
-\left[\begin{matrix}1 & 0\end{matrix}\right] * \left[\begin{array}{c}\text{1. SALC in E2g} \\ \text{2. SALC in E2g}\end{array}\right] = \left[\begin{matrix}1 & 0\end{matrix}\right] * \left[\begin{matrix}\frac{\sqrt{3} \text{s}_{1}}{3} - \frac{\sqrt{3} \text{s}_{2}}{6} - \frac{\sqrt{3} \text{s}_{3}}{6} + \frac{\sqrt{3} \text{s}_{4}}{3} - \frac{\sqrt{3} \text{s}_{5}}{6} - \frac{\sqrt{3} \text{s}_{6}}{6}\\\frac{\text{s}_{2}}{2} - \frac{\text{s}_{3}}{2} + \frac{\text{s}_{5}}{2} - \frac{\text{s}_{6}}{2}\end{matrix}\right] 
+\begin{pmatrix}1 & 0\end{pmatrix} * \left(\begin{array}{c}\text{1. SALC in E2g} \\ \text{2. SALC in E2g}\end{array}\right) = \begin{pmatrix}1 & 0\end{pmatrix} * \begin{pmatrix}\frac{\sqrt{3} \text{s}_{1}}{3} - \frac{\sqrt{3} \text{s}_{2}}{6} - \frac{\sqrt{3} \text{s}_{3}}{6} + \frac{\sqrt{3} \text{s}_{4}}{3} - \frac{\sqrt{3} \text{s}_{5}}{6} - \frac{\sqrt{3} \text{s}_{6}}{6}\\\frac{\text{s}_{2}}{2} - \frac{\text{s}_{3}}{2} + \frac{\text{s}_{5}}{2} - \frac{\text{s}_{6}}{2}\end{pmatrix} 
  $$ $$ = \frac{\sqrt{3} \left(2 \text{s}_{1} - \text{s}_{2} - \text{s}_{3} + 2 \text{s}_{4} - \text{s}_{5} - \text{s}_{6}\right)}{6} 
  $$ 
  )
@@ -157,7 +157,7 @@ $$
                                 $\tilde{\alpha}_{s} - \tilde{\beta}_{s}$ \\
 ( 
 $$
-\left[\begin{matrix}0 & 1\end{matrix}\right] * \left[\begin{array}{c}\text{1. SALC in E2g} \\ \text{2. SALC in E2g}\end{array}\right] = \left[\begin{matrix}0 & 1\end{matrix}\right] * \left[\begin{matrix}\frac{\sqrt{3} \text{s}_{1}}{3} - \frac{\sqrt{3} \text{s}_{2}}{6} - \frac{\sqrt{3} \text{s}_{3}}{6} + \frac{\sqrt{3} \text{s}_{4}}{3} - \frac{\sqrt{3} \text{s}_{5}}{6} - \frac{\sqrt{3} \text{s}_{6}}{6}\\\frac{\text{s}_{2}}{2} - \frac{\text{s}_{3}}{2} + \frac{\text{s}_{5}}{2} - \frac{\text{s}_{6}}{2}\end{matrix}\right] 
+\begin{pmatrix}0 & 1\end{pmatrix} * \left(\begin{array}{c}\text{1. SALC in E2g} \\ \text{2. SALC in E2g}\end{array}\right) = \begin{pmatrix}0 & 1\end{pmatrix} * \begin{pmatrix}\frac{\sqrt{3} \text{s}_{1}}{3} - \frac{\sqrt{3} \text{s}_{2}}{6} - \frac{\sqrt{3} \text{s}_{3}}{6} + \frac{\sqrt{3} \text{s}_{4}}{3} - \frac{\sqrt{3} \text{s}_{5}}{6} - \frac{\sqrt{3} \text{s}_{6}}{6}\\\frac{\text{s}_{2}}{2} - \frac{\text{s}_{3}}{2} + \frac{\text{s}_{5}}{2} - \frac{\text{s}_{6}}{2}\end{pmatrix} 
  $$ $$ = \frac{\text{s}_{2}}{2} - \frac{\text{s}_{3}}{2} + \frac{\text{s}_{5}}{2} - \frac{\text{s}_{6}}{2} 
  $$ 
  )
@@ -166,7 +166,7 @@ $$
                                 $\tilde{\alpha}_{s} - 2 \tilde{\beta}_{s}$ \\
 ( 
 $$
-\left[\begin{matrix}1\end{matrix}\right] * \left[\begin{array}{c}\text{1. SALC in B1u}\end{array}\right] = \left[\begin{matrix}1\end{matrix}\right] * \left[\begin{matrix}\frac{\sqrt{6} \text{s}_{1}}{6} - \frac{\sqrt{6} \text{s}_{2}}{6} + \frac{\sqrt{6} \text{s}_{3}}{6} - \frac{\sqrt{6} \text{s}_{4}}{6} + \frac{\sqrt{6} \text{s}_{5}}{6} - \frac{\sqrt{6} \text{s}_{6}}{6}\end{matrix}\right] 
+\begin{pmatrix}1\end{pmatrix} * \left(\begin{array}{c}\text{1. SALC in B1u}\end{array}\right) = \begin{pmatrix}1\end{pmatrix} * \begin{pmatrix}\frac{\sqrt{6} \text{s}_{1}}{6} - \frac{\sqrt{6} \text{s}_{2}}{6} + \frac{\sqrt{6} \text{s}_{3}}{6} - \frac{\sqrt{6} \text{s}_{4}}{6} + \frac{\sqrt{6} \text{s}_{5}}{6} - \frac{\sqrt{6} \text{s}_{6}}{6}\end{pmatrix} 
  $$ $$ = \frac{\sqrt{6} \left(\text{s}_{1} - \text{s}_{2} + \text{s}_{3} - \text{s}_{4} + \text{s}_{5} - \text{s}_{6}\right)}{6} 
  $$ 
  )
@@ -175,10 +175,10 @@ $$
 
 
 
-\newpage \section*{Transitions from p orbitals into s orbitals}\subsection*{State with Occupation [2, 2, 2, 0, 0, 0] (0 unpaired electrons, mult 1.0)}
+\newpage \section*{Transitions from p orbitals into s orbitals}\subsection*{State with Occupation (2, 2, 2, 0, 0, 0) (0 unpaired electrons, mult 1.0)}
         \noindent\textbf{Transition from $\psi_{2}$ into $\psi_{\text{s}_{2}}$:}
         \begin{itemize}
-            \item $- [2, 2, 2, 0, 0, 0], (0, 0, 0, 0, 0, 0) \rightarrow (2, 1, 2, 0, 0, 0), (0, 1, 0, 0, 0, 0)$
+            \item $- (2, 2, 2, 0, 0, 0), (0, 0, 0, 0, 0, 0) \rightarrow (2, 1, 2, 0, 0, 0), (0, 1, 0, 0, 0, 0)$
         
             \item $\psi_{2}:$ linear combination = $\frac{\sqrt{3} \left(2 \text{p}_{1} + \text{p}_{2} - \text{p}_{3} - 2 \text{p}_{4} - \text{p}_{5} + \text{p}_{6}\right)}{3}$, \
             energy = $\tilde{\alpha} + \tilde{\beta}$
@@ -198,7 +198,7 @@ $$
 
         \noindent\textbf{Transition from $\psi_{3}$ into $\psi_{\text{s}_{3}}$:}
         \begin{itemize}
-            \item $- [2, 2, 2, 0, 0, 0], (0, 0, 0, 0, 0, 0) \rightarrow (2, 2, 1, 0, 0, 0), (0, 0, 1, 0, 0, 0)$
+            \item $- (2, 2, 2, 0, 0, 0), (0, 0, 0, 0, 0, 0) \rightarrow (2, 2, 1, 0, 0, 0), (0, 0, 1, 0, 0, 0)$
         
             \item $\psi_{3}:$ linear combination = $0$, \
             energy = $\tilde{\alpha} + \tilde{\beta}$

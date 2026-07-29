@@ -186,7 +186,7 @@ class MoleculeRepresentation():
             elif expected_numbers[key] > len(items):
                 raise Exception(f"Zu wenig SALCs für {key}")
             else:
-                print("ORTHOGONALIZATION NEEDED")
+                print("ORTHOGONALIZATION NEEDED...")
                 new_set = get_linear_independent_SALCs(items, expected_no=expected_numbers[key])
                 # print(key, len(new_set))
                 for s in new_set:
@@ -342,20 +342,19 @@ class MoleculeRepresentation():
 
     def get_latex_symmetry_behavior(self):
         content = ""
-        latex_plus = r"\oplus{}"
         try:
             content += f"\nSymmetry behavior of the {'s' if self.s_orbital_active else 'p'}-orbitals:\n"
             reducible_representation = self.get_reducible_representation_for_ring_p_orbitals()
             irreducible_representation = self.decomposing_into_irreducible_representations(reducible_representation)
-            for (representation, name) in [
-                (reducible_representation, "red"),
-                (irreducible_representation, "irred")
+            for (representation, name, sep) in [
+                (reducible_representation, "red", "; "),
+                (irreducible_representation, "irred", r"\oplus{}")
             ]:
                 gamma_parts = []
                 for sym, coeff in representation.items():
                     if coeff != 0:
                         gamma_parts.append(fr"\,{coeff} {sym}\;")
-                gamma_red_str = latex_plus.join(gamma_parts)
+                gamma_red_str = sep.join(gamma_parts)
                 gamma_red_str = gamma_red_str.replace("σ", r"\sigma ")
                 content += fr"""$$\Gamma_{{{name}}} = {gamma_red_str}$$""".strip() + "\n"
             return content
@@ -382,7 +381,7 @@ class MoleculeRepresentation():
         SALCs_by_irred = norm_and_group_SALCs(SALCs)
         for irred, salcs in SALCs_by_irred.items():
             H = self.get_effective_hamilton_matrix(SALCs=salcs, irred=irred)
-            content += f"     $$ H_{{{irred}}}= " + save_latex_export(H).replace("matrix","bmatrix") + "$$ \n"
+            content += f"     $$ H_{{{irred}}}= " + save_latex_export(H) + "$$ \n"
 
         content += "\n\nSolving Hückels secular equations, that follow from these H, leads to:\n"
         if True:
@@ -401,7 +400,7 @@ class MoleculeRepresentation():
                 eigenvector_str = save_latex_export(s.eigenvector.T, replacement_text=" eigenvector ")
 
                 latex_labels = [r"\text{%d. SALC in %s}" % (i+1, s.symmetry) for i in range(len(s.eigenvector))]
-                latex_labels_str = r"\left[\begin{array}{c}" + r" \\ ".join(latex_labels) + r"\end{array}\right]"
+                latex_labels_str = r"\left(\begin{array}{c}" + r" \\ ".join(latex_labels) + r"\end{array}\right)"
 
                 salc_vector = save_latex_export(sp.Matrix([[sa["salc"].equation] for sa in s.salcs]) )
 
